@@ -1,0 +1,2003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BlockChain Café — Instant VAT Settlement</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f2eb;
+    --amber: #f5a623;
+    --amber-dim: #c47d10;
+    --green: #00d084;
+    --green-dim: #00855a;
+    --red: #ff4444;
+    --blue: #3b82f6;
+    --purple: #8b5cf6;
+    --panel: #111111;
+    --panel2: #1a1a1a;
+    --border: #2a2a2a;
+    --text-dim: #666;
+    --text-mid: #999;
+    --mono: 'Space Mono', monospace;
+    --sans: 'Syne', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: var(--sans);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── GRID NOISE BACKGROUND ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(245,166,35,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(245,166,35,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .app { position: relative; z-index: 1; max-width: 1400px; margin: 0 auto; padding: 0 24px 40px; }
+
+  /* ── HEADER ── */
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 28px 0 24px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .logo-icon {
+    width: 44px; height: 44px;
+    background: var(--amber);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+
+  .logo-text h1 {
+    font-family: var(--sans);
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: var(--white);
+  }
+
+  .logo-text p {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .chain-badge {
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 6px 12px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text-mid);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--green);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .network-badge {
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 6px 12px;
+    border-radius: 4px;
+    color: var(--amber);
+    border: 1px solid rgba(245,166,35,0.3);
+    background: rgba(245,166,35,0.05);
+  }
+
+  /* ── EU SCALE TICKER ── */
+  .eu-ticker {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 20px;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    overflow: hidden;
+  }
+
+  .eu-ticker-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .eu-flags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: nowrap;
+    overflow: hidden;
+  }
+
+  .eu-country {
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 3px;
+    background: rgba(255,255,255,0.04);
+    color: var(--text-mid);
+    white-space: nowrap;
+    transition: all 0.3s;
+  }
+
+  .eu-country.active {
+    background: rgba(245,166,35,0.15);
+    color: var(--amber);
+    border: 1px solid rgba(245,166,35,0.3);
+  }
+
+  .vat-stats {
+    margin-left: auto;
+    display: flex;
+    gap: 24px;
+    flex-shrink: 0;
+  }
+
+  .vat-stat {
+    text-align: right;
+  }
+
+  .vat-stat .val {
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--green);
+    font-weight: 700;
+  }
+
+  .vat-stat .lbl {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+  }
+
+  /* ── MAIN LAYOUT ── */
+  .main-grid {
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    grid-template-rows: auto auto;
+    gap: 20px;
+  }
+
+  /* ── MENU PANEL ── */
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .panel-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .panel-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .panel-title span { color: var(--amber); }
+
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+
+  .menu-item {
+    padding: 14px 16px;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: background 0.15s;
+    position: relative;
+    overflow: hidden;
+    user-select: none;
+  }
+
+  .menu-item:nth-child(4n) { border-right: none; }
+  .menu-item:nth-last-child(-n+3) { border-bottom: none; }
+
+  .menu-item:hover { background: rgba(245,166,35,0.04); }
+
+  .menu-item.in-cart {
+    background: rgba(245,166,35,0.07);
+  }
+
+  .qty-badge {
+    position: absolute;
+    top: 8px; right: 8px;
+    background: var(--amber);
+    color: var(--black);
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+
+  .qty-badge.show { display: flex; }
+
+  .menu-item-controls {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 8px;
+  }
+
+  .qty-btn {
+    width: 22px; height: 22px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    background: var(--panel2);
+    color: var(--white);
+    font-size: 14px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.1s;
+  }
+
+  .qty-btn:hover { background: rgba(245,166,35,0.15); border-color: rgba(245,166,35,0.4); color: var(--amber); }
+
+  .qty-display {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--amber);
+    min-width: 16px;
+    text-align: center;
+  }
+
+  .item-emoji {
+    font-size: 26px;
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  .item-name {
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+
+  .item-price {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--amber);
+    margin-bottom: 8px;
+  }
+
+  .item-vat-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .vat-tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    background: rgba(0,208,132,0.1);
+    color: var(--green);
+    border: 1px solid rgba(0,208,132,0.2);
+  }
+
+  .vat-amount {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-dim);
+  }
+
+  /* ── CARD TAP ZONE ── */
+  .card-zone {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .tap-area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 28px;
+  }
+
+  .nfc-card {
+    width: 200px;
+    height: 126px;
+    border-radius: 12px;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    user-select: none;
+    flex-shrink: 0;
+  }
+
+  .nfc-card:hover { transform: translateY(-3px); }
+  .nfc-card:active { transform: scale(0.97); }
+
+  .card-consumer {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    border: 1px solid rgba(59,130,246,0.3);
+    box-shadow: 0 4px 24px rgba(59,130,246,0.2);
+  }
+
+  .card-business {
+    background: linear-gradient(135deg, #1a1209 0%, #2d1f06 50%, #3d2a08 100%);
+    border: 1px solid rgba(245,166,35,0.4);
+    box-shadow: 0 4px 24px rgba(245,166,35,0.15);
+  }
+
+  .card-inner {
+    padding: 14px 16px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .card-logo {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    opacity: 0.6;
+  }
+
+  .card-chip {
+    width: 28px; height: 20px;
+    border-radius: 3px;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+
+  .nfc-icon {
+    font-size: 16px;
+    opacity: 0.5;
+  }
+
+  .card-bottom { }
+
+  .card-type-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 3px;
+  }
+
+  .card-id {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 0.05em;
+  }
+
+  .card-divider {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-dim);
+    font-family: var(--mono);
+    font-size: 11px;
+  }
+
+  .or-line {
+    width: 1px;
+    height: 30px;
+    background: var(--border);
+  }
+
+  .tap-instructions {
+    flex: 1;
+  }
+
+  .tap-instructions h3 {
+    font-family: var(--sans);
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+
+  .tap-instructions p {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  .tap-btn {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+  }
+
+  .btn {
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    transition: all 0.15s;
+    letter-spacing: 0.05em;
+  }
+
+  .btn-consumer {
+    background: rgba(59,130,246,0.15);
+    color: #60a5fa;
+    border: 1px solid rgba(59,130,246,0.3);
+  }
+
+  .btn-consumer:hover { background: rgba(59,130,246,0.25); }
+
+  .btn-business {
+    background: rgba(245,166,35,0.15);
+    color: var(--amber);
+    border: 1px solid rgba(245,166,35,0.3);
+  }
+
+  .btn-business:hover { background: rgba(245,166,35,0.25); }
+
+  /* ── LIVE SETTLEMENT PANEL ── */
+  .settlement-panel {
+    grid-column: 2;
+    grid-row: 1 / 3;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* ── TX BREAKDOWN ── */
+  .tx-box {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .tx-summary {
+    padding: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .tx-total {
+    font-family: var(--mono);
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+
+  .tx-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .tx-split {
+    padding: 16px 20px;
+  }
+
+  .split-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+    transition: all 0.4s;
+  }
+
+  .split-row:last-child { border-bottom: none; }
+
+  .split-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-mid);
+  }
+
+  .split-icon {
+    width: 28px; height: 28px;
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+    flex-shrink: 0;
+  }
+
+  .icon-net { background: rgba(59,130,246,0.15); }
+  .icon-vat { background: rgba(0,208,132,0.12); }
+  .icon-state { background: rgba(245,166,35,0.12); }
+  .icon-eu { background: rgba(139,92,246,0.15); }
+
+  .split-amount {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--white);
+  }
+
+  .split-bar-wrap {
+    height: 3px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 2px;
+    margin: 0 20px 16px;
+    display: flex;
+    overflow: hidden;
+    gap: 2px;
+  }
+
+  .split-bar-seg {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.6s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  /* ── SETTLEMENT ANIMATION ── */
+  .settle-box {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 20px;
+  }
+
+  .settle-status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .settle-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--text-dim);
+    flex-shrink: 0;
+    transition: background 0.3s;
+  }
+
+  .settle-dot.active { background: var(--amber); animation: pulse 1s infinite; }
+  .settle-dot.done { background: var(--green); animation: none; }
+
+  .settle-text {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-mid);
+  }
+
+  .settle-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .step-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    background: rgba(255,255,255,0.02);
+    opacity: 0.4;
+    transition: all 0.3s;
+  }
+
+  .step-row.active {
+    opacity: 1;
+    background: rgba(245,166,35,0.06);
+    border: 1px solid rgba(245,166,35,0.1);
+  }
+
+  .step-row.done {
+    opacity: 1;
+    background: rgba(0,208,132,0.05);
+    border: 1px solid rgba(0,208,132,0.1);
+  }
+
+  .step-icon { font-size: 14px; flex-shrink: 0; }
+
+  .step-text {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-mid);
+    flex: 1;
+  }
+
+  .step-row.active .step-text { color: var(--amber); }
+  .step-row.done .step-text { color: var(--green); }
+
+  .step-time {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-dim);
+  }
+
+  /* ── BLOCKCHAIN LEDGER ── */
+  .ledger-box {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    grid-column: 1;
+    grid-row: 3;
+    max-height: 320px;
+  }
+
+  .block-chain-visual {
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    padding: 16px 20px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+
+  .block-item {
+    flex-shrink: 0;
+    width: 140px;
+    background: var(--panel2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px;
+    position: relative;
+    transition: all 0.3s;
+  }
+
+  .block-item.new-block {
+    border-color: rgba(245,166,35,0.5);
+    box-shadow: 0 0 20px rgba(245,166,35,0.1);
+    animation: blockIn 0.5s ease;
+  }
+
+  @keyframes blockIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  .block-connector {
+    display: flex;
+    align-items: center;
+    padding: 0 4px;
+    flex-shrink: 0;
+  }
+
+  .block-connector-line {
+    width: 20px;
+    height: 2px;
+    background: var(--border);
+  }
+
+  .block-connector-arrow {
+    width: 0; height: 0;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 8px solid var(--border);
+  }
+
+  .block-num {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--amber);
+    margin-bottom: 6px;
+  }
+
+  .block-hash {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--text-dim);
+    word-break: break-all;
+    line-height: 1.4;
+    margin-bottom: 8px;
+  }
+
+  .block-txs {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-mid);
+  }
+
+  .block-vat-tag {
+    margin-top: 6px;
+    font-family: var(--mono);
+    font-size: 9px;
+    padding: 2px 5px;
+    border-radius: 2px;
+    background: rgba(0,208,132,0.1);
+    color: var(--green);
+    display: inline-block;
+  }
+
+  /* ── NODES MAP ── */
+  .nodes-panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 20px;
+  }
+
+  .nodes-canvas {
+    width: 100%;
+    height: 160px;
+    position: relative;
+  }
+
+  .node {
+    position: absolute;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    background: var(--panel2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    transition: all 0.3s;
+    cursor: default;
+  }
+
+  .node.active {
+    border-color: var(--green);
+    box-shadow: 0 0 12px rgba(0,208,132,0.3);
+  }
+
+  .node.selected {
+    border-color: var(--amber);
+    box-shadow: 0 0 16px rgba(245,166,35,0.4);
+    animation: nodePulse 0.6s ease;
+  }
+
+  @keyframes nodePulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+  }
+
+  .node-label {
+    position: absolute;
+    bottom: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--text-dim);
+    white-space: nowrap;
+  }
+
+  svg.node-lines {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+
+  .node-line {
+    stroke: var(--border);
+    stroke-width: 1;
+    fill: none;
+    transition: stroke 0.3s;
+  }
+
+  .node-line.active {
+    stroke: rgba(0,208,132,0.4);
+    stroke-dasharray: 4 4;
+    animation: dash 1s linear infinite;
+  }
+
+  @keyframes dash {
+    to { stroke-dashoffset: -8; }
+  }
+
+  /* ── PRIVACY PANEL ── */
+  .privacy-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+    font-family: var(--mono);
+    font-size: 11px;
+  }
+
+  .privacy-row:last-child { border-bottom: none; }
+
+  .privacy-key { color: var(--text-dim); flex: 1; }
+
+  .privacy-val {
+    color: var(--text-mid);
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .privacy-val.hidden { color: var(--purple); }
+  .privacy-val.visible { color: var(--green); }
+
+  /* ── TOAST ── */
+  .toast-area {
+    position: fixed;
+    top: 20px; right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 1000;
+  }
+
+  .toast {
+    background: var(--panel2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--white);
+    max-width: 320px;
+    animation: toastIn 0.3s ease, toastOut 0.3s ease 2.7s forwards;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  }
+
+  .toast.success { border-color: rgba(0,208,132,0.4); }
+  .toast.info { border-color: rgba(59,130,246,0.4); }
+
+  @keyframes toastIn {
+    from { transform: translateX(60px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+
+  @keyframes toastOut {
+    to { transform: translateX(60px); opacity: 0; }
+  }
+
+  /* ── STATS RIBBON ── */
+  .stats-ribbon {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    grid-column: 1;
+    grid-row: 4;
+  }
+
+  .stat-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+  }
+
+  .stat-val {
+    font-family: var(--mono);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 4px;
+    transition: all 0.3s;
+  }
+
+  .stat-lbl {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .stat-val.green { color: var(--green); }
+  .stat-val.amber { color: var(--amber); }
+
+  /* ── INPUT VAT DEDUCTION (B2B) ── */
+  .deduction-box {
+    background: rgba(245,166,35,0.05);
+    border: 1px solid rgba(245,166,35,0.15);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-top: 10px;
+    display: none;
+  }
+
+  .deduction-box.visible { display: block; }
+
+  .deduction-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--amber);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+
+  .deduction-row {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--mono);
+    font-size: 12px;
+    padding: 4px 0;
+  }
+
+  .deduction-key { color: var(--text-dim); }
+  .deduction-val { color: var(--amber); }
+
+  /* ── LEGEND ── */
+  .legend {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    padding: 12px 20px;
+    border-top: 1px solid var(--border);
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-dim);
+  }
+
+  .legend-dot {
+    width: 8px; height: 8px;
+    border-radius: 2px;
+  }
+
+  /* ── TAB SELECTOR ── */
+  .tab-row {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .tab {
+    padding: 10px 16px;
+    font-family: var(--mono);
+    font-size: 11px;
+    cursor: pointer;
+    color: var(--text-dim);
+    border-bottom: 2px solid transparent;
+    transition: all 0.15s;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .tab:hover { color: var(--text-mid); }
+  .tab.active { color: var(--amber); border-bottom-color: var(--amber); }
+
+  .tab-content { display: none; padding: 16px 20px; }
+  .tab-content.active { display: block; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1100px) {
+    .main-grid { grid-template-columns: 1fr; }
+    .settlement-panel { grid-column: 1; grid-row: auto; }
+    .menu-grid { grid-template-columns: repeat(2, 1fr); }
+    .stats-ribbon { grid-template-columns: repeat(2, 1fr); }
+    .ledger-box { grid-column: 1; grid-row: auto; }
+    .stats-ribbon { grid-column: 1; }
+  }
+
+  /* ── CONSUMPTION TOGGLE ── */
+  .consumption-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .ct-btn {
+    padding: 6px 14px;
+    font-family: var(--mono);
+    font-size: 11px;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    color: var(--text-dim);
+    transition: all 0.15s;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+
+  .ct-btn.active-inhouse {
+    background: rgba(245,166,35,0.15);
+    color: var(--amber);
+  }
+
+  .ct-btn.active-takeaway {
+    background: rgba(59,130,246,0.15);
+    color: #60a5fa;
+  }
+
+  .ct-divider {
+    width: 1px;
+    height: 28px;
+    background: var(--border);
+    flex-shrink: 0;
+  }
+
+  .vat-tag-inhouse {
+    background: rgba(245,166,35,0.12);
+    color: var(--amber);
+    border: 1px solid rgba(245,166,35,0.25);
+  }
+
+  .vat-tag-takeaway {
+    background: rgba(59,130,246,0.1);
+    color: #60a5fa;
+    border: 1px solid rgba(59,130,246,0.2);
+  }
+
+  .item-mode-hint {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--text-dim);
+    margin-top: 4px;
+    transition: color 0.2s;
+  }
+
+  @keyframes shimmer {
+    0% { opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { opacity: 0.6; }
+  }
+
+  .hash-animate {
+    animation: hashChange 0.2s ease;
+  }
+
+  @keyframes hashChange {
+    0% { opacity: 0; transform: translateY(-4px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<div class="toast-area" id="toastArea"></div>
+
+<div class="app">
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo">
+      <div class="logo-icon">☕</div>
+      <div class="logo-text">
+        <h1>BlockChain Café</h1>
+        <p>Private VAT Settlement Protocol · Germany Pilot</p>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="chain-badge">
+        <div class="dot"></div>
+        <span id="nodeCount">7</span> nodes online
+      </div>
+      <div class="chain-badge">
+        Block <span id="blockHeight" style="color:var(--amber);margin:0 2px;">1</span>
+      </div>
+      <div class="network-badge">🇩🇪 DE-VAT Mainnet</div>
+    </div>
+  </header>
+
+  <!-- EU TICKER -->
+  <div class="eu-ticker">
+    <span class="eu-ticker-label">EU Expansion →</span>
+    <div class="eu-flags" id="euFlags">
+      <span class="eu-country active">🇩🇪 DE 19%</span>
+      <span class="eu-country">🇫🇷 FR 20%</span>
+      <span class="eu-country">🇳🇱 NL 21%</span>
+      <span class="eu-country">🇦🇹 AT 20%</span>
+      <span class="eu-country">🇮🇹 IT 22%</span>
+      <span class="eu-country">🇪🇸 ES 21%</span>
+      <span class="eu-country">🇵🇱 PL 23%</span>
+      <span class="eu-country">🇸🇪 SE 25%</span>
+      <span class="eu-country">🇩🇰 DK 25%</span>
+      <span class="eu-country">🇧🇪 BE 21%</span>
+    </div>
+    <div class="vat-stats">
+      <div class="vat-stat">
+        <div class="val" id="totalVatSettled">€0.00</div>
+        <div class="lbl">VAT Settled</div>
+      </div>
+      <div class="vat-stat">
+        <div class="val" id="totalTxCount">0</div>
+        <div class="lbl">Transactions</div>
+      </div>
+      <div class="vat-stat">
+        <div class="val" style="color:var(--amber)">~0ms</div>
+        <div class="lbl">Settlement Lag</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN GRID -->
+  <div class="main-grid">
+
+    <!-- MENU PANEL -->
+    <div class="panel" style="grid-column:1; grid-row:1;">
+      <div class="panel-header">
+        <div class="panel-title">☕ <span>Café Menu</span> — add items, then pay</div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="font-family:var(--mono);font-size:11px;color:var(--text-dim);" id="vatModeLabel">🍽️ In-house = 19% MwSt</div>
+          <div class="consumption-toggle">
+            <button class="ct-btn active-inhouse" id="btnInhouse" onclick="setMode('inhouse')">🍽️ In-house</button>
+            <div class="ct-divider"></div>
+            <button class="ct-btn" id="btnTakeaway" onclick="setMode('takeaway')">🥡 Takeaway</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-grid" id="menuGrid">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+
+    <!-- SETTLEMENT PANEL (right column, spans rows) -->
+    <div class="settlement-panel">
+
+      <!-- CART + TX BREAKDOWN -->
+      <div class="tx-box">
+        <div class="tx-summary">
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <div>
+              <div class="tx-label">Order Total</div>
+              <div class="tx-total" id="txTotal">€0.00</div>
+            </div>
+            <button onclick="clearCart()" style="font-family:var(--mono);font-size:10px;padding:5px 10px;border-radius:4px;border:1px solid var(--border);background:transparent;color:var(--text-dim);cursor:pointer;letter-spacing:0.05em;">✕ Clear</button>
+          </div>
+          <div style="font-family:var(--mono);font-size:11px;color:var(--text-dim);margin-top:4px;" id="txItemLabel">Add items from the menu</div>
+        </div>
+
+        <!-- CART LINE ITEMS -->
+        <div id="cartLines" style="padding:0 20px;max-height:140px;overflow-y:auto;border-bottom:1px solid var(--border);">
+          <div id="cartEmpty" style="padding:12px 0;font-family:var(--mono);font-size:11px;color:var(--text-dim);text-align:center;">— cart empty —</div>
+        </div>
+
+        <div class="split-bar-wrap" style="margin-top:12px;">
+          <div class="split-bar-seg" id="barNet" style="width:0%;background:#3b82f6;"></div>
+          <div class="split-bar-seg" id="barVat" style="width:0%;background:#00d084;"></div>
+        </div>
+
+        <div class="tx-split">
+          <div class="split-row">
+            <div class="split-label">
+              <div class="split-icon icon-net">🏪</div>
+              Net (Café revenue)
+            </div>
+            <div class="split-amount" id="splitNet">—</div>
+          </div>
+          <div class="split-row">
+            <div class="split-label">
+              <div class="split-icon icon-vat">🏛️</div>
+              VAT → Finanzamt
+            </div>
+            <div class="split-amount" id="splitVat">—</div>
+          </div>
+          <div class="split-row">
+            <div class="split-label">
+              <div class="split-icon icon-state">📊</div>
+              Bundesland share
+            </div>
+            <div class="split-amount" id="splitState">—</div>
+          </div>
+          <div class="split-row">
+            <div class="split-label">
+              <div class="split-icon icon-eu">🇪🇺</div>
+              EU own resources
+            </div>
+            <div class="split-amount" id="splitEU">—</div>
+          </div>
+        </div>
+
+        <!-- B2B DEDUCTION BOX -->
+        <div class="deduction-box" id="deductionBox" style="margin:0 16px 16px;">
+          <div class="deduction-title">⚡ Input VAT Deduction (Vorsteuerabzug)</div>
+          <div class="deduction-row">
+            <span class="deduction-key">VAT paid on purchase</span>
+            <span class="deduction-val" id="dedVatPaid">—</span>
+          </div>
+          <div class="deduction-row">
+            <span class="deduction-key">Provable on-chain</span>
+            <span class="deduction-val" style="color:var(--green)">✓ Verified</span>
+          </div>
+          <div class="deduction-row">
+            <span class="deduction-key">Net VAT liability</span>
+            <span class="deduction-val" id="dedNetLiability">—</span>
+          </div>
+          <div class="deduction-row">
+            <span class="deduction-key">Fraud protection</span>
+            <span class="deduction-val" style="color:var(--green)">✓ Tamper-proof</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SETTLEMENT STEPS -->
+      <div class="settle-box">
+        <div class="settle-status">
+          <div class="settle-dot" id="settleDot"></div>
+          <div class="settle-text" id="settleStatus">Awaiting transaction…</div>
+        </div>
+        <div class="settle-steps" id="settleSteps">
+          <div class="step-row" id="step0">
+            <div class="step-icon">🔐</div>
+            <div class="step-text">ZK proof generated</div>
+            <div class="step-time" id="stepTime0"></div>
+          </div>
+          <div class="step-row" id="step1">
+            <div class="step-icon">📡</div>
+            <div class="step-text">Broadcast to nodes</div>
+            <div class="step-time" id="stepTime1"></div>
+          </div>
+          <div class="step-row" id="step2">
+            <div class="step-icon">✅</div>
+            <div class="step-text">Consensus reached</div>
+            <div class="step-time" id="stepTime2"></div>
+          </div>
+          <div class="step-row" id="step3">
+            <div class="step-icon">💶</div>
+            <div class="step-text">VAT settled instantly</div>
+            <div class="step-time" id="stepTime3"></div>
+          </div>
+          <div class="step-row" id="step4">
+            <div class="step-icon">📦</div>
+            <div class="step-text">Block confirmed</div>
+            <div class="step-time" id="stepTime4"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PRIVACY TAB -->
+      <div class="panel">
+        <div class="tab-row">
+          <div class="tab active" onclick="switchTab(this,'privacy')">Privacy</div>
+          <div class="tab" onclick="switchTab(this,'cryptography')">Cryptography</div>
+        </div>
+        <div class="tab-content active" id="tab-privacy">
+          <div class="privacy-row">
+            <span class="privacy-key">Consumer identity</span>
+            <span class="privacy-val hidden" id="privConsumer">zk-anon-████████</span>
+          </div>
+          <div class="privacy-row">
+            <span class="privacy-key">Merchant (Café)</span>
+            <span class="privacy-val visible" id="privMerchant">DE-VAT: DE123456789</span>
+          </div>
+          <div class="privacy-row">
+            <span class="privacy-key">Transaction amount</span>
+            <span class="privacy-val hidden" id="privAmount">hidden (commitment)</span>
+          </div>
+          <div class="privacy-row">
+            <span class="privacy-key">VAT amount</span>
+            <span class="privacy-val visible" id="privVatAmt">—</span>
+          </div>
+          <div class="privacy-row">
+            <span class="privacy-key">Basket contents</span>
+            <span class="privacy-val hidden">encrypted</span>
+          </div>
+          <div class="privacy-row">
+            <span class="privacy-key">ZK proof valid</span>
+            <span class="privacy-val visible" id="privProof">pending</span>
+          </div>
+        </div>
+        <div class="tab-content" id="tab-cryptography">
+          <div class="privacy-row">
+            <span class="privacy-key">Proof system</span>
+            <span class="privacy-val visible">Groth16 zk-SNARK</span>
+          </div>
+          <div class="privacy-row">
+            <span class="privacy-key">Commitment scheme</span>
+            <span class="privacy-val visible">Pedersen hash</span>
+          </div>
+          <div class="privacy-row">
+            <span class="privacy-key">Merkle root</span>
+            <span class="privacy-val hidden" id="merkleRoot">0x000000…</span>
+          </div>
+          <div class="privacy-row">
+            <span class="privacy-key">Consensus</span>
+            <span class="privacy-val visible">PBFT (permissioned)</span>
+          </div>
+          <div class="privacy-row">
+            <span class="privacy-key">Hash algo</span>
+            <span class="privacy-val visible">SHA-256</span>
+          </div>
+          <div class="privacy-row">
+            <span class="privacy-key">Finality</span>
+            <span class="privacy-val visible" style="color:var(--green)">Instant (1 block)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD TAP ZONE -->
+    <div class="panel card-zone">
+      <div class="panel-header">
+        <div class="panel-title">💳 <span>Payment</span> — tap card to checkout</div>
+        <div id="selectedItemBadge" style="font-family:var(--mono);font-size:11px;color:var(--text-dim);">Cart empty</div>
+      </div>
+      <div class="tap-area">
+        <div>
+          <div class="nfc-card card-consumer" onclick="tapCard('consumer')" title="Consumer card - anonymous">
+            <div class="card-inner">
+              <div class="card-top">
+                <div class="card-logo">PRIVATE</div>
+                <div class="card-chip"></div>
+              </div>
+              <div class="card-bottom">
+                <div class="card-type-label">Consumer · anonym</div>
+                <div class="card-id">•••• •••• •••• ████</div>
+              </div>
+            </div>
+          </div>
+          <div style="text-align:center;font-family:var(--mono);font-size:10px;color:var(--text-dim);margin-top:8px;">🔒 Anonymous</div>
+        </div>
+
+        <div class="card-divider">
+          <div class="or-line"></div>
+          or
+          <div class="or-line"></div>
+        </div>
+
+        <div>
+          <div class="nfc-card card-business" onclick="tapCard('business')" title="Business card - with VAT deduction">
+            <div class="card-inner">
+              <div class="card-top">
+                <div class="card-logo" style="color:var(--amber);opacity:1;">BUSINESS</div>
+                <div class="card-chip" style="background:rgba(245,166,35,0.2);border-color:rgba(245,166,35,0.3);"></div>
+              </div>
+              <div class="card-bottom">
+                <div class="card-type-label">Unternehmen · B2B</div>
+                <div class="card-id" style="color:rgba(245,166,35,0.7);">DE •••• •••• 789</div>
+              </div>
+            </div>
+          </div>
+          <div style="text-align:center;font-family:var(--mono);font-size:10px;color:var(--text-dim);margin-top:8px;">⚡ VAT Deduction</div>
+        </div>
+
+        <div class="tap-instructions">
+          <h3 id="tapInstructionTitle">Add items to your cart</h3>
+          <p id="tapInstructionText">Use + / − on any menu item to build your order. Then tap a card — consumer for anonymous payment, business card to claim input VAT deduction on the full order.</p>
+          <div class="tap-btn">
+            <button class="btn btn-consumer" onclick="tapCard('consumer')">🔒 Pay Anonymous</button>
+            <button class="btn btn-business" onclick="tapCard('business')">⚡ Pay + Deduct</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOCKCHAIN LEDGER -->
+    <div class="ledger-box" style="grid-column:1;grid-row:3;">
+      <div class="panel-header">
+        <div class="panel-title">⛓ <span>Live Blockchain</span> — immutable VAT ledger</div>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--text-dim);">Block time: instant</div>
+      </div>
+      <div class="block-chain-visual" id="blockChain">
+        <!-- Genesis block -->
+      </div>
+      <div class="legend">
+        <div class="legend-item"><div class="legend-dot" style="background:#3b82f6;"></div>Consumer tx (anon)</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--amber);"></div>Business tx (B2B)</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--green);"></div>VAT settled</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--text-dim);"></div>Genesis</div>
+      </div>
+    </div>
+
+    <!-- STATS RIBBON -->
+    <div class="stats-ribbon" style="grid-column:1;grid-row:4;">
+      <div class="stat-card">
+        <div class="stat-val green" id="statVAT">€0.00</div>
+        <div class="stat-lbl">Total VAT Settled</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val amber" id="statDeductions">€0.00</div>
+        <div class="stat-lbl">Input VAT Deducted (B2B)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val" id="statTx">0</div>
+        <div class="stat-lbl">Transactions Processed</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val green">0ms</div>
+        <div class="stat-lbl">Monthly Reports Needed</div>
+      </div>
+    </div>
+
+    <!-- NODES MAP -->
+    <div class="nodes-panel" style="grid-column:1;grid-row:5;">
+      <div class="panel-header" style="padding:0 0 12px;border:none;">
+        <div class="panel-title">🌐 <span>Decentralized Nodes</span> — no central server</div>
+      </div>
+      <div class="nodes-canvas" id="nodesCanvas">
+        <svg class="node-lines" id="nodeLines"></svg>
+        <!-- nodes inserted by JS -->
+      </div>
+    </div>
+
+  </div><!-- end main-grid -->
+</div><!-- end app -->
+
+<script>
+// ── STATE ──
+const state = {
+  cart: {},          // { itemId: qty }
+  mode: 'inhouse',   // 'inhouse' | 'takeaway'
+  blockHeight: 1,
+  totalVat: 0,
+  totalDeductions: 0,
+  txCount: 0,
+  settling: false,
+};
+
+// ── MENU DATA ──
+// vatBase = item's natural rate when taken away.
+// In-house: ALL items 19% (restaurant/Gaststätte service rule).
+// Takeaway: vatBase applies (7% food, 19% hot drinks).
+const MENU = [
+  // Hot Drinks — always 19% (hot beverage rule, same either way)
+  { id: 'espresso',   emoji: '☕', name: 'Espresso',        price: 2.50, vatBase: 19, cat: 'Hot Drinks' },
+  { id: 'latte',      emoji: '🥛', name: 'Café Latte',      price: 4.20, vatBase: 19, cat: 'Hot Drinks' },
+  { id: 'cappuccino', emoji: '☁️', name: 'Cappuccino',      price: 3.80, vatBase: 19, cat: 'Hot Drinks' },
+  { id: 'tea',        emoji: '🍵', name: 'Herbal Tea',      price: 3.00, vatBase: 19, cat: 'Hot Drinks' },
+  // Cold Drinks — 7% takeaway, 19% in-house
+  { id: 'water',      emoji: '💧', name: 'Water 0.5L',      price: 1.50, vatBase: 7,  cat: 'Cold Drinks' },
+  { id: 'juice',      emoji: '🍊', name: 'Orange Juice',    price: 3.50, vatBase: 7,  cat: 'Cold Drinks' },
+  { id: 'cola',       emoji: '🥤', name: 'Cola 0.33L',      price: 2.80, vatBase: 7,  cat: 'Cold Drinks' },
+  { id: 'smoothie',   emoji: '🫐', name: 'Berry Smoothie',  price: 5.50, vatBase: 7,  cat: 'Cold Drinks' },
+  // Bakery — 7% takeaway, 19% in-house
+  { id: 'croissant',  emoji: '🥐', name: 'Croissant',       price: 3.00, vatBase: 7,  cat: 'Bakery' },
+  { id: 'muffin',     emoji: '🧁', name: 'Blueberry Muffin',price: 2.80, vatBase: 7,  cat: 'Bakery' },
+  { id: 'pretzel',    emoji: '🥨', name: 'Brezel',          price: 2.20, vatBase: 7,  cat: 'Bakery' },
+  { id: 'bagel',      emoji: '🥯', name: 'Bagel + Cream',   price: 4.50, vatBase: 7,  cat: 'Bakery' },
+  { id: 'toast',      emoji: '🍞', name: 'Avocado Toast',   price: 6.50, vatBase: 7,  cat: 'Bakery' },
+  // Snacks — 7% takeaway, 19% in-house
+  { id: 'gummy',      emoji: '🐻', name: 'Gummy Bears',     price: 1.00, vatBase: 7,  cat: 'Snacks' },
+  { id: 'choc',       emoji: '🍫', name: 'Dark Chocolate',  price: 2.50, vatBase: 7,  cat: 'Snacks' },
+  { id: 'nuts',       emoji: '🥜', name: 'Mixed Nuts',      price: 3.20, vatBase: 7,  cat: 'Snacks' },
+  { id: 'granola',    emoji: '🫙', name: 'Granola Bar',     price: 2.00, vatBase: 7,  cat: 'Snacks' },
+  // Meals — 7% takeaway, 19% in-house
+  { id: 'sandwich',   emoji: '🥪', name: 'Club Sandwich',   price: 8.50, vatBase: 7,  cat: 'Meals' },
+  { id: 'salad',      emoji: '🥗', name: 'Caesar Salad',    price: 9.80, vatBase: 7,  cat: 'Meals' },
+];
+
+// ── EFFECTIVE VAT for current mode ──
+function effectiveVat(item) {
+  return state.mode === 'inhouse' ? 19 : item.vatBase;
+}
+
+// ── HELPERS ──
+function vatNet(price, vatPct) {
+  const net = price / (1 + vatPct / 100);
+  const vat = price - net;
+  return { net, vat };
+}
+
+function fmt(n) { return '€' + Math.abs(n).toFixed(2); }
+function randHash(len=8) {
+  return Array.from({length:len}, () => Math.floor(Math.random()*16).toString(16)).join('');
+}
+function merkleHash() {
+  return '0x' + Array.from({length:16}, () => Math.floor(Math.random()*16).toString(16)).join('');
+}
+
+// ── SET CONSUMPTION MODE ──
+function setMode(mode) {
+  state.mode = mode;
+  const btnIn  = document.getElementById('btnInhouse');
+  const btnOut = document.getElementById('btnTakeaway');
+  const label  = document.getElementById('vatModeLabel');
+  btnIn.className  = 'ct-btn' + (mode === 'inhouse'  ? ' active-inhouse'  : '');
+  btnOut.className = 'ct-btn' + (mode === 'takeaway' ? ' active-takeaway' : '');
+  if (mode === 'inhouse') {
+    label.textContent = '🍽️ In-house = 19% MwSt on all items';
+    label.style.color = 'var(--amber)';
+  } else {
+    label.textContent = '🥡 Takeaway = 7% food / 19% hot drinks';
+    label.style.color = '#60a5fa';
+  }
+  refreshMenuCards();
+  updateOrderPanel();
+}
+
+// ── CART TOTALS (mode-aware) ──
+function cartTotals() {
+  let totalPrice = 0, totalNet = 0, totalVatAmt = 0, vat7 = 0, vat19 = 0;
+  Object.entries(state.cart).forEach(([id, qty]) => {
+    const item = MENU.find(m => m.id === id);
+    if (!item || qty < 1) return;
+    const vat = effectiveVat(item);
+    const { net, vat: vatAmt } = vatNet(item.price, vat);
+    totalPrice  += item.price * qty;
+    totalNet    += net * qty;
+    totalVatAmt += vatAmt * qty;
+    if (vat === 7)  vat7  += vatAmt * qty;
+    if (vat === 19) vat19 += vatAmt * qty;
+  });
+  return { totalPrice, totalNet, totalVatAmt, vat7, vat19 };
+}
+
+function cartItemCount() {
+  return Object.values(state.cart).reduce((a,b) => a + b, 0);
+}
+
+// ── BUILD MENU (once on init) ──
+function buildMenu() {
+  const grid = document.getElementById('menuGrid');
+  grid.innerHTML = '';
+  MENU.forEach(item => {
+    const el = document.createElement('div');
+    el.className = 'menu-item';
+    el.id = 'mi-' + item.id;
+    el.innerHTML = `
+      <div class="qty-badge" id="badge-${item.id}">0</div>
+      <span class="item-emoji">${item.emoji}</span>
+      <div class="item-name">${item.name}</div>
+      <div class="item-price">${fmt(item.price)}</div>
+      <div class="item-vat-row">
+        <span class="vat-tag" id="vtag-${item.id}"></span>
+        <span class="vat-amount" id="vamt-${item.id}"></span>
+      </div>
+      <div class="item-mode-hint" id="hint-${item.id}"></div>
+      <div class="menu-item-controls">
+        <button class="qty-btn" onclick="changeQty('${item.id}',-1,event)">−</button>
+        <span class="qty-display" id="qty-${item.id}">0</span>
+        <button class="qty-btn" onclick="changeQty('${item.id}',+1,event)">+</button>
+      </div>
+    `;
+    el.onclick = (e) => { if (e.target.classList.contains('qty-btn')) return; changeQty(item.id, +1, e); };
+    grid.appendChild(el);
+  });
+  refreshMenuCards();
+}
+
+// ── REFRESH VAT BADGES ON ALL MENU CARDS ──
+function refreshMenuCards() {
+  const isInhouse = state.mode === 'inhouse';
+  MENU.forEach(item => {
+    const vat = effectiveVat(item);
+    const { vat: vatAmt } = vatNet(item.price, vat);
+    const vtag = document.getElementById('vtag-' + item.id);
+    const vamt = document.getElementById('vamt-' + item.id);
+    const hint = document.getElementById('hint-' + item.id);
+    if (vtag) {
+      vtag.textContent = vat + '% MwSt';
+      vtag.className = 'vat-tag ' + (isInhouse ? 'vat-tag-inhouse' : 'vat-tag-takeaway');
+    }
+    if (vamt) vamt.textContent = 'VAT: ' + fmt(vatAmt);
+    if (hint) {
+      if (item.vatBase === 19) {
+        hint.textContent = '19% always (hot drink rule)';
+        hint.style.color = 'var(--text-dim)';
+      } else if (isInhouse) {
+        hint.textContent = '↑ 7%→19% in-house service';
+        hint.style.color = 'var(--amber)';
+      } else {
+        hint.textContent = '↓ 7% food takeaway rate';
+        hint.style.color = '#60a5fa';
+      }
+    }
+  });
+}
+
+// ── CHANGE QTY ──
+function changeQty(id, delta, e) {
+  if (e) e.stopPropagation();
+  const current = state.cart[id] || 0;
+  const next = Math.max(0, current + delta);
+  state.cart[id] = next;
+
+  // Update menu item UI
+  const qtyEl = document.getElementById('qty-' + id);
+  const badge = document.getElementById('badge-' + id);
+  const miEl  = document.getElementById('mi-' + id);
+  if (qtyEl) qtyEl.textContent = next;
+  if (badge) {
+    badge.textContent = next;
+    badge.classList.toggle('show', next > 0);
+  }
+  if (miEl) miEl.classList.toggle('in-cart', next > 0);
+
+  updateOrderPanel();
+}
+
+// ── UPDATE ORDER PANEL ──
+function updateOrderPanel() {
+  const { totalPrice, totalNet, totalVatAmt, vat7, vat19 } = cartTotals();
+  const count = cartItemCount();
+  const isInhouse = state.mode === 'inhouse';
+
+  const cartLines = document.getElementById('cartLines');
+  const cartEmpty = document.getElementById('cartEmpty');
+
+  if (count === 0) {
+    cartLines.innerHTML = '';
+    cartLines.appendChild(cartEmpty);
+    cartEmpty.style.display = 'block';
+    document.getElementById('txTotal').textContent = '€0.00';
+    document.getElementById('txItemLabel').textContent = 'Add items from the menu';
+    document.getElementById('selectedItemBadge').textContent = 'Cart empty';
+    document.getElementById('splitNet').textContent = '—';
+    document.getElementById('splitVat').textContent = '—';
+    document.getElementById('splitState').textContent = '—';
+    document.getElementById('splitEU').textContent = '—';
+    document.getElementById('barNet').style.width = '0%';
+    document.getElementById('barVat').style.width = '0%';
+    document.getElementById('tapInstructionTitle').textContent = 'Add items to your cart';
+    document.getElementById('tapInstructionText').textContent = 'Use + / − on any menu item to build your order, then tap a card to pay.';
+    return;
+  }
+
+  // Render cart lines with per-item effective VAT rate
+  cartLines.innerHTML = '';
+  Object.entries(state.cart).forEach(([id, qty]) => {
+    if (qty < 1) return;
+    const item = MENU.find(m => m.id === id);
+    if (!item) return;
+    const vat = effectiveVat(item);
+    const lineTotal = item.price * qty;
+    const rateColor = isInhouse ? 'var(--amber)' : (vat === 7 ? '#60a5fa' : '#a78bfa');
+    const row = document.createElement('div');
+    row.style.cssText = 'display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.03);font-family:var(--mono);font-size:11px;';
+    row.innerHTML = `
+      <span style="color:var(--text-mid)">${item.emoji} ${item.name}</span>
+      <span style="display:flex;align-items:center;gap:8px;">
+        <span style="color:${rateColor};font-size:9px;">${vat}%</span>
+        <span style="color:var(--text-dim)">×${qty}</span>
+        <span style="color:var(--white);min-width:48px;text-align:right;">${fmt(lineTotal)}</span>
+        <button onclick="changeQty('${id}',-1,event)" style="background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:13px;padding:0 2px;">✕</button>
+      </span>
+    `;
+    cartLines.appendChild(row);
+  });
+
+  // VAT rate note
+  let rateNote = '';
+  if (isInhouse) rateNote = ' · 19% in-house';
+  else if (vat7 > 0 && vat19 > 0) rateNote = ' · mixed 7%+19%';
+  else if (vat7 > 0) rateNote = ' · 7% takeaway';
+  else rateNote = ' · 19% hot drinks';
+
+  const stateShare = totalVatAmt * 0.5;
+  const euShare    = totalVatAmt * 0.02;
+  const finanzamt  = totalVatAmt - euShare;
+
+  document.getElementById('txTotal').textContent = fmt(totalPrice);
+  document.getElementById('txItemLabel').textContent = count + ' item' + (count>1?'s':'') + (isInhouse ? ' · 🍽️' : ' · 🥡') + rateNote;
+  document.getElementById('splitNet').textContent = fmt(totalNet);
+  document.getElementById('splitVat').textContent = fmt(finanzamt);
+  document.getElementById('splitState').textContent = fmt(stateShare);
+  document.getElementById('splitEU').textContent = fmt(euShare);
+
+  const netPct = (totalNet / totalPrice) * 100;
+  const vatPct = (totalVatAmt / totalPrice) * 100;
+  document.getElementById('barNet').style.width = netPct + '%';
+  document.getElementById('barVat').style.width = vatPct + '%';
+
+  document.getElementById('privVatAmt').textContent = fmt(totalVatAmt) + ' (public)';
+  document.getElementById('privProof').textContent = 'valid ✓';
+  document.getElementById('selectedItemBadge').textContent = count + ' item' + (count>1?'s':'') + ' · ' + (isInhouse ? '🍽️ in-house' : '🥡 takeaway');
+  document.getElementById('tapInstructionTitle').textContent = fmt(totalPrice) + ' — ready to pay';
+  document.getElementById('tapInstructionText').textContent =
+    count + ' item' + (count>1?'s':'') + ' · ' + fmt(totalVatAmt) + ' VAT (' + (isInhouse ? '19% in-house' : 'takeaway rates') + ') settled instantly on-chain.';
+}
+
+// ── CLEAR CART ──
+function clearCart() {
+  state.cart = {};
+  MENU.forEach(item => {
+    const qtyEl = document.getElementById('qty-' + item.id);
+    const badge = document.getElementById('badge-' + item.id);
+    const miEl  = document.getElementById('mi-' + item.id);
+    if (qtyEl) qtyEl.textContent = '0';
+    if (badge) badge.classList.remove('show');
+    if (miEl)  miEl.classList.remove('in-cart');
+  });
+  document.getElementById('deductionBox').classList.remove('visible');
+  updateOrderPanel();
+}
+
+// ── TAP CARD ──
+function tapCard(cardType) {
+  const count = cartItemCount();
+  if (count === 0) {
+    toast('⚠️ Your cart is empty! Add items from the menu first.', 'info');
+    return;
+  }
+  if (state.settling) return;
+
+  state.settling = true;
+
+  const { totalPrice, totalNet, totalVatAmt } = cartTotals();
+
+  if (cardType === 'business') {
+    document.getElementById('deductionBox').classList.add('visible');
+    const prevVat = totalVatAmt * 0.4;
+    document.getElementById('dedVatPaid').textContent = fmt(prevVat);
+    document.getElementById('dedNetLiability').textContent = fmt(Math.max(0, totalVatAmt - prevVat));
+  } else {
+    document.getElementById('deductionBox').classList.remove('visible');
+  }
+
+  // Highlight random node
+  const nodeEls = document.querySelectorAll('.node');
+  const randomNode = nodeEls[Math.floor(Math.random() * nodeEls.length)];
+  randomNode.classList.add('selected');
+  setTimeout(() => randomNode.classList.remove('selected'), 1500);
+
+  // Build summary of ordered items for the block
+  const itemSummary = Object.entries(state.cart)
+    .filter(([,q]) => q > 0)
+    .map(([id, q]) => { const it = MENU.find(m=>m.id===id); return it.emoji + (q>1?'×'+q:''); })
+    .join(' ');
+
+  animateSettle(totalPrice, totalVatAmt, cardType, itemSummary, count, state.mode);
+}
+
+function animateSettle(totalPrice, vatAmt, cardType, itemSummary, count, snapMode) {
+  const steps = 5;
+  const timings = [0, 120, 280, 450, 700];
+
+  for (let i = 0; i < steps; i++) {
+    document.getElementById('step' + i).className = 'step-row';
+    document.getElementById('stepTime' + i).textContent = '';
+  }
+
+  document.getElementById('settleDot').className = 'settle-dot active';
+  document.getElementById('settleStatus').textContent = 'Processing…';
+
+  const merkle = merkleHash();
+  document.getElementById('merkleRoot').textContent = merkle.slice(0,18) + '…';
+  document.getElementById('merkleRoot').classList.add('hash-animate');
+  setTimeout(() => document.getElementById('merkleRoot').classList.remove('hash-animate'), 400);
+
+  for (let i = 0; i < steps; i++) {
+    setTimeout(() => {
+      if (i > 0) document.getElementById('step' + (i-1)).className = 'step-row done';
+      document.getElementById('step' + i).className = 'step-row active';
+      document.getElementById('stepTime' + i).textContent = timings[i] + 'ms';
+
+      if (i === steps - 1) {
+        setTimeout(() => {
+          document.getElementById('step' + i).className = 'step-row done';
+          document.getElementById('settleDot').className = 'settle-dot done';
+          document.getElementById('settleStatus').textContent = 'Settlement complete ✓';
+
+          state.totalVat += vatAmt;
+          state.txCount++;
+          document.getElementById('statVAT').textContent = fmt(state.totalVat);
+          document.getElementById('statTx').textContent = state.txCount;
+          document.getElementById('totalVatSettled').textContent = fmt(state.totalVat);
+          document.getElementById('totalTxCount').textContent = state.txCount;
+
+          if (cardType === 'business') {
+            const ded = vatAmt * 0.4;
+            state.totalDeductions += ded;
+            document.getElementById('statDeductions').textContent = fmt(state.totalDeductions);
+          }
+
+          addBlock(totalPrice, vatAmt, cardType, itemSummary, count, snapMode);
+
+          const modeLabel = snapMode === 'inhouse' ? '🍽️ in-house' : '🥡 takeaway';
+          if (cardType === 'consumer') {
+            toast(`✅ ${modeLabel} · ${count} item${count>1?'s':''} · ${fmt(vatAmt)} VAT settled instantly.`, 'success');
+          } else {
+            const ded = vatAmt * 0.4;
+            toast(`⚡ ${modeLabel} · ${fmt(ded)} input VAT deduction on-chain.`, 'success');
+          }
+
+          clearCart();
+          state.settling = false;
+        }, 200);
+      }
+    }, timings[i] + 50);
+  }
+}
+
+// ── ADD BLOCK ──
+function addBlock(totalPrice, vatAmt, cardType, itemSummary, count, snapMode) {
+  state.blockHeight++;
+  document.getElementById('blockHeight').textContent = state.blockHeight;
+
+  const chain = document.getElementById('blockChain');
+  const hash = randHash(6);
+  const prevHash = randHash(6);
+  const isB2B = cardType === 'business';
+  const modeTag = snapMode === 'inhouse' ? '🍽️' : '🥡';
+
+  const conn = document.createElement('div');
+  conn.className = 'block-connector';
+  conn.innerHTML = '<div class="block-connector-line"></div><div class="block-connector-arrow"></div>';
+
+  const block = document.createElement('div');
+  block.className = 'block-item new-block';
+  block.style.borderColor = isB2B ? '#f5a623' : '#3b82f6';
+  block.innerHTML = `
+    <div class="block-num" style="color:${isB2B ? 'var(--amber)' : '#60a5fa'}">Block #${state.blockHeight}</div>
+    <div class="block-hash">prev: ${prevHash}…<br>hash: ${hash}…</div>
+    <div class="block-txs">${modeTag} ${count} item${count>1?'s':''} · ${itemSummary}</div>
+    <div class="block-vat-tag">${fmt(vatAmt)} VAT · ${fmt(totalPrice)} total</div>
+  `;
+
+  chain.appendChild(conn);
+  chain.appendChild(block);
+  chain.scrollLeft = chain.scrollWidth;
+  flashNodeLines();
+}
+
+// ── NODE NETWORK ──
+const NODE_POSITIONS = [
+  { x: 14, y: 45, flag: '🏦', label: 'Finanzamt' },
+  { x: 35, y: 15, flag: '🏪', label: 'Café' },
+  { x: 60, y: 20, flag: '🏛️', label: 'Bundesbank' },
+  { x: 80, y: 45, flag: '🇪🇺', label: 'EU Node' },
+  { x: 65, y: 75, flag: '🏗️', label: 'Validator' },
+  { x: 38, y: 80, flag: '🔐', label: 'Prüfer' },
+  { x: 18, y: 70, flag: '📊', label: 'Statistik' },
+];
+
+const EDGES = [[0,1],[0,5],[0,6],[1,2],[1,5],[2,3],[2,4],[3,4],[4,5],[5,6],[1,6]];
+
+function buildNodes() {
+  const canvas = document.getElementById('nodesCanvas');
+  const svg = document.getElementById('nodeLines');
+  svg.innerHTML = '';
+  EDGES.forEach(([a,b]) => {
+    const na = NODE_POSITIONS[a], nb = NODE_POSITIONS[b];
+    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    line.setAttribute('x1', na.x + '%'); line.setAttribute('y1', na.y + '%');
+    line.setAttribute('x2', nb.x + '%'); line.setAttribute('y2', nb.y + '%');
+    line.className = 'node-line';
+    line.id = 'line-' + a + '-' + b;
+    svg.appendChild(line);
+  });
+  NODE_POSITIONS.forEach((n, i) => {
+    const el = document.createElement('div');
+    el.className = 'node active';
+    el.id = 'node-' + i;
+    el.style.left = (n.x - 2.5) + '%';
+    el.style.top = 'calc(' + n.y + '% - 18px)';
+    el.innerHTML = '<span style="font-size:14px;">' + n.flag + '</span><span class="node-label">' + n.label + '</span>';
+    canvas.appendChild(el);
+  });
+}
+
+function flashNodeLines() {
+  EDGES.forEach(([a,b]) => {
+    const line = document.getElementById('line-' + a + '-' + b);
+    if (line) {
+      line.classList.add('active');
+      setTimeout(() => line.classList.remove('active'), 1200);
+    }
+  });
+}
+
+// ── GENESIS BLOCK ──
+function buildGenesis() {
+  const chain = document.getElementById('blockChain');
+  const block = document.createElement('div');
+  block.className = 'block-item';
+  block.style.borderColor = 'var(--text-dim)';
+  block.innerHTML = `
+    <div class="block-num" style="color:var(--text-dim)">Block #1</div>
+    <div class="block-hash">prev: 000000…<br>hash: a4f9d1…</div>
+    <div class="block-txs">Genesis block</div>
+    <div class="block-vat-tag" style="background:rgba(102,102,102,0.1);color:var(--text-dim);border-color:var(--border);">DE-VAT Chain</div>
+  `;
+  chain.appendChild(block);
+}
+
+// ── TAB SWITCHER ──
+function switchTab(el, id) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('tab-' + id).classList.add('active');
+}
+
+// ── TOAST ──
+function toast(msg, type='success') {
+  const area = document.getElementById('toastArea');
+  const el = document.createElement('div');
+  el.className = 'toast ' + type;
+  el.textContent = msg;
+  area.appendChild(el);
+  setTimeout(() => el.remove(), 3200);
+}
+
+// ── EU FLAGS ANIMATION ──
+let euIdx = 0;
+const euCountries = document.querySelectorAll('.eu-country');
+setInterval(() => {
+  euCountries.forEach(e => e.classList.remove('active'));
+  euIdx = (euIdx + 1) % euCountries.length;
+  euCountries[euIdx].classList.add('active');
+}, 2500);
+
+// ── INIT ──
+buildMenu();
+buildGenesis();
+buildNodes();
+toast('☕ Welcome! Choose 🍽️ In-house or 🥡 Takeaway — rates update instantly. Add items, then tap a card.', 'info');
+</script>
+</body>
+</html>
