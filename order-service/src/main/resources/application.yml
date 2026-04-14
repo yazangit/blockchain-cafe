@@ -1,0 +1,18 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: order-service
+
+app:
+  clients:
+    menu-service-url: http://menu-service:8082
+    payment-service-url: http://payment-service:8084
+    vat-service-url: http://vat-service:8086
+    wallet-service-url: http://wallet-service:8085
+    blockchain-service-url: http://blockchain-service:8087
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html

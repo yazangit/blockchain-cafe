@@ -1,0 +1,20 @@
+server:
+  port: 8087
+
+spring:
+  application:
+    name: blockchain-service
+
+  datasource:
+    url: jdbc:mysql://mysql:3306/blockchain_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    username: root
+    password: root
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html

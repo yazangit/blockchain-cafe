@@ -1,0 +1,13 @@
+# Java
+target/
+*.log
+
+# Mac
+.DS_Store
+
+# IDE
+.idea/
+.vscode/
+
+# Node (لو استخدمت frontend لاحقًا)
+node_modules/

@@ -1,0 +1,12 @@
+package com.blockchaincafe.order.client.payment.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class ConfirmPaymentRequest {
+    private String cryptoRef;
+}
