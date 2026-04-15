@@ -33,9 +33,6 @@ A real-time system that:
 - Stores transactions immutably on a blockchain
 
 ---
-
-## 🏗️ Architecture
-
 ## 🏗️ Architecture
 
 Frontend (HTML / JS)
