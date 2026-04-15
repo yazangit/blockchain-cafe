@@ -36,21 +36,17 @@ A real-time system that:
 
 ## 🏗️ Architecture
 
-Frontend (HTML/JS)
-│
-▼
+## 🏗️ Architecture
+
+Frontend (HTML / JS)
+        │
+        ▼
 Order Service (8083)
-│
-┌──────┼───────────────┐
-▼ ▼ ▼
-Menu Payment VAT
-(8082) (8084) (8086)
-│ │
-▼ ▼
-Wallet Service (8085)
-│
-▼
-Blockchain Service (8087)
+   ├── Menu Service (8082)
+   ├── Payment Service (8084)
+   ├── VAT Service (8086)
+   ├── Wallet Service (8085)
+   └── Blockchain Service (8087)
 
 ---
 
