@@ -10,4 +10,8 @@ public class CheckoutOrderResponse {
     private String paymentId;
     private String vatRecordId;
     private String blockId;
+    private String payerType;
+    private String invoiceNumber;
+    private String companyName;
+    private String vatId;
 }

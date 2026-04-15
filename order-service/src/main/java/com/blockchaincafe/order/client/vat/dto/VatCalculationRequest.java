@@ -11,5 +11,9 @@ import java.util.List;
 @AllArgsConstructor
 public class VatCalculationRequest {
     private String orderId;
+    private String payerType;
+    private String invoiceNumber;
+    private String companyName;
+    private String vatId;
     private List<VatCalculationItemRequest> items;
 }

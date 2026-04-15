@@ -1,5 +1,6 @@
 package com.blockchaincafe.payment.domain.model;
 
+import com.blockchaincafe.payment.domain.enums.PayerType;
 import com.blockchaincafe.payment.domain.enums.PaymentMethodType;
 import com.blockchaincafe.payment.domain.enums.PaymentStatusType;
 import jakarta.persistence.Column;
@@ -40,6 +41,13 @@ public class PaymentEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private PaymentStatusType status;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "payer_type", nullable = false)
+    private PayerType payerType;
+
+    @Column(name = "invoice_number")
+    private String invoiceNumber;
 
     @Column(name = "crypto_ref")
     private String cryptoRef;

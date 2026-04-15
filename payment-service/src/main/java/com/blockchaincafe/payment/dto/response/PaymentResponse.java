@@ -14,6 +14,8 @@ public class PaymentResponse {
     private String method;
     private BigDecimal amount;
     private String status;
+    private String payerType;
+    private String invoiceNumber;
     private String cryptoRef;
     private Instant createdAt;
     private Instant confirmedAt;

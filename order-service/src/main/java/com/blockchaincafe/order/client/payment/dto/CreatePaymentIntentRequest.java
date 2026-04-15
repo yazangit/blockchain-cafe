@@ -12,4 +12,6 @@ import java.math.BigDecimal;
 public class CreatePaymentIntentRequest {
     private String orderId;
     private BigDecimal amount;
+    private String payerType;
+    private String invoiceNumber;
 }

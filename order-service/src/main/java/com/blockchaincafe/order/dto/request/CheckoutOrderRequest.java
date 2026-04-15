@@ -13,6 +13,12 @@ public class CheckoutOrderRequest {
     @NotBlank
     private String orderId;
 
+    @NotBlank
+    private String payerType; // PRIVATE or BUSINESS
+
+    @Valid
+    private BusinessDetailsRequest businessDetails;
+
     @Valid
     @NotEmpty
     private List<OrderItemRequest> items;

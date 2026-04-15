@@ -26,6 +26,18 @@ public class VatRecordEntity {
     @Column(name = "order_id", nullable = false, unique = true, length = 64)
     private String orderId;
 
+    @Column(name = "payer_type", nullable = false, length = 32)
+    private String payerType;
+
+    @Column(name = "invoice_number", nullable = false, length = 128)
+    private String invoiceNumber;
+
+    @Column(name = "company_name")
+    private String companyName;
+
+    @Column(name = "vat_id")
+    private String vatId;
+
     @Column(name = "gross_total", nullable = false, precision = 15, scale = 2)
     private BigDecimal grossTotal;
 

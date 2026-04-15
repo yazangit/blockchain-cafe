@@ -1,5 +1,6 @@
 package com.blockchaincafe.payment.service.impl;
 
+import com.blockchaincafe.payment.domain.enums.PayerType;
 import com.blockchaincafe.payment.domain.enums.PaymentMethodType;
 import com.blockchaincafe.payment.domain.enums.PaymentStatusType;
 import com.blockchaincafe.payment.domain.model.PaymentEntity;
@@ -31,6 +32,8 @@ public class PaymentServiceImpl implements PaymentService {
                 .method(PaymentMethodType.CRYPTO_USDC_SIM)
                 .amount(MoneyUtils.normalize(request.getAmount()))
                 .status(PaymentStatusType.PENDING)
+                .payerType(PayerType.valueOf(request.getPayerType()))
+                .invoiceNumber(request.getInvoiceNumber())
                 .cryptoRef("intent-" + UUID.randomUUID())
                 .createdAt(Instant.now())
                 .confirmedAt(null)

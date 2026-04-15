@@ -10,6 +10,10 @@ import java.math.BigDecimal;
 public class VatCalculationResponse {
     private String vatRecordId;
     private String orderId;
+    private String payerType;
+    private String invoiceNumber;
+    private String companyName;
+    private String vatId;
     private BigDecimal grossTotal;
     private BigDecimal netTotal;
     private BigDecimal totalVat;

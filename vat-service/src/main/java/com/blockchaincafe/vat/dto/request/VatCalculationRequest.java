@@ -17,6 +17,16 @@ public class VatCalculationRequest {
     @NotBlank
     private String orderId;
 
+    @NotBlank
+    private String payerType;
+
+    @NotBlank
+    private String invoiceNumber;
+
+    private String companyName;
+
+    private String vatId;
+
     @Valid
     @NotEmpty
     private List<VatCalculationItemRequest> items;

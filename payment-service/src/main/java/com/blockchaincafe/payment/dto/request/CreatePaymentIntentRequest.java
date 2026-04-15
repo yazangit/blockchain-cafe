@@ -16,4 +16,10 @@ public class CreatePaymentIntentRequest {
     @NotNull
     @DecimalMin(value = "0.01")
     private BigDecimal amount;
+
+    @NotBlank
+    private String payerType;
+
+    @NotBlank
+    private String invoiceNumber;
 }

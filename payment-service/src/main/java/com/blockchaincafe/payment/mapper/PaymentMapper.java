@@ -15,6 +15,8 @@ public final class PaymentMapper {
                 .method(entity.getMethod().name())
                 .amount(entity.getAmount())
                 .status(entity.getStatus().name())
+                .payerType(entity.getPayerType().name())
+                .invoiceNumber(entity.getInvoiceNumber())
                 .cryptoRef(entity.getCryptoRef())
                 .createdAt(entity.getCreatedAt())
                 .confirmedAt(entity.getConfirmedAt())
