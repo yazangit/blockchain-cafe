@@ -1,911 +1,841 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Blockchain Café</title>
-    <style>
-      :root {
-        --bg: #f5f5f7;
-        --panel: rgba(255, 255, 255, 0.72);
-        --panel-solid: #ffffff;
-        --text: #1d1d1f;
-        --muted: #6e6e73;
-        --line: rgba(0, 0, 0, 0.08);
-        --shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
-        --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.05);
-        --blue: #0071e3;
-        --blue-hover: #0077ed;
-        --green: #34c759;
-        --orange: #ff9f0a;
-        --red: #ff3b30;
-        --purple: #5856d6;
-        --radius-xl: 28px;
-        --radius-lg: 22px;
-        --radius-md: 16px;
-        --radius-sm: 12px;
-        --max-width: 1480px;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blockchain Café</title>
+  <style>
+    :root {
+      --bg: #f5f5f7;
+      --panel: rgba(255, 255, 255, 0.72);
+      --panel-solid: #ffffff;
+      --text: #1d1d1f;
+      --muted: #6e6e73;
+      --line: rgba(0, 0, 0, 0.08);
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+      --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.05);
+      --blue: #0071e3;
+      --blue-hover: #0077ed;
+      --green: #34c759;
+      --orange: #ff9f0a;
+      --red: #ff3b30;
+      --purple: #5856d6;
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --radius-sm: 12px;
+      --max-width: 1480px;
+    }
 
-      * {
-        box-sizing: border-box;
-      }
+    * {
+      box-sizing: border-box;
+    }
 
-      html {
-        scroll-behavior: smooth;
-      }
+    html {
+      scroll-behavior: smooth;
+    }
 
-      body {
-        margin: 0;
-        font-family:
-          Inter,
-          ui-sans-serif,
-          system-ui,
-          -apple-system,
-          BlinkMacSystemFont,
-          "SF Pro Display",
-          "Segoe UI",
-          sans-serif;
-        color: var(--text);
-        background:
-          radial-gradient(
-            circle at top left,
-            rgba(0, 113, 227, 0.1),
-            transparent 22%
-          ),
-          radial-gradient(
-            circle at top right,
-            rgba(88, 86, 214, 0.08),
-            transparent 18%
-          ),
-          linear-gradient(180deg, #fbfbfd 0%, #f5f5f7 100%);
-        min-height: 100vh;
-        padding: 28px;
-        letter-spacing: -0.01em;
-      }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(0, 113, 227, 0.10), transparent 22%),
+        radial-gradient(circle at top right, rgba(88, 86, 214, 0.08), transparent 18%),
+        linear-gradient(180deg, #fbfbfd 0%, #f5f5f7 100%);
+      min-height: 100vh;
+      padding: 28px;
+      letter-spacing: -0.01em;
+    }
 
-      .page {
-        max-width: var(--max-width);
-        margin: 0 auto;
-      }
+    .page {
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
 
-      .hero {
-        display: flex;
-        align-items: flex-end;
-        justify-content: space-between;
-        gap: 24px;
-        margin-bottom: 28px;
-      }
+    .hero {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 28px;
+    }
 
-      .hero-copy h1 {
-        margin: 0;
-        font-size: 46px;
-        line-height: 1.02;
-        letter-spacing: -0.04em;
-        font-weight: 700;
-      }
+    .hero-copy h1 {
+      margin: 0;
+      font-size: 46px;
+      line-height: 1.02;
+      letter-spacing: -0.04em;
+      font-weight: 700;
+    }
 
-      .hero-copy p {
-        margin: 12px 0 0;
-        max-width: 720px;
-        color: var(--muted);
-        font-size: 16px;
-        line-height: 1.55;
-      }
+    .hero-copy p {
+      margin: 12px 0 0;
+      max-width: 720px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.55;
+    }
 
-      .hero-badges {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        justify-content: flex-end;
-      }
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: flex-end;
+    }
 
-      .badge-chip {
-        border: 1px solid var(--line);
-        background: rgba(255, 255, 255, 0.72);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        color: var(--muted);
-        border-radius: 999px;
-        padding: 10px 14px;
-        font-size: 13px;
-        font-weight: 600;
-        white-space: nowrap;
-        box-shadow: var(--shadow-soft);
+    .badge-chip {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      color: var(--muted);
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+
+    .stat-card {
+      background: var(--panel);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.65);
+      box-shadow: var(--shadow-soft);
+      border-radius: var(--radius-xl);
+      padding: 22px 22px 20px;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .stat-value {
+      font-size: 32px;
+      line-height: 1;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+    }
+
+    .dashboard {
+      display: grid;
+      grid-template-columns: 1.8fr 1fr;
+      gap: 22px;
+    }
+
+    .column {
+      display: grid;
+      gap: 22px;
+      align-self: start;
+    }
+
+    .card {
+      background: var(--panel);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.68);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .card-head {
+      padding: 22px 24px 18px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .card-head h2 {
+      margin: 0;
+      font-size: 22px;
+      font-weight: 650;
+      letter-spacing: -0.03em;
+    }
+
+    .card-head p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .card-body {
+      padding: 22px 24px 24px;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .menu-item {
+      border-radius: var(--radius-lg);
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      padding: 18px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .menu-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 30px rgba(0,0,0,0.06);
+    }
+
+    .menu-item-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .menu-item-name {
+      font-size: 17px;
+      font-weight: 650;
+      line-height: 1.3;
+    }
+
+    .menu-item-meta {
+      margin-top: 6px;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .price {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      white-space: nowrap;
+    }
+
+    .cart-list,
+    .invoice-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .cart-item,
+    .invoice-row {
+      background: rgba(255,255,255,0.8);
+      border: 1px solid rgba(0,0,0,0.05);
+      border-radius: var(--radius-lg);
+      padding: 16px 18px;
+    }
+
+    .cart-item-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .cart-item-name {
+      font-size: 16px;
+      font-weight: 640;
+      margin-bottom: 4px;
+    }
+
+    .subtle {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .summary {
+      margin-top: 18px;
+      border-radius: var(--radius-lg);
+      background: rgba(255,255,255,0.78);
+      border: 1px solid rgba(0,0,0,0.05);
+      padding: 16px 18px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .summary-total {
+      padding-top: 10px;
+      border-top: 1px solid rgba(0,0,0,0.06);
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .qty-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .result-box {
+      background: rgba(255,255,255,0.82);
+      border: 1px solid rgba(0,0,0,0.05);
+      border-radius: var(--radius-lg);
+      padding: 16px 18px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .invoice-summary {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .invoice-summary-card {
+      background: rgba(255,255,255,0.82);
+      border: 1px solid rgba(0,0,0,0.05);
+      border-radius: var(--radius-lg);
+      padding: 16px 18px;
+    }
+
+    .invoice-summary-card .label {
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    .invoice-summary-card .value {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .filters {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr auto auto;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .invoice-row-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .invoice-row-title {
+      font-size: 16px;
+      font-weight: 650;
+      margin-bottom: 4px;
+    }
+
+    .invoice-row-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .pagination {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .status-positive {
+      color: var(--green);
+      font-weight: 650;
+    }
+
+    .empty-state,
+    .loading-state {
+      border-radius: var(--radius-lg);
+      background: rgba(255,255,255,0.76);
+      border: 1px solid rgba(0,0,0,0.05);
+      padding: 28px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .loading {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .spinner {
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      border: 2px solid rgba(0,0,0,0.12);
+      border-top-color: var(--text);
+      animation: spin .8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    input,
+    select {
+      width: 100%;
+      height: 46px;
+      border-radius: 14px;
+      border: 1px solid rgba(0,0,0,0.08);
+      background: rgba(255,255,255,0.86);
+      color: var(--text);
+      padding: 0 14px;
+      font-size: 14px;
+      outline: none;
+      transition: border-color .15s ease, box-shadow .15s ease;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.7);
+    }
+
+    input::placeholder {
+      color: #8e8e93;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: rgba(0,113,227,0.45);
+      box-shadow: 0 0 0 4px rgba(0,113,227,0.12);
+    }
+
+    button {
+      height: 46px;
+      border: none;
+      border-radius: 999px;
+      padding: 0 18px;
+      font-size: 14px;
+      font-weight: 650;
+      letter-spacing: -0.01em;
+      cursor: pointer;
+      transition: transform .12s ease, opacity .18s ease, background .18s ease, box-shadow .18s ease;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+    }
+
+    button:hover {
+      opacity: 0.96;
+    }
+
+    button:active {
+      transform: scale(0.985);
+    }
+
+    button:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .add,
+    .pay-private,
+    .pay-business,
+    .download-btn {
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .add,
+    .pay-private,
+    .pay-business {
+      width: 100%;
+    }
+
+    .add,
+    .pay-private,
+    .pay-business {
+      background: var(--blue);
+      color: #fff;
+    }
+
+    .add:hover,
+    .pay-private:hover,
+    .pay-business:hover,
+    .download-btn:hover {
+      background: var(--blue-hover);
+    }
+
+    .secondary-btn {
+      background: rgba(255,255,255,0.9);
+      color: var(--text);
+      border: 1px solid rgba(0,0,0,0.08);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.05);
+    }
+
+    .clear-cart {
+      width: 100%;
+      margin-top: 10px;
+      background: rgba(255,255,255,0.9);
+      color: var(--text);
+      border: 1px solid rgba(0,0,0,0.08);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.05);
+    }
+
+    .clear-history {
+      background: #1d1d1f;
+      color: #fff;
+    }
+
+    .download-btn {
+      margin-top: 14px;
+      padding: 0 18px;
+      height: 42px;
+      background: var(--blue);
+      color: #fff;
+      border-radius: 999px;
+      box-shadow: 0 8px 20px rgba(0, 113, 227, 0.22);
+    }
+
+    .qty-btn {
+      width: 36px;
+      min-width: 36px;
+      height: 36px;
+      padding: 0;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.9);
+      color: var(--text);
+      border: 1px solid rgba(0,0,0,0.08);
+      box-shadow: none;
+    }
+
+    .remove-btn {
+      color: var(--red);
+    }
+
+    .section-title {
+      margin-top: 18px;
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .error {
+      color: var(--red);
+      font-weight: 600;
+      line-height: 1.5;
+    }
+
+    .ok {
+      color: var(--green);
+      font-weight: 650;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 30px;
+      padding: 0 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+    }
+
+    .badge-private {
+      background: rgba(255, 159, 10, 0.14);
+      color: #a15c00;
+    }
+
+    .badge-business {
+      background: rgba(0, 113, 227, 0.12);
+      color: #005bb5;
+    }
+
+    @media (max-width: 1180px) {
+      .dashboard {
+        grid-template-columns: 1fr;
       }
 
       .stats-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 18px;
-        margin-bottom: 24px;
-      }
-
-      .stat-card {
-        background: var(--panel);
-        backdrop-filter: blur(24px);
-        -webkit-backdrop-filter: blur(24px);
-        border: 1px solid rgba(255, 255, 255, 0.65);
-        box-shadow: var(--shadow-soft);
-        border-radius: var(--radius-xl);
-        padding: 22px 22px 20px;
-      }
-
-      .stat-label {
-        font-size: 13px;
-        color: var(--muted);
-        margin-bottom: 10px;
-        font-weight: 600;
-      }
-
-      .stat-value {
-        font-size: 32px;
-        line-height: 1;
-        font-weight: 700;
-        letter-spacing: -0.04em;
-      }
-
-      .dashboard {
-        display: grid;
-        grid-template-columns: 1.8fr 1fr;
-        gap: 22px;
-      }
-
-      .column {
-        display: grid;
-        gap: 22px;
-        align-self: start;
-      }
-
-      .card {
-        background: var(--panel);
-        backdrop-filter: blur(24px);
-        -webkit-backdrop-filter: blur(24px);
-        border: 1px solid rgba(255, 255, 255, 0.68);
-        border-radius: var(--radius-xl);
-        box-shadow: var(--shadow);
-        overflow: hidden;
-      }
-
-      .card-head {
-        padding: 22px 24px 18px;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        gap: 16px;
-      }
-
-      .card-head h2 {
-        margin: 0;
-        font-size: 22px;
-        font-weight: 650;
-        letter-spacing: -0.03em;
-      }
-
-      .card-head p {
-        margin: 6px 0 0;
-        color: var(--muted);
-        font-size: 14px;
-        line-height: 1.45;
-      }
-
-      .card-body {
-        padding: 22px 24px 24px;
+        grid-template-columns: repeat(2, 1fr);
       }
 
       .menu-grid {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 16px;
-      }
-
-      .menu-item {
-        border-radius: var(--radius-lg);
-        background: rgba(255, 255, 255, 0.82);
-        border: 1px solid rgba(0, 0, 0, 0.06);
-        padding: 18px;
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
-        transition:
-          transform 0.18s ease,
-          box-shadow 0.18s ease;
-      }
-
-      .menu-item:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 18px 30px rgba(0, 0, 0, 0.06);
-      }
-
-      .menu-item-top {
-        display: flex;
-        justify-content: space-between;
-        gap: 16px;
-        margin-bottom: 16px;
-      }
-
-      .menu-item-name {
-        font-size: 17px;
-        font-weight: 650;
-        line-height: 1.3;
-      }
-
-      .menu-item-meta {
-        margin-top: 6px;
-        font-size: 13px;
-        color: var(--muted);
-        line-height: 1.5;
-      }
-
-      .price {
-        font-size: 22px;
-        font-weight: 700;
-        letter-spacing: -0.03em;
-        white-space: nowrap;
-      }
-
-      .cart-list,
-      .invoice-list {
-        display: grid;
-        gap: 14px;
-      }
-
-      .cart-item,
-      .invoice-row {
-        background: rgba(255, 255, 255, 0.8);
-        border: 1px solid rgba(0, 0, 0, 0.05);
-        border-radius: var(--radius-lg);
-        padding: 16px 18px;
-      }
-
-      .cart-item-inner {
-        display: flex;
-        justify-content: space-between;
-        gap: 14px;
-        align-items: center;
-      }
-
-      .cart-item-name {
-        font-size: 16px;
-        font-weight: 640;
-        margin-bottom: 4px;
-      }
-
-      .subtle {
-        color: var(--muted);
-        font-size: 13px;
-        line-height: 1.45;
-      }
-
-      .summary {
-        margin-top: 18px;
-        border-radius: var(--radius-lg);
-        background: rgba(255, 255, 255, 0.78);
-        border: 1px solid rgba(0, 0, 0, 0.05);
-        padding: 16px 18px;
-        display: grid;
-        gap: 10px;
-      }
-
-      .summary-row {
-        display: flex;
-        justify-content: space-between;
-        gap: 12px;
-        align-items: center;
-      }
-
-      .summary-total {
-        padding-top: 10px;
-        border-top: 1px solid rgba(0, 0, 0, 0.06);
-        font-size: 18px;
-        font-weight: 700;
-      }
-
-      .qty-controls {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-
-      .results-grid {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 14px;
-        margin-top: 14px;
-      }
-
-      .result-box {
-        background: rgba(255, 255, 255, 0.82);
-        border: 1px solid rgba(0, 0, 0, 0.05);
-        border-radius: var(--radius-lg);
-        padding: 16px 18px;
-        display: grid;
-        gap: 8px;
-      }
-
-      .invoice-summary {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 14px;
-        margin-bottom: 18px;
-      }
-
-      .invoice-summary-card {
-        background: rgba(255, 255, 255, 0.82);
-        border: 1px solid rgba(0, 0, 0, 0.05);
-        border-radius: var(--radius-lg);
-        padding: 16px 18px;
-      }
-
-      .invoice-summary-card .label {
-        color: var(--muted);
-        font-size: 12px;
-        margin-bottom: 6px;
-        font-weight: 600;
-      }
-
-      .invoice-summary-card .value {
-        font-size: 24px;
-        font-weight: 700;
-        letter-spacing: -0.03em;
-      }
-
-      .toolbar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 12px;
-        margin-bottom: 14px;
-        flex-wrap: wrap;
+        grid-template-columns: 1fr;
       }
 
       .filters {
-        display: grid;
-        grid-template-columns: 1.4fr 1fr 1fr auto auto;
-        gap: 10px;
-        margin-bottom: 18px;
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 760px) {
+      body {
+        padding: 16px;
       }
 
-      .invoice-row-head {
-        display: flex;
-        justify-content: space-between;
+      .hero {
+        flex-direction: column;
         align-items: flex-start;
-        gap: 12px;
-        margin-bottom: 12px;
       }
 
-      .invoice-row-title {
-        font-size: 16px;
-        font-weight: 650;
-        margin-bottom: 4px;
+      .hero-copy h1 {
+        font-size: 36px;
       }
 
+      .stats-grid,
+      .invoice-summary,
+      .results-grid,
       .invoice-row-grid {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 12px;
+        grid-template-columns: 1fr;
       }
 
-      .pagination {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 12px;
-        margin-top: 18px;
+      .filters {
+        grid-template-columns: 1fr;
       }
 
-      .status-positive {
-        color: var(--green);
-        font-weight: 650;
+      .card-head,
+      .card-body {
+        padding-left: 18px;
+        padding-right: 18px;
       }
 
-      .empty-state,
-      .loading-state {
-        border-radius: var(--radius-lg);
-        background: rgba(255, 255, 255, 0.76);
-        border: 1px solid rgba(0, 0, 0, 0.05);
-        padding: 28px;
-        text-align: center;
-        color: var(--muted);
-        font-size: 15px;
+      .cart-item-inner,
+      .invoice-row-head {
+        flex-direction: column;
+        align-items: flex-start;
       }
 
-      .loading {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
+      .hero-badges {
+        justify-content: flex-start;
       }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="hero">
+      <div class="hero-copy">
+        <h1>Blockchain Café</h1>
+        <p>
+          A clean interface for crypto checkout, invoice history, VAT tracking,
+          and blockchain-backed payment transparency.
+        </p>
+      </div>
+      <div class="hero-badges">
+        <div class="badge-chip">Invoice History</div>
+        <div class="badge-chip">VAT Summary</div>
+        <div class="badge-chip">Blockchain Validation</div>
+      </div>
+    </div>
 
-      .spinner {
-        width: 18px;
-        height: 18px;
-        border-radius: 999px;
-        border: 2px solid rgba(0, 0, 0, 0.12);
-        border-top-color: var(--text);
-        animation: spin 0.8s linear infinite;
-      }
+    <div id="topStats" class="stats-grid"></div>
 
-      @keyframes spin {
-        to {
-          transform: rotate(360deg);
-        }
-      }
-
-      input,
-      select {
-        width: 100%;
-        height: 46px;
-        border-radius: 14px;
-        border: 1px solid rgba(0, 0, 0, 0.08);
-        background: rgba(255, 255, 255, 0.86);
-        color: var(--text);
-        padding: 0 14px;
-        font-size: 14px;
-        outline: none;
-        transition:
-          border-color 0.15s ease,
-          box-shadow 0.15s ease;
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
-      }
-
-      input::placeholder {
-        color: #8e8e93;
-      }
-
-      input:focus,
-      select:focus {
-        border-color: rgba(0, 113, 227, 0.45);
-        box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.12);
-      }
-
-      button {
-        height: 46px;
-        border: none;
-        border-radius: 999px;
-        padding: 0 18px;
-        font-size: 14px;
-        font-weight: 650;
-        letter-spacing: -0.01em;
-        cursor: pointer;
-        transition:
-          transform 0.12s ease,
-          opacity 0.18s ease,
-          background 0.18s ease,
-          box-shadow 0.18s ease;
-        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
-      }
-
-      button:hover {
-        opacity: 0.96;
-      }
-
-      button:active {
-        transform: scale(0.985);
-      }
-
-      button:disabled {
-        opacity: 0.55;
-        cursor: not-allowed;
-        transform: none;
-      }
-
-      .add,
-      .pay-private,
-      .pay-business,
-      .download-btn {
-        text-decoration: none;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .add,
-      .pay-private,
-      .pay-business {
-        width: 100%;
-      }
-
-      .add,
-      .pay-private,
-      .pay-business {
-        background: var(--blue);
-        color: #fff;
-      }
-
-      .add:hover,
-      .pay-private:hover,
-      .pay-business:hover,
-      .download-btn:hover {
-        background: var(--blue-hover);
-      }
-
-      .secondary-btn {
-        background: rgba(255, 255, 255, 0.9);
-        color: var(--text);
-        border: 1px solid rgba(0, 0, 0, 0.08);
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
-      }
-
-      .clear-cart {
-        width: 100%;
-        margin-top: 10px;
-        background: rgba(255, 255, 255, 0.9);
-        color: var(--text);
-        border: 1px solid rgba(0, 0, 0, 0.08);
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
-      }
-
-      .clear-history {
-        background: #1d1d1f;
-        color: #fff;
-      }
-
-      .download-btn {
-        margin-top: 14px;
-        padding: 0 18px;
-        height: 42px;
-        background: var(--blue);
-        color: #fff;
-        border-radius: 999px;
-        box-shadow: 0 8px 20px rgba(0, 113, 227, 0.22);
-      }
-
-      .qty-btn {
-        width: 36px;
-        min-width: 36px;
-        height: 36px;
-        padding: 0;
-        border-radius: 999px;
-        background: rgba(255, 255, 255, 0.9);
-        color: var(--text);
-        border: 1px solid rgba(0, 0, 0, 0.08);
-        box-shadow: none;
-      }
-
-      .remove-btn {
-        color: var(--red);
-      }
-
-      .section-title {
-        margin-top: 18px;
-        margin-bottom: 8px;
-        color: var(--muted);
-        font-size: 12px;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-        font-weight: 700;
-      }
-
-      .hidden {
-        display: none;
-      }
-
-      .error {
-        color: var(--red);
-        font-weight: 600;
-        line-height: 1.5;
-      }
-
-      .ok {
-        color: var(--green);
-        font-weight: 650;
-      }
-
-      .badge {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 30px;
-        padding: 0 12px;
-        border-radius: 999px;
-        font-size: 12px;
-        font-weight: 700;
-        letter-spacing: 0.01em;
-      }
-
-      .badge-private {
-        background: rgba(255, 159, 10, 0.14);
-        color: #a15c00;
-      }
-
-      .badge-business {
-        background: rgba(0, 113, 227, 0.12);
-        color: #005bb5;
-      }
-
-      @media (max-width: 1180px) {
-        .dashboard {
-          grid-template-columns: 1fr;
-        }
-
-        .stats-grid {
-          grid-template-columns: repeat(2, 1fr);
-        }
-
-        .menu-grid {
-          grid-template-columns: 1fr;
-        }
-
-        .filters {
-          grid-template-columns: 1fr 1fr;
-        }
-      }
-
-      @media (max-width: 760px) {
-        body {
-          padding: 16px;
-        }
-
-        .hero {
-          flex-direction: column;
-          align-items: flex-start;
-        }
-
-        .hero-copy h1 {
-          font-size: 36px;
-        }
-
-        .stats-grid,
-        .invoice-summary,
-        .results-grid,
-        .invoice-row-grid {
-          grid-template-columns: 1fr;
-        }
-
-        .filters {
-          grid-template-columns: 1fr;
-        }
-
-        .card-head,
-        .card-body {
-          padding-left: 18px;
-          padding-right: 18px;
-        }
-
-        .cart-item-inner,
-        .invoice-row-head {
-          flex-direction: column;
-          align-items: flex-start;
-        }
-
-        .hero-badges {
-          justify-content: flex-start;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <div class="page">
-      <div class="hero">
-        <div class="hero-copy">
-          <h1>Blockchain Café</h1>
-          <p>
-            A clean interface for crypto checkout, invoice history, VAT
-            tracking, and blockchain-backed payment transparency.
-          </p>
+    <div class="dashboard">
+      <div class="column">
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <h2>Menu</h2>
+              <p>Live products loaded from the backend service.</p>
+            </div>
+          </div>
+          <div class="card-body">
+            <div id="menu" class="loading-state">
+              <div class="loading">
+                <div class="spinner"></div>
+                <span>Loading menu...</span>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="hero-badges">
-          <div class="badge-chip">Invoice History</div>
-          <div class="badge-chip">VAT Summary</div>
-          <div class="badge-chip">Blockchain Validation</div>
+
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <h2>Order Result</h2>
+              <p>Checkout result, VAT split, wallets, and blockchain validation.</p>
+            </div>
+          </div>
+          <div class="card-body">
+            <div id="results">No results yet.</div>
+          </div>
         </div>
       </div>
 
-      <div id="topStats" class="stats-grid"></div>
-
-      <div class="dashboard">
-        <div class="column">
-          <div class="card">
-            <div class="card-head">
-              <div>
-                <h2>Menu</h2>
-                <p>Live products loaded from the backend service.</p>
-              </div>
-            </div>
-            <div class="card-body">
-              <div id="menu" class="loading-state">
-                <div class="loading">
-                  <div class="spinner"></div>
-                  <span>Loading menu...</span>
-                </div>
-              </div>
+      <div class="column">
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <h2>Cart</h2>
+              <p>Review selected items before checkout.</p>
             </div>
           </div>
+          <div class="card-body">
+            <div id="cartItems">Cart empty.</div>
 
-          <div class="card">
-            <div class="card-head">
-              <div>
-                <h2>Order Result</h2>
-                <p>
-                  Checkout result, VAT split, wallets, and blockchain
-                  validation.
-                </p>
-              </div>
+            <div id="cartSummary" class="summary">
+              <div class="summary-row"><span>Items</span><strong>0</strong></div>
+              <div class="summary-row summary-total"><span>Total</span><strong>€0.00</strong></div>
             </div>
-            <div class="card-body">
-              <div id="results">No results yet.</div>
+
+            <button id="privateBtn" class="pay-private" onclick="checkoutPrivate()">Checkout as Private</button>
+            <button id="businessBtn" class="pay-business" onclick="toggleBusinessForm()">Checkout as Business</button>
+            <button class="clear-cart" onclick="clearCart()">Clear Cart</button>
+
+            <div id="businessForm" class="hidden">
+              <div class="section-title">Business Details</div>
+              <input id="companyName" type="text" placeholder="Company name" />
+              <input id="vatId" type="text" placeholder="VAT ID" />
+              <button class="pay-business" onclick="checkoutBusiness()">Confirm Business Checkout</button>
             </div>
           </div>
         </div>
 
-        <div class="column">
-          <div class="card">
-            <div class="card-head">
-              <div>
-                <h2>Cart</h2>
-                <p>Review selected items before checkout.</p>
-              </div>
-            </div>
-            <div class="card-body">
-              <div id="cartItems">Cart empty.</div>
-
-              <div id="cartSummary" class="summary">
-                <div class="summary-row">
-                  <span>Items</span><strong>0</strong>
-                </div>
-                <div class="summary-row summary-total">
-                  <span>Total</span><strong>€0.00</strong>
-                </div>
-              </div>
-
-              <button
-                id="privateBtn"
-                class="pay-private"
-                onclick="checkoutPrivate()"
-              >
-                Checkout as Private
-              </button>
-              <button
-                id="businessBtn"
-                class="pay-business"
-                onclick="toggleBusinessForm()"
-              >
-                Checkout as Business
-              </button>
-              <button class="clear-cart" onclick="clearCart()">
-                Clear Cart
-              </button>
-
-              <div id="businessForm" class="hidden">
-                <div class="section-title">Business Details</div>
-                <input
-                  id="companyName"
-                  type="text"
-                  placeholder="Company name"
-                />
-                <input id="vatId" type="text" placeholder="VAT ID" />
-                <button class="pay-business" onclick="checkoutBusiness()">
-                  Confirm Business Checkout
-                </button>
-              </div>
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <h2>Invoice History</h2>
+              <p>Search, filter, sort, and paginate stored invoices.</p>
             </div>
           </div>
+          <div class="card-body">
+            <div id="invoiceSummary" class="invoice-summary"></div>
 
-          <div class="card">
-            <div class="card-head">
-              <div>
-                <h2>Invoice History</h2>
-                <p>Search, filter, sort, and paginate stored invoices.</p>
-              </div>
+            <div class="toolbar">
+              <div class="subtle">Manage invoice history directly from the interface.</div>
+              <button class="clear-history" onclick="clearInvoiceHistory()">Delete All History</button>
             </div>
-            <div class="card-body">
-              <div id="invoiceSummary" class="invoice-summary"></div>
 
-              <div class="toolbar">
-                <div class="subtle">
-                  Manage invoice history directly from the interface.
-                </div>
-                <button class="clear-history" onclick="clearInvoiceHistory()">
-                  Delete All History
-                </button>
-              </div>
-
-              <div class="filters">
-                <input
-                  id="invoiceSearch"
-                  type="text"
-                  placeholder="Search by invoice number"
-                />
-                <select id="payerTypeFilter">
-                  <option value="">All payer types</option>
-                  <option value="PRIVATE">Private</option>
-                  <option value="BUSINESS">Business</option>
-                </select>
-                <select id="sortFilter">
-                  <option value="desc">Newest first</option>
-                  <option value="asc">Oldest first</option>
-                </select>
-                <button class="secondary-btn" onclick="applyInvoiceFilters()">
-                  Apply
-                </button>
-                <button class="secondary-btn" onclick="resetInvoiceFilters()">
-                  Reset
-                </button>
-              </div>
-
-              <div id="invoiceHistory">No invoices yet.</div>
-              <div id="invoicePagination" class="pagination"></div>
+            <div class="filters">
+              <input id="invoiceSearch" type="text" placeholder="Search by invoice number" />
+              <select id="payerTypeFilter">
+                <option value="">All payer types</option>
+                <option value="PRIVATE">Private</option>
+                <option value="BUSINESS">Business</option>
+              </select>
+              <select id="sortFilter">
+                <option value="desc">Newest first</option>
+                <option value="asc">Oldest first</option>
+              </select>
+              <button class="secondary-btn" onclick="applyInvoiceFilters()">Apply</button>
+              <button class="secondary-btn" onclick="resetInvoiceFilters()">Reset</button>
             </div>
+
+            <div id="invoiceHistory">No invoices yet.</div>
+            <div id="invoicePagination" class="pagination"></div>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <script>
-      const API = "http://localhost";
+  <script>
+    const API = "http://localhost";
 
-      let products = [];
-      let cart = [];
+    let products = [];
+    let cart = [];
 
-      let invoicePage = 0;
-      let invoiceSize = 5;
-      let invoiceSearch = "";
-      let invoicePayerType = "";
-      let invoiceSort = "desc";
+    let invoicePage = 0;
+    let invoiceSize = 5;
+    let invoiceSearch = "";
+    let invoicePayerType = "";
+    let invoiceSort = "desc";
 
-      async function safeJson(url, options) {
-        const res = await fetch(url, options);
-        const text = await res.text();
-        let json = null;
+    async function safeJson(url, options) {
+      const res = await fetch(url, options);
+      const text = await res.text();
+      let json = null;
 
-        try {
-          json = JSON.parse(text);
-        } catch (_) {}
+      try {
+        json = JSON.parse(text);
+      } catch (_) {}
 
-        if (!res.ok) {
-          throw new Error(`${url} -> ${res.status} ${text}`);
-        }
-
-        return json;
+      if (!res.ok) {
+        throw new Error(`${url} -> ${res.status} ${text}`);
       }
 
-      function euro(value) {
-        return `€${Number(value || 0).toFixed(2)}`;
+      return json;
+    }
+
+    function euro(value) {
+      return `€${Number(value || 0).toFixed(2)}`;
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#39;");
+    }
+
+    function setLoadingButtons(loading) {
+      document.getElementById("privateBtn").disabled = loading;
+      document.getElementById("businessBtn").disabled = loading;
+      document.getElementById("privateBtn").textContent = loading ? "Processing..." : "Checkout as Private";
+      document.getElementById("businessBtn").textContent = loading ? "Processing..." : "Checkout as Business";
+    }
+
+    async function loadMenu() {
+      const menuDiv = document.getElementById("menu");
+
+      try {
+        const json = await safeJson(`${API}:8082/api/products`);
+        products = (json.data || []).filter(p => p.active !== false);
+        renderMenu();
+      } catch (e) {
+        console.error(e);
+        menuDiv.innerHTML = `<div class="error">Failed to load menu.<br>${escapeHtml(e.message)}</div>`;
+      }
+    }
+
+    function renderMenu() {
+      const menuDiv = document.getElementById("menu");
+
+      if (!products.length) {
+        menuDiv.innerHTML = `<div class="empty-state">No active products returned from the backend.</div>`;
+        return;
       }
 
-      function escapeHtml(value) {
-        return String(value ?? "")
-          .replaceAll("&", "&amp;")
-          .replaceAll("<", "&lt;")
-          .replaceAll(">", "&gt;")
-          .replaceAll('"', "&quot;")
-          .replaceAll("'", "&#39;");
-      }
-
-      function setLoadingButtons(loading) {
-        document.getElementById("privateBtn").disabled = loading;
-        document.getElementById("businessBtn").disabled = loading;
-        document.getElementById("privateBtn").textContent = loading
-          ? "Processing..."
-          : "Checkout as Private";
-        document.getElementById("businessBtn").textContent = loading
-          ? "Processing..."
-          : "Checkout as Business";
-      }
-
-      async function loadMenu() {
-        const menuDiv = document.getElementById("menu");
-
-        try {
-          const json = await safeJson(`${API}:8082/api/products`);
-          products = (json.data || []).filter((p) => p.active !== false);
-          renderMenu();
-        } catch (e) {
-          console.error(e);
-          menuDiv.innerHTML = `<div class="error">Failed to load menu.<br>${escapeHtml(e.message)}</div>`;
-        }
-      }
-
-      function renderMenu() {
-        const menuDiv = document.getElementById("menu");
-
-        if (!products.length) {
-          menuDiv.innerHTML = `<div class="empty-state">No active products returned from the backend.</div>`;
-          return;
-        }
-
-        menuDiv.innerHTML = `<div class="menu-grid">${products
-          .map(
-            (p) => `
+      menuDiv.innerHTML = `<div class="menu-grid">${
+        products.map(p => `
           <div class="menu-item">
             <div class="menu-item-top">
               <div>
@@ -919,76 +849,75 @@
             </div>
             <button class="add" onclick="addToCart('${escapeHtml(p.id)}')">Add to Cart</button>
           </div>
-        `,
-          )
-          .join("")}</div>`;
+        `).join("")
+      }</div>`;
+    }
+
+    function addToCart(id) {
+      const item = cart.find(i => String(i.id) === String(id));
+      if (item) item.qty++;
+      else cart.push({ id, qty: 1 });
+      renderCart();
+    }
+
+    function increaseQty(id) {
+      const item = cart.find(i => String(i.id) === String(id));
+      if (!item) return;
+      item.qty++;
+      renderCart();
+    }
+
+    function decreaseQty(id) {
+      const item = cart.find(i => String(i.id) === String(id));
+      if (!item) return;
+      item.qty--;
+      if (item.qty <= 0) {
+        cart = cart.filter(i => String(i.id) !== String(id));
       }
+      renderCart();
+    }
 
-      function addToCart(id) {
-        const item = cart.find((i) => String(i.id) === String(id));
-        if (item) item.qty++;
-        else cart.push({ id, qty: 1 });
-        renderCart();
-      }
+    function removeFromCart(id) {
+      cart = cart.filter(i => String(i.id) !== String(id));
+      renderCart();
+    }
 
-      function increaseQty(id) {
-        const item = cart.find((i) => String(i.id) === String(id));
-        if (!item) return;
-        item.qty++;
-        renderCart();
-      }
+    function clearCart() {
+      cart = [];
+      renderCart();
+    }
 
-      function decreaseQty(id) {
-        const item = cart.find((i) => String(i.id) === String(id));
-        if (!item) return;
-        item.qty--;
-        if (item.qty <= 0) {
-          cart = cart.filter((i) => String(i.id) !== String(id));
-        }
-        renderCart();
-      }
+    function calculateCartTotal() {
+      return cart.reduce((sum, c) => {
+        const p = products.find(x => String(x.id) === String(c.id));
+        if (!p) return sum;
+        return sum + (Number(p.priceGross) * c.qty);
+      }, 0);
+    }
 
-      function removeFromCart(id) {
-        cart = cart.filter((i) => String(i.id) !== String(id));
-        renderCart();
-      }
+    function calculateCartItemCount() {
+      return cart.reduce((sum, c) => sum + c.qty, 0);
+    }
 
-      function clearCart() {
-        cart = [];
-        renderCart();
-      }
+    function renderCart() {
+      const cartDiv = document.getElementById("cartItems");
+      const summaryDiv = document.getElementById("cartSummary");
 
-      function calculateCartTotal() {
-        return cart.reduce((sum, c) => {
-          const p = products.find((x) => String(x.id) === String(c.id));
-          if (!p) return sum;
-          return sum + Number(p.priceGross) * c.qty;
-        }, 0);
-      }
-
-      function calculateCartItemCount() {
-        return cart.reduce((sum, c) => sum + c.qty, 0);
-      }
-
-      function renderCart() {
-        const cartDiv = document.getElementById("cartItems");
-        const summaryDiv = document.getElementById("cartSummary");
-
-        if (!cart.length) {
-          cartDiv.innerHTML = `<div class="empty-state">Your cart is empty.</div>`;
-          summaryDiv.innerHTML = `
+      if (!cart.length) {
+        cartDiv.innerHTML = `<div class="empty-state">Your cart is empty.</div>`;
+        summaryDiv.innerHTML = `
           <div class="summary-row"><span>Items</span><strong>0</strong></div>
           <div class="summary-row summary-total"><span>Total</span><strong>€0.00</strong></div>
         `;
-          return;
-        }
+        return;
+      }
 
-        cartDiv.innerHTML = `<div class="cart-list">${cart
-          .map((c) => {
-            const p = products.find((x) => String(x.id) === String(c.id));
-            const lineTotal = p ? Number(p.priceGross) * c.qty : 0;
+      cartDiv.innerHTML = `<div class="cart-list">${
+        cart.map(c => {
+          const p = products.find(x => String(x.id) === String(c.id));
+          const lineTotal = p ? Number(p.priceGross) * c.qty : 0;
 
-            return `
+          return `
             <div class="cart-item">
               <div class="cart-item-inner">
                 <div>
@@ -1005,32 +934,30 @@
               </div>
             </div>
           `;
-          })
-          .join("")}</div>`;
+        }).join("")
+      }</div>`;
 
-        const total = calculateCartTotal();
-        const itemCount = calculateCartItemCount();
+      const total = calculateCartTotal();
+      const itemCount = calculateCartItemCount();
 
-        summaryDiv.innerHTML = `
+      summaryDiv.innerHTML = `
         <div class="summary-row"><span>Items</span><strong>${itemCount}</strong></div>
         <div class="summary-row summary-total"><span>Total</span><strong>${euro(total)}</strong></div>
       `;
-      }
+    }
 
-      function toggleBusinessForm() {
-        document.getElementById("businessForm").classList.toggle("hidden");
-      }
+    function toggleBusinessForm() {
+      document.getElementById("businessForm").classList.toggle("hidden");
+    }
 
-      async function renderTopStats() {
-        const container = document.getElementById("topStats");
+    async function renderTopStats() {
+      const container = document.getElementById("topStats");
 
-        try {
-          const summaryJson = await safeJson(
-            `${API}:8083/api/invoices/summary`,
-          );
-          const s = summaryJson.data;
+      try {
+        const summaryJson = await safeJson(`${API}:8083/api/invoices/summary`);
+        const s = summaryJson.data;
 
-          container.innerHTML = `
+        container.innerHTML = `
           <div class="stat-card">
             <div class="stat-label">Invoices</div>
             <div class="stat-value">${s.count}</div>
@@ -1048,46 +975,45 @@
             <div class="stat-value" style="font-size: 18px;">${escapeHtml(s.lastInvoiceNumber || "-")}</div>
           </div>
         `;
-        } catch (e) {
-          console.error(e);
-          container.innerHTML = `
+      } catch (e) {
+        console.error(e);
+        container.innerHTML = `
           <div class="stat-card"><div class="stat-label">Invoices</div><div class="stat-value">-</div></div>
           <div class="stat-card"><div class="stat-label">Revenue</div><div class="stat-value">-</div></div>
           <div class="stat-card"><div class="stat-label">Average Invoice</div><div class="stat-value">-</div></div>
           <div class="stat-card"><div class="stat-label">Latest Invoice</div><div class="stat-value">-</div></div>
         `;
-        }
       }
+    }
 
-      function buildInvoiceHistoryUrl() {
-        const params = new URLSearchParams();
-        params.set("page", invoicePage);
-        params.set("size", invoiceSize);
-        params.set("sort", invoiceSort);
+    function buildInvoiceHistoryUrl() {
+      const params = new URLSearchParams();
+      params.set("page", invoicePage);
+      params.set("size", invoiceSize);
+      params.set("sort", invoiceSort);
 
-        if (invoicePayerType) params.set("payerType", invoicePayerType);
-        if (invoiceSearch) params.set("invoiceNumber", invoiceSearch);
+      if (invoicePayerType) params.set("payerType", invoicePayerType);
+      if (invoiceSearch) params.set("invoiceNumber", invoiceSearch);
 
-        return `${API}:8083/api/invoices/history?${params.toString()}`;
-      }
+      return `${API}:8083/api/invoices/history?${params.toString()}`;
+    }
 
-      async function renderInvoiceHistory() {
-        const container = document.getElementById("invoiceHistory");
-        const summaryContainer = document.getElementById("invoiceSummary");
-        const paginationContainer =
-          document.getElementById("invoicePagination");
+    async function renderInvoiceHistory() {
+      const container = document.getElementById("invoiceHistory");
+      const summaryContainer = document.getElementById("invoiceSummary");
+      const paginationContainer = document.getElementById("invoicePagination");
 
-        try {
-          const [historyJson, summaryJson] = await Promise.all([
-            safeJson(buildInvoiceHistoryUrl()),
-            safeJson(`${API}:8083/api/invoices/summary`),
-          ]);
+      try {
+        const [historyJson, summaryJson] = await Promise.all([
+          safeJson(buildInvoiceHistoryUrl()),
+          safeJson(`${API}:8083/api/invoices/summary`)
+        ]);
 
-          const pageData = historyJson.data;
-          const invoices = pageData.content || [];
-          const summary = summaryJson.data;
+        const pageData = historyJson.data;
+        const invoices = pageData.content || [];
+        const summary = summaryJson.data;
 
-          summaryContainer.innerHTML = `
+        summaryContainer.innerHTML = `
           <div class="invoice-summary-card">
             <div class="label">Invoice Count</div>
             <div class="value">${summary.count}</div>
@@ -1106,20 +1032,19 @@
           </div>
         `;
 
-          if (!invoices.length) {
-            container.innerHTML = `<div class="empty-state">No invoices found.</div>`;
-            paginationContainer.innerHTML = "";
-            return;
-          }
+        if (!invoices.length) {
+          container.innerHTML = `<div class="empty-state">No invoices found.</div>`;
+          paginationContainer.innerHTML = "";
+          return;
+        }
 
-          container.innerHTML = `<div class="invoice-list">${invoices
-            .map((inv) => {
-              const payerBadge =
-                inv.payerType === "BUSINESS"
-                  ? `<span class="badge badge-business">Business</span>`
-                  : `<span class="badge badge-private">Private</span>`;
+        container.innerHTML = `<div class="invoice-list">${
+          invoices.map(inv => {
+            const payerBadge = inv.payerType === "BUSINESS"
+              ? `<span class="badge badge-business">Business</span>`
+              : `<span class="badge badge-private">Private</span>`;
 
-              return `
+            return `
               <div class="invoice-row">
                 <div class="invoice-row-head">
                   <div>
@@ -1141,164 +1066,153 @@
                 <a class="download-btn" href="${API}:8083/api/invoices/${encodeURIComponent(inv.orderId)}" target="_blank">Open Invoice</a>
               </div>
             `;
-            })
-            .join("")}</div>`;
+          }).join("")
+        }</div>`;
 
-          paginationContainer.innerHTML = `
+        paginationContainer.innerHTML = `
           <button class="secondary-btn" onclick="previousInvoicePage()" ${pageData.first ? "disabled" : ""}>Previous</button>
           <span class="subtle">Page ${pageData.page + 1} of ${pageData.totalPages || 1}</span>
           <button class="secondary-btn" onclick="nextInvoicePage()" ${pageData.last ? "disabled" : ""}>Next</button>
         `;
-        } catch (e) {
-          console.error(e);
-          summaryContainer.innerHTML = "";
-          container.innerHTML = `<div class="error">Failed to load invoice history.<br>${escapeHtml(e.message)}</div>`;
-          paginationContainer.innerHTML = "";
-        }
+      } catch (e) {
+        console.error(e);
+        summaryContainer.innerHTML = "";
+        container.innerHTML = `<div class="error">Failed to load invoice history.<br>${escapeHtml(e.message)}</div>`;
+        paginationContainer.innerHTML = "";
       }
+    }
 
-      function applyInvoiceFilters() {
-        invoiceSearch = document.getElementById("invoiceSearch").value.trim();
-        invoicePayerType = document.getElementById("payerTypeFilter").value;
-        invoiceSort = document.getElementById("sortFilter").value;
+    function applyInvoiceFilters() {
+      invoiceSearch = document.getElementById("invoiceSearch").value.trim();
+      invoicePayerType = document.getElementById("payerTypeFilter").value;
+      invoiceSort = document.getElementById("sortFilter").value;
+      invoicePage = 0;
+      renderInvoiceHistory();
+    }
+
+    function resetInvoiceFilters() {
+      invoiceSearch = "";
+      invoicePayerType = "";
+      invoiceSort = "desc";
+      invoicePage = 0;
+
+      document.getElementById("invoiceSearch").value = "";
+      document.getElementById("payerTypeFilter").value = "";
+      document.getElementById("sortFilter").value = "desc";
+
+      renderInvoiceHistory();
+    }
+
+    function previousInvoicePage() {
+      if (invoicePage > 0) {
+        invoicePage--;
+        renderInvoiceHistory();
+      }
+    }
+
+    function nextInvoicePage() {
+      invoicePage++;
+      renderInvoiceHistory();
+    }
+
+    async function clearInvoiceHistory() {
+      const confirmed = confirm("Are you sure you want to delete all invoice history?");
+      if (!confirmed) return;
+
+      try {
+        await safeJson(`${API}:8083/api/invoices/history`, { method: "DELETE" });
         invoicePage = 0;
-        renderInvoiceHistory();
+        await renderTopStats();
+        await renderInvoiceHistory();
+        document.getElementById("results").innerHTML = `<p class="status-positive">Invoice history cleared successfully.</p>`;
+      } catch (e) {
+        console.error(e);
+        document.getElementById("results").innerHTML = `<div class="error">Failed to clear history.<br>${escapeHtml(e.message)}</div>`;
+      }
+    }
+
+    function checkoutPrivate() {
+      checkout("PRIVATE", null);
+    }
+
+    function checkoutBusiness() {
+      const companyName = document.getElementById("companyName").value.trim();
+      const vatId = document.getElementById("vatId").value.trim();
+
+      if (!companyName) {
+        alert("Company name is required.");
+        return;
       }
 
-      function resetInvoiceFilters() {
-        invoiceSearch = "";
-        invoicePayerType = "";
-        invoiceSort = "desc";
+      if (!vatId) {
+        alert("VAT ID is required.");
+        return;
+      }
+
+      checkout("BUSINESS", { companyName, vatId });
+    }
+
+    async function checkout(payerType, businessDetails) {
+      const resultsDiv = document.getElementById("results");
+
+      if (!cart.length) {
+        alert("Your cart is empty.");
+        return;
+      }
+
+      const payload = {
+        orderId: "order-ui-" + Date.now(),
+        payerType,
+        items: cart.map(c => ({
+          productId: c.id,
+          quantity: c.qty
+        }))
+      };
+
+      if (payerType === "BUSINESS") {
+        payload.businessDetails = businessDetails;
+      }
+
+      try {
+        setLoadingButtons(true);
+
+        const result = await safeJson(`${API}:8083/api/orders/checkout`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+
+        await loadResults(result.data, payerType);
         invoicePage = 0;
-
-        document.getElementById("invoiceSearch").value = "";
-        document.getElementById("payerTypeFilter").value = "";
-        document.getElementById("sortFilter").value = "desc";
-
-        renderInvoiceHistory();
+        await renderTopStats();
+        await renderInvoiceHistory();
+      } catch (e) {
+        console.error(e);
+        resultsDiv.innerHTML = `<div class="error">Checkout failed.<br>${escapeHtml(e.message)}</div>`;
+      } finally {
+        setLoadingButtons(false);
       }
+    }
 
-      function previousInvoicePage() {
-        if (invoicePage > 0) {
-          invoicePage--;
-          renderInvoiceHistory();
-        }
-      }
+    async function loadResults(orderData, payerType) {
+      const div = document.getElementById("results");
+      const orderId = orderData.orderId;
 
-      function nextInvoicePage() {
-        invoicePage++;
-        renderInvoiceHistory();
-      }
+      try {
+        div.innerHTML = `<div class="loading-state"><div class="loading"><div class="spinner"></div><span>Loading order details...</span></div></div>`;
 
-      async function clearInvoiceHistory() {
-        const confirmed = confirm(
-          "Are you sure you want to delete all invoice history?",
-        );
-        if (!confirmed) return;
+        const [payment, vat, wallets, blockchain] = await Promise.all([
+          safeJson(`${API}:8084/api/payments/by-order/${encodeURIComponent(orderId)}`),
+          safeJson(`${API}:8086/api/vat/records/${encodeURIComponent(orderId)}`),
+          safeJson(`${API}:8085/api/wallets`),
+          safeJson(`${API}:8087/api/blockchain/validate`)
+        ]);
 
-        try {
-          await safeJson(`${API}:8083/api/invoices/history`, {
-            method: "DELETE",
-          });
-          invoicePage = 0;
-          await renderTopStats();
-          await renderInvoiceHistory();
-          document.getElementById("results").innerHTML =
-            `<p class="status-positive">Invoice history cleared successfully.</p>`;
-        } catch (e) {
-          console.error(e);
-          document.getElementById("results").innerHTML =
-            `<div class="error">Failed to clear history.<br>${escapeHtml(e.message)}</div>`;
-        }
-      }
+        const payerBadge = payerType === "BUSINESS"
+          ? `<span class="badge badge-business">Business</span>`
+          : `<span class="badge badge-private">Private</span>`;
 
-      function checkoutPrivate() {
-        checkout("PRIVATE", null);
-      }
-
-      function checkoutBusiness() {
-        const companyName = document.getElementById("companyName").value.trim();
-        const vatId = document.getElementById("vatId").value.trim();
-
-        if (!companyName) {
-          alert("Company name is required.");
-          return;
-        }
-
-        if (!vatId) {
-          alert("VAT ID is required.");
-          return;
-        }
-
-        checkout("BUSINESS", { companyName, vatId });
-      }
-
-      async function checkout(payerType, businessDetails) {
-        const resultsDiv = document.getElementById("results");
-
-        if (!cart.length) {
-          alert("Your cart is empty.");
-          return;
-        }
-
-        const payload = {
-          orderId: "order-ui-" + Date.now(),
-          payerType,
-          items: cart.map((c) => ({
-            productId: c.id,
-            quantity: c.qty,
-          })),
-        };
-
-        if (payerType === "BUSINESS") {
-          payload.businessDetails = businessDetails;
-        }
-
-        try {
-          setLoadingButtons(true);
-
-          const result = await safeJson(`${API}:8083/api/orders/checkout`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload),
-          });
-
-          await loadResults(result.data, payerType);
-          invoicePage = 0;
-          await renderTopStats();
-          await renderInvoiceHistory();
-        } catch (e) {
-          console.error(e);
-          resultsDiv.innerHTML = `<div class="error">Checkout failed.<br>${escapeHtml(e.message)}</div>`;
-        } finally {
-          setLoadingButtons(false);
-        }
-      }
-
-      async function loadResults(orderData, payerType) {
-        const div = document.getElementById("results");
-        const orderId = orderData.orderId;
-
-        try {
-          div.innerHTML = `<div class="loading-state"><div class="loading"><div class="spinner"></div><span>Loading order details...</span></div></div>`;
-
-          const [payment, vat, wallets, blockchain] = await Promise.all([
-            safeJson(
-              `${API}:8084/api/payments/by-order/${encodeURIComponent(orderId)}`,
-            ),
-            safeJson(
-              `${API}:8086/api/vat/records/${encodeURIComponent(orderId)}`,
-            ),
-            safeJson(`${API}:8085/api/wallets`),
-            safeJson(`${API}:8087/api/blockchain/validate`),
-          ]);
-
-          const payerBadge =
-            payerType === "BUSINESS"
-              ? `<span class="badge badge-business">Business</span>`
-              : `<span class="badge badge-private">Private</span>`;
-
-          div.innerHTML = `
+        div.innerHTML = `
           <p class="status-positive">Order completed successfully.</p>
 
           <div class="results-grid">
@@ -1322,29 +1236,29 @@
 
           <div class="result-box" style="margin-top: 14px;">
             <p><strong>Wallets</strong></p>
-            ${wallets.data.map((w) => `<p>${escapeHtml(w.type)}: ${euro(w.balance)}</p>`).join("")}
+            ${wallets.data.map(w => `<p>${escapeHtml(w.type)}: ${euro(w.balance)}</p>`).join("")}
           </div>
 
           <a class="download-btn" href="${API}:8083/api/invoices/${encodeURIComponent(orderId)}" target="_blank">Open Invoice PDF</a>
         `;
 
-          cart = [];
-          renderCart();
-          document.getElementById("companyName").value = "";
-          document.getElementById("vatId").value = "";
-          document.getElementById("businessForm").classList.add("hidden");
-        } catch (e) {
-          console.error(e);
-          div.innerHTML = `<div class="error">Failed to load results.<br>${escapeHtml(e.message)}</div>`;
-        }
-      }
-
-      (async function init() {
-        await loadMenu();
+        cart = [];
         renderCart();
-        await renderTopStats();
-        await renderInvoiceHistory();
-      })();
-    </script>
-  </body>
+        document.getElementById("companyName").value = "";
+        document.getElementById("vatId").value = "";
+        document.getElementById("businessForm").classList.add("hidden");
+      } catch (e) {
+        console.error(e);
+        div.innerHTML = `<div class="error">Failed to load results.<br>${escapeHtml(e.message)}</div>`;
+      }
+    }
+
+    (async function init() {
+      await loadMenu();
+      renderCart();
+      await renderTopStats();
+      await renderInvoiceHistory();
+    })();
+  </script>
+</body>
 </html>
