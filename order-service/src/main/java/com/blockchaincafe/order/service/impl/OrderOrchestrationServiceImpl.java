@@ -19,14 +19,17 @@ import com.blockchaincafe.order.dto.request.BusinessDetailsRequest;
 import com.blockchaincafe.order.dto.request.CheckoutOrderRequest;
 import com.blockchaincafe.order.dto.request.OrderItemRequest;
 import com.blockchaincafe.order.dto.response.CheckoutOrderResponse;
+import com.blockchaincafe.order.dto.response.InvoiceHistoryItemResponse;
 import com.blockchaincafe.order.invoice.InvoicePdfService;
 import com.blockchaincafe.order.invoice.model.InvoiceData;
+import com.blockchaincafe.order.service.InvoiceHistoryService;
 import com.blockchaincafe.order.service.OrderOrchestrationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +43,7 @@ public class OrderOrchestrationServiceImpl implements OrderOrchestrationService 
     private final WalletClient walletClient;
     private final BlockchainClient blockchainClient;
     private final InvoicePdfService invoicePdfService;
+    private final InvoiceHistoryService invoiceHistoryService;
 
     @Override
     public CheckoutOrderResponse checkout(CheckoutOrderRequest request) {
@@ -121,6 +125,21 @@ public class OrderOrchestrationServiceImpl implements OrderOrchestrationService 
                         .grossTotal(vat.getGrossTotal())
                         .netTotal(vat.getNetTotal())
                         .totalVat(vat.getTotalVat())
+                        .build()
+        );
+
+        invoiceHistoryService.saveInvoice(
+                InvoiceHistoryItemResponse.builder()
+                        .orderId(request.getOrderId())
+                        .invoiceNumber(invoiceNumber)
+                        .payerType(request.getPayerType())
+                        .companyName(request.getBusinessDetails() != null ? request.getBusinessDetails().getCompanyName() : null)
+                        .vatId(request.getBusinessDetails() != null ? request.getBusinessDetails().getVatId() : null)
+                        .paymentId(confirmedPayment.getId())
+                        .grossTotal(vat.getGrossTotal())
+                        .netTotal(vat.getNetTotal())
+                        .totalVat(vat.getTotalVat())
+                        .createdAt(LocalDateTime.now().toString())
                         .build()
         );
 
