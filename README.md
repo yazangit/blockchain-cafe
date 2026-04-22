@@ -1,147 +1,227 @@
-# ☕ Blockchain Café — VAT Transparency System
+# ☕ Blockchain Café
 
-## 📌 Overview
-
-**Blockchain Café** is a full-stack prototype demonstrating how blockchain can improve **VAT transparency** in a café environment.
-
-The system:
-
-- Processes orders
-- Calculates VAT automatically (German model)
-- Splits funds (merchant vs tax)
-- Records each transaction on a blockchain
-- Runs as **microservices inside Docker**
+A full-stack prototype demonstrating how blockchain can enhance **tax transparency**, **VAT tracking**, and **financial auditability** in a real-world café environment.
 
 ---
 
-## 🚨 Problem
+## 🚀 Overview
 
-Current VAT systems:
+Blockchain Café is a microservices-based system where:
 
-- Reported **monthly (not real-time)**
-- Prone to **fraud and manipulation**
-- Lack **transparency and auditability**
+- Customers place orders
+- Payments are processed
+- VAT is automatically calculated
+- Each transaction is recorded on a **private blockchain**
+- Data becomes **immutable, auditable, and transparent**
+
+---
+
+## 🎯 Problem
+
+In systems like Germany’s tax ecosystem:
+
+- VAT fraud is common
+- Reporting is delayed (monthly)
+- Transactions are opaque
+- Audits are manual and expensive
 
 ---
 
 ## 💡 Solution
 
-A real-time system that:
+We introduce a **blockchain-backed transaction layer** where:
 
-- Calculates VAT instantly
-- Separates funds automatically
-- Stores transactions immutably on a blockchain
-
----
-## 🏗️ Architecture
-
-Frontend (HTML / JS)
-        │
-        ▼
-Order Service (8083)
-   ├── Menu Service (8082)
-   ├── Payment Service (8084)
-   ├── VAT Service (8086)
-   ├── Wallet Service (8085)
-   └── Blockchain Service (8087)
+- Every order = blockchain block
+- VAT is calculated in real-time
+- Payments are traceable
+- Data cannot be altered
 
 ---
 
-## ⚙️ Tech Stack
+## 🧱 Architecture
 
-- Java 17 + Spring Boot
-- Microservices architecture
-- MySQL
-- REST APIs
-- Docker + Docker Compose
-- HTML + CSS + JavaScript (Frontend)
+### Microservices
+
+- **Menu Service** (Port 8082)
+- **Order Service** (Port 8083)
+- **Payment Service** (Port 8084)
+- **Wallet Service** (Port 8085)
+- **VAT Service** (Port 8086)
+- **Blockchain Service** (Port 8087)
+- **MySQL Database**
 
 ---
 
-## 🚀 Run the Project
+## 🔗 Core Features
 
-### 1) Build
+### 🧾 Invoice System
+- Invoice generation per order
+- Business vs Private checkout
+- VAT ID support
+- Downloadable PDF invoices
+- Invoice history with:
+  - pagination
+  - filtering
+  - search
+  - sorting by date
 
-mvn clean package -DskipTests
+---
 
-### 2) Start Docker
+### 💰 VAT Engine
+- Automatic VAT calculation
+- Supports:
+  - 19% VAT
+  - 7% VAT
+- Splits:
+  - Gross
+  - Net
+  - VAT
 
+---
+
+### 📊 Tax Analytics Dashboard
+- Total revenue (gross / net / VAT)
+- VAT breakdown (19% vs 7%)
+- Private vs Business VAT
+- Time-based chart visualization
+
+---
+
+### 🔗 Blockchain Layer
+
+Each order is stored as a **block**:
+
+- blockIndex
+- orderId
+- paymentId
+- totals (gross, net, VAT)
+- previousHash
+- hash
+- timestamp
+
+---
+
+## 🔍 Blockchain Validation
+
+Advanced validation ensures:
+
+- Hash integrity (stored vs recalculated)
+- Chain linkage (previousHash correctness)
+- Full chain verification
+
+Endpoint:
+```bash
+GET /api/blockchain/validate/details
+Example response:
+{
+  "valid": true,
+  "chainSize": 5
+}
+
+🔎 Blockchain Explorer
+
+Endpoints:GET /api/blockchain/overview
+GET /api/blockchain/blocks
+GET /api/blockchain/blocks/latest
+GET /api/blockchain/blocks/order/{orderId}
+GET /api/blockchain/validate/details
+
+Frontend includes:
+
+* Latest blocks view
+* Linked block per order
+* Hash + previousHash visualization
+
+🎨 Frontend
+
+* Pure HTML/CSS/JS (no framework)
+* Apple-inspired clean UI
+* Features:
+    * Menu
+    * Cart
+    * Checkout (Private / Business)
+    * Invoice history dashboard
+    * Tax analytics charts
+    * Blockchain explorer integration
+
+⸻
+
+🐳 Running the Project
+
+1. Build services
+mvn clean package
+2. Start with Docker
 docker compose up --build
 
----
+🧪 Testing Flow
 
-## 🌐 Access
+1. Open frontend:
+http://localhost
 
-Frontend:
+2. Add products to cart
+3. Checkout (private or business)
+4. Verify:
 
-http://127.0.0.1:5501/frontend/index.html
+* Invoice generated
+* VAT calculated
+* Payment processed
+* Block created
+* Blockchain validation = true
 
----
+⸻
 
-## 🧪 Demo Flow
+🛠 Tech Stack
 
-1. Add items
-2. Click PAY
-3. System processes:
-   - Order
-   - Payment
-   - VAT
-   - Wallet split
-   - Blockchain record
+* Java 17
+* Spring Boot
+* Maven (multi-module)
+* MySQL
+* Docker
+* REST APIs
+* Vanilla JS frontend
 
----
+⸻
 
-## 📊 Example Output
+🔐 Important Note
 
-- Total: €8.50
-- Net: €7.71
-- VAT: €0.79
+This is a prototype system:
 
-Wallets:
+* No real integration with German Finanzamt
+* Designed for demonstration purposes
+* Focused on transparency and auditability concepts
 
-- Merchant → €7.71
-- VAT → €0.79
+⸻
 
-Blockchain:
+📈 Future Improvements
 
-- Transaction recorded ✔
-- Chain valid ✔
+* Multi-tenant cafés (SaaS model)
+* Authentication (JWT)
+* NFC payment integration
+* Smart contract layer
+* Blockchain node distribution
+* Real tax authority integration
 
----
-
-## 🔗 API Endpoints
-
-| Service    | Endpoint                    |
-| ---------- | --------------------------- |
-| Menu       | /api/products               |
-| Order      | /api/orders/checkout        |
-| Payment    | /api/payments/by-order/{id} |
-| VAT        | /api/vat/records/{id}       |
-| Wallet     | /api/wallets                |
-| Blockchain | /api/blockchain/validate    |
-
----
-
-## ⚠️ Disclaimer
-
-This is a prototype:
-
-- No real crypto payments
-- No real Finanzamt integration
-- Demonstration purposes only
-
----
-
-## 📈 Future Improvements
-
-- Real blockchain (Ethereum / Hyperledger)
-- Authentication (JWT)
-- Kafka event-driven architecture
-- Cloud deployment
-- UI dashboard
-
----
+⸻
 
 ## 👨‍💻 Author
 
-Yazan Al Hussein
+**Yazan Al Hussein**
+
+Fintech & Blockchain Engineer  
+Focused on building transparent financial systems using distributed technologies.
+
+This project was developed as a practical demonstration of:
+
+- Blockchain-based transaction integrity
+- VAT automation & auditability (German tax context)
+- Scalable microservices architecture
+
+🔗 GitHub: https://github.com/yazangit
+
+⸻
+
+⭐ Key Takeaway
+
+Blockchain Café shows how:
+
+“Every transaction can become verifiable, immutable, and transparent — reducing fraud and increasing trust in financial systems.”
