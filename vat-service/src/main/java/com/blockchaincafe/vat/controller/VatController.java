@@ -2,6 +2,7 @@ package com.blockchaincafe.vat.controller;
 
 import com.blockchaincafe.shared.dto.SuccessResponse;
 import com.blockchaincafe.vat.dto.request.VatCalculationRequest;
+import com.blockchaincafe.vat.dto.response.TaxAnalyticsResponse;
 import com.blockchaincafe.vat.dto.response.VatCalculationResponse;
 import com.blockchaincafe.vat.dto.response.VatRecordResponse;
 import com.blockchaincafe.vat.service.VatCalculationService;
@@ -29,6 +30,14 @@ public class VatController {
         return SuccessResponse.<VatRecordResponse>builder()
                 .success(true)
                 .data(vatCalculationService.getByOrderId(orderId))
+                .build();
+    }
+
+    @GetMapping("/analytics/tax")
+    public SuccessResponse<TaxAnalyticsResponse> getTaxAnalytics() {
+        return SuccessResponse.<TaxAnalyticsResponse>builder()
+                .success(true)
+                .data(vatCalculationService.getTaxAnalytics())
                 .build();
     }
 }

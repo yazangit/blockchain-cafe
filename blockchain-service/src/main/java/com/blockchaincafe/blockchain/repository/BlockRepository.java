@@ -9,4 +9,5 @@ import java.util.Optional;
 public interface BlockRepository extends JpaRepository<BlockEntity, String> {
     Optional<BlockEntity> findTopByOrderByBlockIndexDesc();
     List<BlockEntity> findAllByOrderByBlockIndexAsc();
+    Optional<BlockEntity> findByOrderId(String orderId);
 }
