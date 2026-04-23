@@ -16,6 +16,7 @@
         <module>vat-service</module>
         <module>wallet-service</module>
         <module>blockchain-service</module>
+        <module>nfc-bridge-service</module>
     </modules>
 
     <properties>

@@ -5,235 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Blockchain Café</title>
     <style>
-      .blockchain-panel {
-        background: #111827;
-        color: #fff;
-        padding: 20px;
-        border-radius: 14px;
-        margin-top: 20px;
-      }
-
-      .blockchain-panel h2 {
-        margin: 0 0 14px;
-      }
-
-      .blockchain-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 12px;
-        margin-bottom: 16px;
-      }
-
-      .blockchain-card {
-        background: rgba(255, 255, 255, 0.06);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 12px;
-        padding: 14px;
-      }
-
-      .blockchain-card .label {
-        font-size: 12px;
-        opacity: 0.75;
-        margin-bottom: 8px;
-      }
-
-      .blockchain-card .value {
-        font-size: 20px;
-        font-weight: 700;
-        word-break: break-word;
-      }
-
-      .blockchain-list {
-        display: grid;
-        gap: 12px;
-        margin-top: 14px;
-      }
-
-      .block-item {
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 12px;
-        padding: 14px;
-      }
-
-      .hash-box {
-        margin-top: 8px;
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 10px;
-        padding: 10px;
-        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-        font-size: 12px;
-        line-height: 1.5;
-        word-break: break-all;
-        color: rgba(255, 255, 255, 0.85);
-      }
-
-      .badge-valid {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 28px;
-        padding: 0 10px;
-        border-radius: 999px;
-        background: rgba(34, 197, 94, 0.15);
-        color: #86efac;
-        font-size: 12px;
-        font-weight: 700;
-      }
-
-      .badge-invalid {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 28px;
-        padding: 0 10px;
-        border-radius: 999px;
-        background: rgba(239, 68, 68, 0.15);
-        color: #fca5a5;
-        font-size: 12px;
-        font-weight: 700;
-      }
-
-      @media (max-width: 900px) {
-        .blockchain-grid {
-          grid-template-columns: repeat(2, 1fr);
-        }
-      }
-
-      @media (max-width: 640px) {
-        .blockchain-grid {
-          grid-template-columns: 1fr;
-        }
-      }
-      .analytics {
-        background: #1e293b;
-        padding: 20px;
-        border-radius: 10px;
-        margin-top: 20px;
-        color: #fff;
-      }
-      .analytics h2 {
-        margin-top: 0;
-        margin-bottom: 16px;
-      }
-      .analytics-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 12px;
-        margin-bottom: 20px;
-      }
-      .analytics-card {
-        background: #0f172a;
-        padding: 14px;
-        border-radius: 10px;
-        border: 1px solid rgba(255, 255, 255, 0.08);
-      }
-      .analytics-card .label {
-        font-size: 12px;
-        opacity: 0.8;
-        margin-bottom: 8px;
-      }
-      .analytics-card .value {
-        font-size: 22px;
-        font-weight: bold;
-      }
-      .chart {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
-        gap: 12px;
-        align-items: end;
-        min-height: 240px;
-      }
-      .chart-col {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-      }
-      .chart-bars {
-        height: 180px;
-        display: flex;
-        align-items: end;
-        gap: 6px;
-      }
-      .bar {
-        width: 14px;
-        border-radius: 999px;
-        min-height: 6px;
-      }
-      .bar-gross {
-        background: #38bdf8;
-      }
-      .bar-net {
-        background: #22c55e;
-      }
-      .bar-vat {
-        background: #f59e0b;
-      }
-      .chart-label {
-        font-size: 12px;
-        opacity: 0.85;
-        text-align: center;
-        word-break: break-word;
-      }
-      .legend {
-        display: flex;
-        gap: 16px;
-        flex-wrap: wrap;
-        margin-bottom: 14px;
-        font-size: 13px;
-        opacity: 0.9;
-      }
-      .legend span {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-      .dot {
-        width: 10px;
-        height: 10px;
-        border-radius: 999px;
-        display: inline-block;
-      }
-      .dot-gross {
-        background: #38bdf8;
-      }
-      .dot-net {
-        background: #22c55e;
-      }
-      .dot-vat {
-        background: #f59e0b;
-      }
-      @media (max-width: 900px) {
-        .analytics-grid {
-          grid-template-columns: repeat(2, 1fr);
-        }
-      }
-      @media (max-width: 640px) {
-        .analytics-grid {
-          grid-template-columns: 1fr;
-        }
-      }
       :root {
-        --bg: #f5f5f7;
-        --panel: rgba(255, 255, 255, 0.72);
-        --panel-solid: #ffffff;
-        --text: #1d1d1f;
-        --muted: #6e6e73;
-        --line: rgba(0, 0, 0, 0.08);
-        --shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
-        --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.05);
-        --blue: #0071e3;
-        --blue-hover: #0077ed;
-        --green: #34c759;
+        --bg: #050507;
+        --bg-soft: #0b0b10;
+        --panel: rgba(18, 18, 24, 0.78);
+        --panel-strong: rgba(24, 24, 31, 0.88);
+        --panel-light: rgba(255, 255, 255, 0.04);
+        --text: #f5f5f7;
+        --muted: #a1a1aa;
+        --line: rgba(255, 255, 255, 0.08);
+        --line-strong: rgba(255, 255, 255, 0.14);
+        --blue: #2997ff;
+        --blue-hover: #46a7ff;
+        --green: #32d74b;
         --orange: #ff9f0a;
-        --red: #ff3b30;
-        --purple: #5856d6;
-        --radius-xl: 28px;
-        --radius-lg: 22px;
-        --radius-md: 16px;
-        --radius-sm: 12px;
+        --red: #ff453a;
+        --purple: #bf5af2;
+        --shadow-xl: 0 30px 80px rgba(0, 0, 0, 0.45);
+        --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.28);
+        --radius-2xl: 32px;
+        --radius-xl: 24px;
+        --radius-lg: 18px;
+        --radius-md: 14px;
+        --radius-sm: 10px;
         --max-width: 1480px;
       }
 
@@ -247,6 +41,7 @@
 
       body {
         margin: 0;
+        min-height: 100vh;
         font-family:
           Inter,
           ui-sans-serif,
@@ -259,18 +54,17 @@
         color: var(--text);
         background:
           radial-gradient(
-            circle at top left,
-            rgba(0, 113, 227, 0.1),
-            transparent 22%
+            circle at top center,
+            rgba(41, 151, 255, 0.14),
+            transparent 26%
           ),
           radial-gradient(
             circle at top right,
-            rgba(88, 86, 214, 0.08),
-            transparent 18%
+            rgba(191, 90, 242, 0.1),
+            transparent 20%
           ),
-          linear-gradient(180deg, #fbfbfd 0%, #f5f5f7 100%);
-        min-height: 100vh;
-        padding: 28px;
+          linear-gradient(180deg, #06070a 0%, #050507 45%, #09090c 100%);
+        padding: 30px;
         letter-spacing: -0.01em;
       }
 
@@ -283,45 +77,46 @@
         display: flex;
         align-items: flex-end;
         justify-content: space-between;
-        gap: 24px;
-        margin-bottom: 28px;
+        gap: 28px;
+        margin-bottom: 30px;
+        padding: 10px 4px 0;
       }
 
       .hero-copy h1 {
         margin: 0;
-        font-size: 46px;
-        line-height: 1.02;
-        letter-spacing: -0.04em;
+        font-size: 56px;
+        line-height: 0.98;
+        letter-spacing: -0.05em;
         font-weight: 700;
       }
 
       .hero-copy p {
-        margin: 12px 0 0;
-        max-width: 720px;
+        margin: 16px 0 0;
+        max-width: 760px;
         color: var(--muted);
-        font-size: 16px;
-        line-height: 1.55;
+        font-size: 17px;
+        line-height: 1.6;
       }
 
       .hero-badges {
         display: flex;
         flex-wrap: wrap;
-        gap: 10px;
+        gap: 12px;
         justify-content: flex-end;
       }
 
       .badge-chip {
         border: 1px solid var(--line);
-        background: rgba(255, 255, 255, 0.72);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        color: var(--muted);
+        background: rgba(255, 255, 255, 0.04);
+        color: #d6d6db;
         border-radius: 999px;
-        padding: 10px 14px;
+        padding: 11px 16px;
         font-size: 13px;
         font-weight: 600;
         white-space: nowrap;
-        box-shadow: var(--shadow-soft);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        box-shadow: var(--shadow-lg);
       }
 
       .stats-grid {
@@ -332,27 +127,34 @@
       }
 
       .stat-card {
-        background: var(--panel);
-        backdrop-filter: blur(24px);
-        -webkit-backdrop-filter: blur(24px);
-        border: 1px solid rgba(255, 255, 255, 0.65);
-        box-shadow: var(--shadow-soft);
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.06),
+          rgba(255, 255, 255, 0.03)
+        );
+        border: 1px solid var(--line);
         border-radius: var(--radius-xl);
-        padding: 22px 22px 20px;
+        padding: 24px;
+        box-shadow: var(--shadow-lg);
+        backdrop-filter: blur(22px);
+        -webkit-backdrop-filter: blur(22px);
       }
 
       .stat-label {
-        font-size: 13px;
+        font-size: 12px;
         color: var(--muted);
-        margin-bottom: 10px;
+        margin-bottom: 12px;
         font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
       }
 
       .stat-value {
-        font-size: 32px;
+        font-size: 34px;
         line-height: 1;
         font-weight: 700;
-        letter-spacing: -0.04em;
+        color: var(--text);
+        letter-spacing: -0.05em;
       }
 
       .dashboard {
@@ -367,19 +169,38 @@
         align-self: start;
       }
 
-      .card {
-        background: var(--panel);
-        backdrop-filter: blur(24px);
-        -webkit-backdrop-filter: blur(24px);
-        border: 1px solid rgba(255, 255, 255, 0.68);
-        border-radius: var(--radius-xl);
-        box-shadow: var(--shadow);
+      .card,
+      .analytics,
+      .blockchain-panel {
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.06),
+          rgba(255, 255, 255, 0.03)
+        );
+        border: 1px solid var(--line);
+        border-radius: var(--radius-2xl);
+        box-shadow: var(--shadow-xl);
         overflow: hidden;
+        backdrop-filter: blur(26px);
+        -webkit-backdrop-filter: blur(26px);
+      }
+
+      .analytics,
+      .blockchain-panel {
+        padding: 24px;
+        margin-top: 22px;
+      }
+
+      .blockchain-panel h2,
+      .analytics h2 {
+        margin: 0 0 16px;
+        font-size: 24px;
+        letter-spacing: -0.03em;
       }
 
       .card-head {
-        padding: 22px 24px 18px;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        padding: 24px 26px 18px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
         display: flex;
         justify-content: space-between;
         align-items: flex-start;
@@ -388,20 +209,20 @@
 
       .card-head h2 {
         margin: 0;
-        font-size: 22px;
+        font-size: 24px;
         font-weight: 650;
         letter-spacing: -0.03em;
       }
 
       .card-head p {
-        margin: 6px 0 0;
+        margin: 7px 0 0;
         color: var(--muted);
         font-size: 14px;
-        line-height: 1.45;
+        line-height: 1.55;
       }
 
       .card-body {
-        padding: 22px 24px 24px;
+        padding: 24px 26px 26px;
       }
 
       .menu-grid {
@@ -410,88 +231,104 @@
         gap: 16px;
       }
 
-      .menu-item {
+      .menu-item,
+      .cart-item,
+      .invoice-row,
+      .result-box,
+      .invoice-summary-card,
+      .analytics-card,
+      .blockchain-card,
+      .block-item,
+      .receipt-card,
+      .payment-section {
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.06),
+          rgba(255, 255, 255, 0.035)
+        );
+        border: 1px solid rgba(255, 255, 255, 0.08);
         border-radius: var(--radius-lg);
-        background: rgba(255, 255, 255, 0.82);
-        border: 1px solid rgba(0, 0, 0, 0.06);
-        padding: 18px;
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      }
+
+      .menu-item {
+        padding: 20px;
         transition:
           transform 0.18s ease,
+          border-color 0.18s ease,
           box-shadow 0.18s ease;
       }
 
-      .menu-item:hover {
+      .menu-item:hover,
+      .cart-item:hover,
+      .invoice-row:hover,
+      .block-item:hover {
         transform: translateY(-2px);
-        box-shadow: 0 18px 30px rgba(0, 0, 0, 0.06);
+        border-color: rgba(255, 255, 255, 0.14);
       }
 
-      .menu-item-top {
+      .menu-item-top,
+      .cart-item-inner,
+      .invoice-row-head,
+      .receipt-head {
         display: flex;
         justify-content: space-between;
-        gap: 16px;
-        margin-bottom: 16px;
+        gap: 14px;
+        align-items: flex-start;
       }
 
-      .menu-item-name {
+      .menu-item-name,
+      .cart-item-name,
+      .invoice-row-title,
+      .receipt-title {
         font-size: 17px;
         font-weight: 650;
+        color: var(--text);
         line-height: 1.3;
       }
 
-      .menu-item-meta {
-        margin-top: 6px;
-        font-size: 13px;
+      .menu-item-meta,
+      .subtle,
+      .small,
+      .receipt-note,
+      .chart-label,
+      .legend {
         color: var(--muted);
-        line-height: 1.5;
+        font-size: 13px;
+        line-height: 1.55;
       }
 
       .price {
-        font-size: 22px;
+        font-size: 28px;
         font-weight: 700;
-        letter-spacing: -0.03em;
+        letter-spacing: -0.05em;
         white-space: nowrap;
       }
 
       .cart-list,
-      .invoice-list {
+      .invoice-list,
+      .blockchain-list {
         display: grid;
         gap: 14px;
       }
 
       .cart-item,
-      .invoice-row {
-        background: rgba(255, 255, 255, 0.8);
-        border: 1px solid rgba(0, 0, 0, 0.05);
-        border-radius: var(--radius-lg);
+      .invoice-row,
+      .result-box,
+      .block-item {
         padding: 16px 18px;
       }
 
-      .cart-item-inner {
-        display: flex;
-        justify-content: space-between;
-        gap: 14px;
-        align-items: center;
-      }
-
-      .cart-item-name {
-        font-size: 16px;
-        font-weight: 640;
-        margin-bottom: 4px;
-      }
-
-      .subtle {
-        color: var(--muted);
-        font-size: 13px;
-        line-height: 1.45;
+      .summary,
+      .hash-box {
+        margin-top: 18px;
+        border-radius: var(--radius-lg);
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        padding: 16px 18px;
       }
 
       .summary {
-        margin-top: 18px;
-        border-radius: var(--radius-lg);
-        background: rgba(255, 255, 255, 0.78);
-        border: 1px solid rgba(0, 0, 0, 0.05);
-        padding: 16px 18px;
         display: grid;
         gap: 10px;
       }
@@ -501,11 +338,12 @@
         justify-content: space-between;
         gap: 12px;
         align-items: center;
+        color: #dddddf;
       }
 
       .summary-total {
         padding-top: 10px;
-        border-top: 1px solid rgba(0, 0, 0, 0.06);
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
         font-size: 18px;
         font-weight: 700;
       }
@@ -516,47 +354,54 @@
         gap: 8px;
       }
 
-      .results-grid {
+      .results-grid,
+      .invoice-summary,
+      .invoice-row-grid,
+      .analytics-grid,
+      .blockchain-grid,
+      .receipt-grid {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 14px;
-        margin-top: 14px;
       }
 
-      .result-box {
-        background: rgba(255, 255, 255, 0.82);
-        border: 1px solid rgba(0, 0, 0, 0.05);
-        border-radius: var(--radius-lg);
-        padding: 16px 18px;
-        display: grid;
-        gap: 8px;
+      .analytics-grid {
+        grid-template-columns: repeat(4, 1fr);
+        margin-bottom: 16px;
       }
 
-      .invoice-summary {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 14px;
-        margin-bottom: 18px;
+      .blockchain-grid {
+        grid-template-columns: repeat(4, 1fr);
+        margin-bottom: 16px;
       }
 
-      .invoice-summary-card {
-        background: rgba(255, 255, 255, 0.82);
-        border: 1px solid rgba(0, 0, 0, 0.05);
-        border-radius: var(--radius-lg);
+      .analytics-card,
+      .blockchain-card,
+      .invoice-summary-card,
+      .receipt-item {
         padding: 16px 18px;
       }
 
-      .invoice-summary-card .label {
+      .analytics-card .label,
+      .blockchain-card .label,
+      .invoice-summary-card .label,
+      .receipt-item .label {
         color: var(--muted);
         font-size: 12px;
-        margin-bottom: 6px;
+        margin-bottom: 7px;
         font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
       }
 
-      .invoice-summary-card .value {
-        font-size: 24px;
+      .analytics-card .value,
+      .blockchain-card .value,
+      .invoice-summary-card .value,
+      .receipt-item .value {
+        font-size: 22px;
         font-weight: 700;
         letter-spacing: -0.03em;
+        word-break: break-word;
       }
 
       .toolbar {
@@ -575,26 +420,6 @@
         margin-bottom: 18px;
       }
 
-      .invoice-row-head {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        gap: 12px;
-        margin-bottom: 12px;
-      }
-
-      .invoice-row-title {
-        font-size: 16px;
-        font-weight: 650;
-        margin-bottom: 4px;
-      }
-
-      .invoice-row-grid {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 12px;
-      }
-
       .pagination {
         display: flex;
         align-items: center;
@@ -603,7 +428,8 @@
         margin-top: 18px;
       }
 
-      .status-positive {
+      .status-positive,
+      .ok {
         color: var(--green);
         font-weight: 650;
       }
@@ -611,9 +437,9 @@
       .empty-state,
       .loading-state {
         border-radius: var(--radius-lg);
-        background: rgba(255, 255, 255, 0.76);
-        border: 1px solid rgba(0, 0, 0, 0.05);
-        padding: 28px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        padding: 30px;
         text-align: center;
         color: var(--muted);
         font-size: 15px;
@@ -629,8 +455,8 @@
         width: 18px;
         height: 18px;
         border-radius: 999px;
-        border: 2px solid rgba(0, 0, 0, 0.12);
-        border-top-color: var(--text);
+        border: 2px solid rgba(255, 255, 255, 0.14);
+        border-top-color: #ffffff;
         animation: spin 0.8s linear infinite;
       }
 
@@ -643,32 +469,33 @@
       input,
       select {
         width: 100%;
-        height: 46px;
+        height: 48px;
         border-radius: 14px;
-        border: 1px solid rgba(0, 0, 0, 0.08);
-        background: rgba(255, 255, 255, 0.86);
+        border: 1px solid rgba(255, 255, 255, 0.09);
+        background: rgba(255, 255, 255, 0.05);
         color: var(--text);
         padding: 0 14px;
         font-size: 14px;
         outline: none;
         transition:
           border-color 0.15s ease,
-          box-shadow 0.15s ease;
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+          box-shadow 0.15s ease,
+          background 0.15s ease;
       }
 
       input::placeholder {
-        color: #8e8e93;
+        color: #8d8d95;
       }
 
       input:focus,
       select:focus {
-        border-color: rgba(0, 113, 227, 0.45);
-        box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.12);
+        border-color: rgba(41, 151, 255, 0.55);
+        box-shadow: 0 0 0 4px rgba(41, 151, 255, 0.14);
+        background: rgba(255, 255, 255, 0.07);
       }
 
       button {
-        height: 46px;
+        height: 48px;
         border: none;
         border-radius: 999px;
         padding: 0 18px;
@@ -681,15 +508,15 @@
           opacity 0.18s ease,
           background 0.18s ease,
           box-shadow 0.18s ease;
-        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
       }
 
       button:hover {
-        opacity: 0.96;
+        opacity: 0.97;
       }
 
       button:active {
-        transform: scale(0.985);
+        transform: scale(0.986);
       }
 
       button:disabled {
@@ -701,6 +528,10 @@
       .add,
       .pay-private,
       .pay-business,
+      .pay-nfc-private,
+      .pay-nfc-business,
+      .pay-cash-private,
+      .pay-cash-business,
       .download-btn {
         text-decoration: none;
         display: inline-flex;
@@ -710,53 +541,46 @@
 
       .add,
       .pay-private,
-      .pay-business {
+      .pay-business,
+      .pay-nfc-private,
+      .pay-nfc-business {
         width: 100%;
-      }
-
-      .add,
-      .pay-private,
-      .pay-business {
-        background: var(--blue);
+        background: linear-gradient(180deg, var(--blue), #1278dc);
         color: #fff;
       }
 
       .add:hover,
       .pay-private:hover,
       .pay-business:hover,
+      .pay-nfc-private:hover,
+      .pay-nfc-business:hover,
       .download-btn:hover {
-        background: var(--blue-hover);
+        background: linear-gradient(180deg, var(--blue-hover), #2997ff);
       }
 
-      .secondary-btn {
-        background: rgba(255, 255, 255, 0.9);
+      .secondary-btn,
+      .clear-cart,
+      .pay-cash-private,
+      .pay-cash-business {
+        background: rgba(255, 255, 255, 0.06);
         color: var(--text);
-        border: 1px solid rgba(0, 0, 0, 0.08);
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
-      }
-
-      .clear-cart {
-        width: 100%;
-        margin-top: 10px;
-        background: rgba(255, 255, 255, 0.9);
-        color: var(--text);
-        border: 1px solid rgba(0, 0, 0, 0.08);
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: none;
       }
 
       .clear-history {
-        background: #1d1d1f;
-        color: #fff;
+        background: rgba(255, 69, 58, 0.16);
+        color: #ffd2cf;
+        border: 1px solid rgba(255, 69, 58, 0.24);
       }
 
       .download-btn {
         margin-top: 14px;
         padding: 0 18px;
         height: 42px;
-        background: var(--blue);
+        background: linear-gradient(180deg, var(--blue), #1278dc);
         color: #fff;
         border-radius: 999px;
-        box-shadow: 0 8px 20px rgba(0, 113, 227, 0.22);
       }
 
       .qty-btn {
@@ -765,14 +589,14 @@
         height: 36px;
         padding: 0;
         border-radius: 999px;
-        background: rgba(255, 255, 255, 0.9);
+        background: rgba(255, 255, 255, 0.06);
         color: var(--text);
-        border: 1px solid rgba(0, 0, 0, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.08);
         box-shadow: none;
       }
 
       .remove-btn {
-        color: var(--red);
+        color: #ffb4ae;
       }
 
       .section-title {
@@ -785,22 +609,42 @@
         font-weight: 700;
       }
 
+      .payment-section {
+        margin-top: 18px;
+        padding: 18px;
+      }
+
+      .payment-section:first-of-type {
+        margin-top: 20px;
+      }
+
+      .payment-title {
+        margin: 0 0 12px;
+        font-size: 13px;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        font-weight: 700;
+      }
+
+      .payment-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
       .hidden {
         display: none;
       }
 
       .error {
-        color: var(--red);
+        color: #ff9b94;
         font-weight: 600;
         line-height: 1.5;
       }
 
-      .ok {
-        color: var(--green);
-        font-weight: 650;
-      }
-
-      .badge {
+      .badge,
+      .receipt-badge {
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -813,13 +657,74 @@
       }
 
       .badge-private {
-        background: rgba(255, 159, 10, 0.14);
-        color: #a15c00;
+        background: rgba(255, 159, 10, 0.16);
+        color: #ffd19b;
       }
 
       .badge-business {
-        background: rgba(0, 113, 227, 0.12);
-        color: #005bb5;
+        background: rgba(41, 151, 255, 0.16);
+        color: #a8d5ff;
+      }
+
+      .receipt-badge {
+        background: rgba(50, 215, 75, 0.16);
+        color: #baf5c4;
+      }
+
+      .legend span {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        display: inline-block;
+      }
+
+      .dot-gross,
+      .bar-gross {
+        background: #4db2ff;
+      }
+
+      .dot-net,
+      .bar-net {
+        background: #30d158;
+      }
+
+      .dot-vat,
+      .bar-vat {
+        background: #ff9f0a;
+      }
+
+      .chart {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(72px, 1fr));
+        gap: 14px;
+        align-items: end;
+        min-height: 240px;
+      }
+
+      .chart-col {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .chart-bars {
+        height: 180px;
+        display: flex;
+        align-items: end;
+        gap: 6px;
+      }
+
+      .bar {
+        width: 14px;
+        border-radius: 999px;
+        min-height: 6px;
       }
 
       @media (max-width: 1180px) {
@@ -827,15 +732,15 @@
           grid-template-columns: 1fr;
         }
 
-        .stats-grid {
+        .stats-grid,
+        .analytics-grid,
+        .blockchain-grid {
           grid-template-columns: repeat(2, 1fr);
         }
 
-        .menu-grid {
-          grid-template-columns: 1fr;
-        }
-
-        .filters {
+        .menu-grid,
+        .filters,
+        .payment-grid {
           grid-template-columns: 1fr 1fr;
         }
       }
@@ -851,28 +756,33 @@
         }
 
         .hero-copy h1 {
-          font-size: 36px;
+          font-size: 38px;
         }
 
         .stats-grid,
-        .invoice-summary,
         .results-grid,
-        .invoice-row-grid {
-          grid-template-columns: 1fr;
-        }
-
-        .filters {
+        .invoice-summary,
+        .invoice-row-grid,
+        .receipt-grid,
+        .analytics-grid,
+        .blockchain-grid,
+        .filters,
+        .menu-grid,
+        .payment-grid {
           grid-template-columns: 1fr;
         }
 
         .card-head,
-        .card-body {
+        .card-body,
+        .analytics,
+        .blockchain-panel {
           padding-left: 18px;
           padding-right: 18px;
         }
 
         .cart-item-inner,
-        .invoice-row-head {
+        .invoice-row-head,
+        .receipt-head {
           flex-direction: column;
           align-items: flex-start;
         }
@@ -940,6 +850,7 @@
             <h2>Tax Analytics</h2>
             <div id="taxAnalytics">No tax analytics yet</div>
           </div>
+
           <div class="blockchain-panel">
             <h2>Blockchain Explorer</h2>
             <div id="blockchainExplorer">No blockchain data yet</div>
@@ -966,25 +877,38 @@
                 </div>
               </div>
 
-              <button
-                id="privateBtn"
-                class="pay-private"
-                onclick="checkoutPrivate()"
-              >
-                Checkout as Private
-              </button>
-              <button
-                id="businessBtn"
-                class="pay-business"
-                onclick="toggleBusinessForm()"
-              >
-                Checkout as Business
-              </button>
+              <div class="payment-section">
+                <div class="payment-title">Pay by NFC Card</div>
+                <div class="payment-grid">
+                  <button class="pay-nfc-private" onclick="prepareNfcPayment()">
+                    Pay as Private
+                  </button>
+                  <button
+                    class="pay-nfc-business"
+                    onclick="showBusinessPaymentForm('NFC')"
+                  >
+                    Pay as Business
+                  </button>
+                </div>
+              </div>
+
+              <div class="payment-section">
+                <div class="payment-title">Cash</div>
+                <div class="payment-grid">
+                  <button class="pay-cash-private" onclick="checkoutPrivate()">
+                    Pay as Private
+                  </button>
+                  <button
+                    class="pay-cash-business"
+                    onclick="showBusinessPaymentForm('CASH')"
+                  >
+                    Pay as Business
+                  </button>
+                </div>
+              </div>
+
               <button class="clear-cart" onclick="clearCart()">
                 Clear Cart
-              </button>
-              <button class="pay-business" onclick="prepareNfcPayment()">
-                Prepare NFC Payment
               </button>
 
               <div id="businessForm" class="hidden">
@@ -995,8 +919,12 @@
                   placeholder="Company name"
                 />
                 <input id="vatId" type="text" placeholder="VAT ID" />
-                <button class="pay-business" onclick="checkoutBusiness()">
-                  Confirm Business Checkout
+                <button
+                  id="businessActionBtn"
+                  class="pay-business"
+                  onclick="submitBusinessPayment()"
+                >
+                  Continue
                 </button>
               </div>
             </div>
@@ -1053,33 +981,34 @@
     </div>
 
     <script>
-            const API = "http://192.168.0.189";
-            let products = [];
-            let cart = [];
-            let pendingNfcOrder = null;
-            let nfcPollingInterval = null;
-            let invoicePage = 0;
-            let invoiceSize = 5;
-            let invoiceSearch = "";
-            let invoicePayerType = "";
-            let invoiceSort = "desc";
+      const API = "http://192.168.0.189";
+      let products = [];
+      let cart = [];
+      let pendingNfcOrder = null;
+      let nfcPollingInterval = null;
+      let invoicePage = 0;
+      let invoiceSize = 5;
+      let invoiceSearch = "";
+      let invoicePayerType = "";
+      let invoiceSort = "desc";
+      let selectedBusinessPaymentMode = null;
 
-            async function renderBlockchainExplorer() {
-              const container = document.getElementById("blockchainExplorer");
+      async function renderBlockchainExplorer() {
+        const container = document.getElementById("blockchainExplorer");
 
-              try {
-                const [overviewJson, validationJson, blocksJson] = await Promise.all([
-                  safeJson(`${API}:8087/api/blockchain/overview`),
-                  safeJson(`${API}:8087/api/blockchain/validate/details`),
-                  safeJson(`${API}:8087/api/blockchain/blocks`),
-                ]);
+        try {
+          const [overviewJson, validationJson, blocksJson] = await Promise.all([
+            safeJson(`${API}:8087/api/blockchain/overview`),
+            safeJson(`${API}:8087/api/blockchain/validate/details`),
+            safeJson(`${API}:8087/api/blockchain/blocks`),
+          ]);
 
-                const overview = overviewJson.data;
-                const validation = validationJson.data;
-                const blocks = blocksJson.data || [];
-                const latestBlocks = [...blocks].reverse().slice(0, 5);
+          const overview = overviewJson.data;
+          const validation = validationJson.data;
+          const blocks = blocksJson.data || [];
+          const latestBlocks = [...blocks].reverse().slice(0, 5);
 
-                container.innerHTML = `
+          container.innerHTML = `
             <div class="blockchain-grid">
               <div class="blockchain-card">
                 <div class="label">Total Blocks</div>
@@ -1105,7 +1034,7 @@
               </div>
             </div>
 
-            <div class="blockchain-card">
+            <div class="blockchain-card" style="padding:16px 18px; margin-bottom:14px;">
               <div class="label">Validation Reason</div>
               <div class="value" style="font-size:16px;">${escapeHtml(validation.message || "-")}</div>
               <div class="hash-box">Stored Hash: ${escapeHtml(validation.storedHash || "-")}</div>
@@ -1120,557 +1049,565 @@
                   ? latestBlocks
                       .map(
                         (block) => `
-                <div class="block-item">
-                  <div><strong>Block #${escapeHtml(block.blockIndex)}</strong></div>
-                  <div class="subtle">Order: ${escapeHtml(block.orderId)}</div>
-                  <div class="subtle">VAT: €${Number(block.totalVat || 0).toFixed(2)}</div>
-                  <div class="hash-box">Hash: ${escapeHtml(block.hash)}</div>
-                  <div class="hash-box">Previous Hash: ${escapeHtml(block.previousHash)}</div>
-                </div>
-              `,
+                  <div class="block-item">
+                    <div><strong>Block #${escapeHtml(block.blockIndex)}</strong></div>
+                    <div class="subtle">Order: ${escapeHtml(block.orderId)}</div>
+                    <div class="subtle">VAT: €${Number(block.totalVat || 0).toFixed(2)}</div>
+                    <div class="hash-box">Hash: ${escapeHtml(block.hash)}</div>
+                    <div class="hash-box">Previous Hash: ${escapeHtml(block.previousHash)}</div>
+                  </div>
+                `,
                       )
                       .join("")
                   : `<div class="subtle">No blocks yet</div>`
               }
             </div>
           `;
-              } catch (e) {
-                console.error(e);
-                container.innerHTML = `<div class="error">Failed to load blockchain explorer.<br>${escapeHtml(e.message)}</div>`;
-              }
-            }
+        } catch (e) {
+          console.error(e);
+          container.innerHTML = `<div class="error">Failed to load blockchain explorer.<br>${escapeHtml(e.message)}</div>`;
+        }
+      }
 
-            async function safeJson(url, options) {
-              const res = await fetch(url, options);
-              const text = await res.text();
-              let json = null;
+      async function safeJson(url, options) {
+        const res = await fetch(url, options);
+        const text = await res.text();
+        let json = null;
 
-              try {
-                json = JSON.parse(text);
-              } catch (_) {}
+        try {
+          json = JSON.parse(text);
+        } catch (_) {}
 
-              if (!res.ok) {
-                throw new Error(`${url} -> ${res.status} ${text}`);
-              }
+        if (!res.ok) {
+          throw new Error(`${url} -> ${res.status} ${text}`);
+        }
 
-              return json;
-            }
+        return json;
+      }
 
-            function euro(value) {
-              return `€${Number(value || 0).toFixed(2)}`;
-            }
+      function euro(value) {
+        return `€${Number(value || 0).toFixed(2)}`;
+      }
 
-            function escapeHtml(value) {
-              return String(value ?? "")
-                .replaceAll("&", "&amp;")
-                .replaceAll("<", "&lt;")
-                .replaceAll(">", "&gt;")
-                .replaceAll('"', "&quot;")
-                .replaceAll("'", "&#39;");
-            }
+      function escapeHtml(value) {
+        return String(value ?? "")
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#39;");
+      }
 
-            async function renderTaxAnalytics() {
-              const container = document.getElementById("taxAnalytics");
+      async function renderTaxAnalytics() {
+        const container = document.getElementById("taxAnalytics");
 
-              try {
-                const json = await safeJson(`${API}:8086/api/vat/analytics/tax`);
-                const analytics = json.data;
-                const points = analytics.points || [];
+        try {
+          const json = await safeJson(`${API}:8086/api/vat/analytics/tax`);
+          const analytics = json.data;
+          const points = analytics.points || [];
 
-                const maxValue = Math.max(
-                  1,
-                  ...points.map((p) => Number(p.grossTotal || 0)),
-                  ...points.map((p) => Number(p.netTotal || 0)),
-                  ...points.map((p) => Number(p.totalVat || 0)),
-                );
+          const maxValue = Math.max(
+            1,
+            ...points.map((p) => Number(p.grossTotal || 0)),
+            ...points.map((p) => Number(p.netTotal || 0)),
+            ...points.map((p) => Number(p.totalVat || 0)),
+          );
 
-                const chartHtml = points.length
-                  ? `
-                    <div class="legend">
-                      <span><i class="dot dot-gross"></i>Gross</span>
-                      <span><i class="dot dot-net"></i>Net</span>
-                      <span><i class="dot dot-vat"></i>VAT</span>
-                    </div>
-                    <div class="chart">
-                      ${points
-                        .map((point) => {
-                          const grossHeight = Math.max(
-                            6,
-                            (Number(point.grossTotal || 0) / maxValue) * 100,
-                          );
-                          const netHeight = Math.max(
-                            6,
-                            (Number(point.netTotal || 0) / maxValue) * 100,
-                          );
-                          const vatHeight = Math.max(
-                            6,
-                            (Number(point.totalVat || 0) / maxValue) * 100,
-                          );
-
-                          return `
-                            <div class="chart-col">
-                              <div class="chart-bars">
-                                <div class="bar bar-gross" style="height:${grossHeight}%"></div>
-                                <div class="bar bar-net" style="height:${netHeight}%"></div>
-                                <div class="bar bar-vat" style="height:${vatHeight}%"></div>
-                              </div>
-                              <div class="chart-label">${escapeHtml(point.label)}</div>
-                            </div>
-                          `;
-                        })
-                        .join("")}
-                    </div>
-                  `
-                  : `<div class="subtle">No tax records yet</div>`;
-
-                container.innerHTML = `
-                  <div class="analytics-grid">
-                    <div class="analytics-card">
-                      <div class="label">Gross Total</div>
-                      <div class="value">€${Number(analytics.grossTotal || 0).toFixed(2)}</div>
-                    </div>
-                    <div class="analytics-card">
-                      <div class="label">Net Total</div>
-                      <div class="value">€${Number(analytics.netTotal || 0).toFixed(2)}</div>
-                    </div>
-                    <div class="analytics-card">
-                      <div class="label">VAT Total</div>
-                      <div class="value">€${Number(analytics.totalVat || 0).toFixed(2)}</div>
-                    </div>
-                    <div class="analytics-card">
-                      <div class="label">VAT 19 / VAT 7</div>
-                      <div class="value">€${Number(analytics.vat19Total || 0).toFixed(2)} / €${Number(analytics.vat7Total || 0).toFixed(2)}</div>
-                    </div>
-                  </div>
-
-                  <div class="analytics-grid">
-                    <div class="analytics-card">
-                      <div class="label">Private VAT</div>
-                      <div class="value">€${Number(analytics.privateVatTotal || 0).toFixed(2)}</div>
-                    </div>
-                    <div class="analytics-card">
-                      <div class="label">Business VAT</div>
-                      <div class="value">€${Number(analytics.businessVatTotal || 0).toFixed(2)}</div>
-                    </div>
-                    <div class="analytics-card">
-                      <div class="label">Records</div>
-                      <div class="value">${analytics.totalRecords || 0}</div>
-                    </div>
-                  </div>
-
-                  ${chartHtml}
-                `;
-              } catch (e) {
-                console.error(e);
-                container.innerHTML = `<div class="error">Failed to load tax analytics.<br>${escapeHtml(e.message)}</div>`;
-              }
-            }
-
-            function setLoadingButtons(loading) {
-              document.getElementById("privateBtn").disabled = loading;
-              document.getElementById("businessBtn").disabled = loading;
-              document.getElementById("privateBtn").textContent = loading
-                ? "Processing..."
-                : "Checkout as Private";
-              document.getElementById("businessBtn").textContent = loading
-                ? "Processing..."
-                : "Checkout as Business";
-            }
-
-            async function loadMenu() {
-              const menuDiv = document.getElementById("menu");
-
-              try {
-                const json = await safeJson(`${API}:8082/api/products`);
-                products = (json.data || []).filter((p) => p.active !== false);
-                renderMenu();
-              } catch (e) {
-                console.error(e);
-                menuDiv.innerHTML = `<div class="error">Failed to load menu.<br>${escapeHtml(e.message)}</div>`;
-              }
-            }
-
-            function renderMenu() {
-              const menuDiv = document.getElementById("menu");
-
-              if (!products.length) {
-                menuDiv.innerHTML = `<div class="empty-state">No active products returned from the backend.</div>`;
-                return;
-              }
-
-              menuDiv.innerHTML = `<div class="menu-grid">${products
-                .map(
-                  (p) => `
-                    <div class="menu-item">
-                      <div class="menu-item-top">
-                        <div>
-                          <div class="menu-item-name">${escapeHtml(p.name)}</div>
-                          <div class="menu-item-meta">
-                            Product ID: ${escapeHtml(p.id)}<br>
-                            VAT Rate: ${escapeHtml(p.vatRateType || "-")}
-                          </div>
-                        </div>
-                        <div class="price">${euro(p.priceGross)}</div>
-                      </div>
-                      <button class="add" onclick="addToCart('${escapeHtml(p.id)}')">Add to Cart</button>
-                    </div>
-                  `,
-                )
-                .join("")}</div>`;
-            }
-
-            function addToCart(id) {
-              const item = cart.find((i) => String(i.id) === String(id));
-              if (item) item.qty++;
-              else cart.push({ id, qty: 1 });
-              renderCart();
-            }
-
-            function increaseQty(id) {
-              const item = cart.find((i) => String(i.id) === String(id));
-              if (!item) return;
-              item.qty++;
-              renderCart();
-            }
-
-            function decreaseQty(id) {
-              const item = cart.find((i) => String(i.id) === String(id));
-              if (!item) return;
-              item.qty--;
-              if (item.qty <= 0) {
-                cart = cart.filter((i) => String(i.id) !== String(id));
-              }
-              renderCart();
-            }
-
-            function removeFromCart(id) {
-              cart = cart.filter((i) => String(i.id) !== String(id));
-              renderCart();
-            }
-
-            function clearCart() {
-              cart = [];
-              renderCart();
-            }
-
-            function calculateCartTotal() {
-              return cart.reduce((sum, c) => {
-                const p = products.find((x) => String(x.id) === String(c.id));
-                if (!p) return sum;
-                return sum + Number(p.priceGross) * c.qty;
-              }, 0);
-            }
-
-            function calculateCartItemCount() {
-              return cart.reduce((sum, c) => sum + c.qty, 0);
-            }
-
-            function renderCart() {
-              const cartDiv = document.getElementById("cartItems");
-              const summaryDiv = document.getElementById("cartSummary");
-
-              if (!cart.length) {
-                cartDiv.innerHTML = `<div class="empty-state">Your cart is empty.</div>`;
-                summaryDiv.innerHTML = `
-                  <div class="summary-row"><span>Items</span><strong>0</strong></div>
-                  <div class="summary-row summary-total"><span>Total</span><strong>€0.00</strong></div>
-                `;
-                return;
-              }
-
-              cartDiv.innerHTML = `<div class="cart-list">${cart
-                .map((c) => {
-                  const p = products.find((x) => String(x.id) === String(c.id));
-                  const lineTotal = p ? Number(p.priceGross) * c.qty : 0;
-
-                  return `
-                    <div class="cart-item">
-                      <div class="cart-item-inner">
-                        <div>
-                          <div class="cart-item-name">${escapeHtml(p ? p.name : c.id)}</div>
-                          <div class="subtle">Line total: ${euro(lineTotal)}</div>
-                        </div>
-
-                        <div class="qty-controls">
-                          <button class="qty-btn" onclick="decreaseQty('${escapeHtml(c.id)}')">−</button>
-                          <strong>${c.qty}</strong>
-                          <button class="qty-btn" onclick="increaseQty('${escapeHtml(c.id)}')">+</button>
-                          <button class="qty-btn remove-btn" onclick="removeFromCart('${escapeHtml(c.id)}')">×</button>
-                        </div>
-                      </div>
-                    </div>
-                  `;
-                })
-                .join("")}</div>`;
-
-              const total = calculateCartTotal();
-              const itemCount = calculateCartItemCount();
-
-              summaryDiv.innerHTML = `
-                <div class="summary-row"><span>Items</span><strong>${itemCount}</strong></div>
-                <div class="summary-row summary-total"><span>Total</span><strong>${euro(total)}</strong></div>
-              `;
-            }
-
-            function toggleBusinessForm() {
-              document.getElementById("businessForm").classList.toggle("hidden");
-            }
-
-            async function renderTopStats() {
-              const container = document.getElementById("topStats");
-
-              try {
-                const summaryJson = await safeJson(
-                  `${API}:8083/api/invoices/summary`,
-                );
-                const s = summaryJson.data;
-
-                container.innerHTML = `
-                  <div class="stat-card">
-                    <div class="stat-label">Invoices</div>
-                    <div class="stat-value">${s.count}</div>
-                  </div>
-                  <div class="stat-card">
-                    <div class="stat-label">Revenue</div>
-                    <div class="stat-value">${euro(s.totalAmount)}</div>
-                  </div>
-                  <div class="stat-card">
-                    <div class="stat-label">Average Invoice</div>
-                    <div class="stat-value">${euro(s.averageAmount)}</div>
-                  </div>
-                  <div class="stat-card">
-                    <div class="stat-label">Latest Invoice</div>
-                    <div class="stat-value" style="font-size: 18px;">${escapeHtml(s.lastInvoiceNumber || "-")}</div>
-                  </div>
-                `;
-              } catch (e) {
-                console.error(e);
-                container.innerHTML = `
-                  <div class="stat-card"><div class="stat-label">Invoices</div><div class="stat-value">-</div></div>
-                  <div class="stat-card"><div class="stat-label">Revenue</div><div class="stat-value">-</div></div>
-                  <div class="stat-card"><div class="stat-label">Average Invoice</div><div class="stat-value">-</div></div>
-                  <div class="stat-card"><div class="stat-label">Latest Invoice</div><div class="stat-value">-</div></div>
-                `;
-              }
-            }
-
-            function buildInvoiceHistoryUrl() {
-              const params = new URLSearchParams();
-              params.set("page", invoicePage);
-              params.set("size", invoiceSize);
-              params.set("sort", invoiceSort);
-
-              if (invoicePayerType) params.set("payerType", invoicePayerType);
-              if (invoiceSearch) params.set("invoiceNumber", invoiceSearch);
-
-              return `${API}:8083/api/invoices/history?${params.toString()}`;
-            }
-
-            async function renderInvoiceHistory() {
-              const container = document.getElementById("invoiceHistory");
-              const summaryContainer = document.getElementById("invoiceSummary");
-              const paginationContainer =
-                document.getElementById("invoicePagination");
-
-              try {
-                const [historyJson, summaryJson] = await Promise.all([
-                  safeJson(buildInvoiceHistoryUrl()),
-                  safeJson(`${API}:8083/api/invoices/summary`),
-                ]);
-
-                const pageData = historyJson.data;
-                const invoices = pageData.content || [];
-                const summary = summaryJson.data;
-
-                summaryContainer.innerHTML = `
-                  <div class="invoice-summary-card">
-                    <div class="label">Invoice Count</div>
-                    <div class="value">${summary.count}</div>
-                  </div>
-                  <div class="invoice-summary-card">
-                    <div class="label">Total Value</div>
-                    <div class="value">${euro(summary.totalAmount)}</div>
-                  </div>
-                  <div class="invoice-summary-card">
-                    <div class="label">Business Orders</div>
-                    <div class="value">${summary.businessCount}</div>
-                  </div>
-                  <div class="invoice-summary-card">
-                    <div class="label">Private Orders</div>
-                    <div class="value">${summary.privateCount}</div>
-                  </div>
-                `;
-
-                if (!invoices.length) {
-                  container.innerHTML = `<div class="empty-state">No invoices found.</div>`;
-                  paginationContainer.innerHTML = "";
-                  return;
-                }
-
-                container.innerHTML = `<div class="invoice-list">${invoices
-                  .map((inv) => {
-                    const payerBadge =
-                      inv.payerType === "BUSINESS"
-                        ? `<span class="badge badge-business">Business</span>`
-                        : `<span class="badge badge-private">Private</span>`;
+          const chartHtml = points.length
+            ? `
+              <div class="legend">
+                <span><i class="dot dot-gross"></i>Gross</span>
+                <span><i class="dot dot-net"></i>Net</span>
+                <span><i class="dot dot-vat"></i>VAT</span>
+              </div>
+              <div class="chart">
+                ${points
+                  .map((point) => {
+                    const grossHeight = Math.max(
+                      6,
+                      (Number(point.grossTotal || 0) / maxValue) * 100,
+                    );
+                    const netHeight = Math.max(
+                      6,
+                      (Number(point.netTotal || 0) / maxValue) * 100,
+                    );
+                    const vatHeight = Math.max(
+                      6,
+                      (Number(point.totalVat || 0) / maxValue) * 100,
+                    );
 
                     return `
-                      <div class="invoice-row">
-                        <div class="invoice-row-head">
-                          <div>
-                            <div class="invoice-row-title">${escapeHtml(inv.invoiceNumber || "-")}</div>
-                            <div class="subtle">Order: ${escapeHtml(inv.orderId)}</div>
-                          </div>
-                          <div>${payerBadge}</div>
+                      <div class="chart-col">
+                        <div class="chart-bars">
+                          <div class="bar bar-gross" style="height:${grossHeight}%"></div>
+                          <div class="bar bar-net" style="height:${netHeight}%"></div>
+                          <div class="bar bar-vat" style="height:${vatHeight}%"></div>
                         </div>
-
-                        <div class="invoice-row-grid">
-                          <div><span class="subtle">Date</span><br><strong>${escapeHtml(inv.createdAt || "-")}</strong></div>
-                          <div><span class="subtle">Total</span><br><strong>${euro(inv.grossTotal)}</strong></div>
-                          <div><span class="subtle">Payment ID</span><br><strong>${escapeHtml(inv.paymentId || "-")}</strong></div>
-                          <div><span class="subtle">Company</span><br><strong>${escapeHtml(inv.companyName || "-")}</strong></div>
-                          <div><span class="subtle">VAT ID</span><br><strong>${escapeHtml(inv.vatId || "-")}</strong></div>
-                          <div><span class="subtle">VAT</span><br><strong>${euro(inv.totalVat)}</strong></div>
-                        </div>
-
-                        <a class="download-btn" href="${API}:8083/api/invoices/${encodeURIComponent(inv.orderId)}" target="_blank">Open Invoice</a>
+                        <div class="chart-label">${escapeHtml(point.label)}</div>
                       </div>
                     `;
                   })
-                  .join("")}</div>`;
+                  .join("")}
+              </div>
+            `
+            : `<div class="subtle">No tax records yet</div>`;
 
-                paginationContainer.innerHTML = `
-                  <button class="secondary-btn" onclick="previousInvoicePage()" ${pageData.first ? "disabled" : ""}>Previous</button>
-                  <span class="subtle">Page ${pageData.page + 1} of ${pageData.totalPages || 1}</span>
-                  <button class="secondary-btn" onclick="nextInvoicePage()" ${pageData.last ? "disabled" : ""}>Next</button>
-                `;
-              } catch (e) {
-                console.error(e);
-                summaryContainer.innerHTML = "";
-                container.innerHTML = `<div class="error">Failed to load invoice history.<br>${escapeHtml(e.message)}</div>`;
-                paginationContainer.innerHTML = "";
-              }
-            }
+          container.innerHTML = `
+            <div class="analytics-grid">
+              <div class="analytics-card">
+                <div class="label">Gross Total</div>
+                <div class="value">€${Number(analytics.grossTotal || 0).toFixed(2)}</div>
+              </div>
+              <div class="analytics-card">
+                <div class="label">Net Total</div>
+                <div class="value">€${Number(analytics.netTotal || 0).toFixed(2)}</div>
+              </div>
+              <div class="analytics-card">
+                <div class="label">VAT Total</div>
+                <div class="value">€${Number(analytics.totalVat || 0).toFixed(2)}</div>
+              </div>
+              <div class="analytics-card">
+                <div class="label">VAT 19 / VAT 7</div>
+                <div class="value">€${Number(analytics.vat19Total || 0).toFixed(2)} / €${Number(analytics.vat7Total || 0).toFixed(2)}</div>
+              </div>
+            </div>
 
-            function applyInvoiceFilters() {
-              invoiceSearch = document.getElementById("invoiceSearch").value.trim();
-              invoicePayerType = document.getElementById("payerTypeFilter").value;
-              invoiceSort = document.getElementById("sortFilter").value;
-              invoicePage = 0;
-              renderInvoiceHistory();
-            }
+            <div class="analytics-grid">
+              <div class="analytics-card">
+                <div class="label">Private VAT</div>
+                <div class="value">€${Number(analytics.privateVatTotal || 0).toFixed(2)}</div>
+              </div>
+              <div class="analytics-card">
+                <div class="label">Business VAT</div>
+                <div class="value">€${Number(analytics.businessVatTotal || 0).toFixed(2)}</div>
+              </div>
+              <div class="analytics-card">
+                <div class="label">Records</div>
+                <div class="value">${analytics.totalRecords || 0}</div>
+              </div>
+            </div>
 
-            function resetInvoiceFilters() {
-              invoiceSearch = "";
-              invoicePayerType = "";
-              invoiceSort = "desc";
-              invoicePage = 0;
+            ${chartHtml}
+          `;
+        } catch (e) {
+          console.error(e);
+          container.innerHTML = `<div class="error">Failed to load tax analytics.<br>${escapeHtml(e.message)}</div>`;
+        }
+      }
 
-              document.getElementById("invoiceSearch").value = "";
-              document.getElementById("payerTypeFilter").value = "";
-              document.getElementById("sortFilter").value = "desc";
+      async function loadMenu() {
+        const menuDiv = document.getElementById("menu");
 
-              renderInvoiceHistory();
-            }
+        try {
+          const json = await safeJson(`${API}:8082/api/products`);
+          products = (json.data || []).filter((p) => p.active !== false);
+          renderMenu();
+        } catch (e) {
+          console.error(e);
+          menuDiv.innerHTML = `<div class="error">Failed to load menu.<br>${escapeHtml(e.message)}</div>`;
+        }
+      }
 
-            function previousInvoicePage() {
-              if (invoicePage > 0) {
-                invoicePage--;
-                renderInvoiceHistory();
-              }
-            }
+      function renderMenu() {
+        const menuDiv = document.getElementById("menu");
 
-            function nextInvoicePage() {
-              invoicePage++;
-              renderInvoiceHistory();
-            }
+        if (!products.length) {
+          menuDiv.innerHTML = `<div class="empty-state">No active products returned from the backend.</div>`;
+          return;
+        }
 
-            async function clearInvoiceHistory() {
-              const confirmed = confirm(
-                "Are you sure you want to delete all invoice history?",
-              );
-              if (!confirmed) return;
+        menuDiv.innerHTML = `<div class="menu-grid">${products
+          .map(
+            (p) => `
+              <div class="menu-item">
+                <div class="menu-item-top">
+                  <div>
+                    <div class="menu-item-name">${escapeHtml(p.name)}</div>
+                    <div class="menu-item-meta">
+                      Product ID: ${escapeHtml(p.id)}<br>
+                      VAT Rate: ${escapeHtml(p.vatRate || "-")}
+                    </div>
+                  </div>
+                  <div class="price">${euro(p.priceGross)}</div>
+                </div>
+                <button class="add" onclick="addToCart('${escapeHtml(p.id)}')">Add to Cart</button>
+              </div>
+            `,
+          )
+          .join("")}</div>`;
+      }
 
-              try {
-                await safeJson(`${API}:8083/api/invoices/history`, {
-                  method: "DELETE",
-                });
-                invoicePage = 0;
-                await renderTopStats();
-                await renderInvoiceHistory();
-                await renderTaxAnalytics();
-                await renderBlockchainExplorer();
-                document.getElementById("results").innerHTML =
-                  `<p class="status-positive">Invoice history cleared successfully.</p>`;
-              } catch (e) {
-                console.error(e);
-                document.getElementById("results").innerHTML =
-                  `<div class="error">Failed to clear history.<br>${escapeHtml(e.message)}</div>`;
-              }
-            }
+      function addToCart(id) {
+        const item = cart.find((i) => String(i.id) === String(id));
+        if (item) item.qty++;
+        else cart.push({ id, qty: 1 });
+        renderCart();
+      }
 
-            function checkoutPrivate() {
-              checkout("PRIVATE", null);
-            }
+      function increaseQty(id) {
+        const item = cart.find((i) => String(i.id) === String(id));
+        if (!item) return;
+        item.qty++;
+        renderCart();
+      }
 
-            function checkoutBusiness() {
-              const companyName = document.getElementById("companyName").value.trim();
-              const vatId = document.getElementById("vatId").value.trim();
+      function decreaseQty(id) {
+        const item = cart.find((i) => String(i.id) === String(id));
+        if (!item) return;
+        item.qty--;
+        if (item.qty <= 0) {
+          cart = cart.filter((i) => String(i.id) !== String(id));
+        }
+        renderCart();
+      }
 
-              if (!companyName) {
-                alert("Company name is required.");
-                return;
-              }
+      function removeFromCart(id) {
+        cart = cart.filter((i) => String(i.id) !== String(id));
+        renderCart();
+      }
 
-              if (!vatId) {
-                alert("VAT ID is required.");
-                return;
-              }
+      function clearCart() {
+        cart = [];
+        renderCart();
+      }
 
-              checkout("BUSINESS", { companyName, vatId });
-            }
+      function calculateCartTotal() {
+        return cart.reduce((sum, c) => {
+          const p = products.find((x) => String(x.id) === String(c.id));
+          if (!p) return sum;
+          return sum + Number(p.priceGross) * c.qty;
+        }, 0);
+      }
 
-            async function prepareNfcPayment() {
-              const resultsDiv = document.getElementById("results");
+      function calculateCartItemCount() {
+        return cart.reduce((sum, c) => sum + c.qty, 0);
+      }
 
-              if (!cart.length) {
-                alert("Your cart is empty.");
-                return;
-              }
+      function renderCart() {
+        const cartDiv = document.getElementById("cartItems");
+        const summaryDiv = document.getElementById("cartSummary");
 
-              const total = calculateCartTotal();
-              const orderId = "nfc-ui-" + Date.now();
+        if (!cart.length) {
+          cartDiv.innerHTML = `<div class="empty-state">Your cart is empty.</div>`;
+          summaryDiv.innerHTML = `
+            <div class="summary-row"><span>Items</span><strong>0</strong></div>
+            <div class="summary-row summary-total"><span>Total</span><strong>€0.00</strong></div>
+          `;
+          return;
+        }
 
-              const payload = {
-                cardToken: "demo-card-001",
-                orderId,
-                amount: Number(total.toFixed(2)),
-                payerType: "PRIVATE",
-                items: cart.map((item) => ({
-                  productId: item.id,
-                  quantity: item.qty,
-                })),
-              };
+        cartDiv.innerHTML = `<div class="cart-list">${cart
+          .map((c) => {
+            const p = products.find((x) => String(x.id) === String(c.id));
+            const lineTotal = p ? Number(p.priceGross) * c.qty : 0;
 
-              try {
-                const response = await safeJson(
-                  `${API}:8088/api/nfc/checkout-intent`,
-                  {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(payload),
-                  },
-                );
+            return `
+              <div class="cart-item">
+                <div class="cart-item-inner">
+                  <div>
+                    <div class="cart-item-name">${escapeHtml(p ? p.name : c.id)}</div>
+                    <div class="subtle">Line total: ${euro(lineTotal)}</div>
+                  </div>
 
-                pendingNfcOrder = {
-                  orderId,
-                  amount: payload.amount,
-                  payerType: payload.payerType,
-                  cardToken: payload.cardToken,
-                };
-                startNfcResolutionPolling();
+                  <div class="qty-controls">
+                    <button class="qty-btn" onclick="decreaseQty('${escapeHtml(c.id)}')">−</button>
+                    <strong>${c.qty}</strong>
+                    <button class="qty-btn" onclick="increaseQty('${escapeHtml(c.id)}')">+</button>
+                    <button class="qty-btn remove-btn" onclick="removeFromCart('${escapeHtml(c.id)}')">×</button>
+                  </div>
+                </div>
+              </div>
+            `;
+          })
+          .join("")}</div>`;
 
-                resultsDiv.innerHTML = `
+        const total = calculateCartTotal();
+        const itemCount = calculateCartItemCount();
+
+        summaryDiv.innerHTML = `
+          <div class="summary-row"><span>Items</span><strong>${itemCount}</strong></div>
+          <div class="summary-row summary-total"><span>Total</span><strong>${euro(total)}</strong></div>
+        `;
+      }
+
+      function showBusinessPaymentForm(mode) {
+        selectedBusinessPaymentMode = mode;
+        const form = document.getElementById("businessForm");
+        const btn = document.getElementById("businessActionBtn");
+
+        form.classList.remove("hidden");
+
+        if (mode === "NFC") {
+          btn.textContent = "Prepare NFC Business Payment";
+        } else {
+          btn.textContent = "Pay as Business";
+        }
+      }
+
+      function submitBusinessPayment() {
+        if (selectedBusinessPaymentMode === "NFC") {
+          prepareNfcBusinessPayment();
+        } else {
+          checkoutBusiness();
+        }
+      }
+
+      async function renderTopStats() {
+        const container = document.getElementById("topStats");
+
+        try {
+          const summaryJson = await safeJson(
+            `${API}:8083/api/invoices/summary`,
+          );
+          const s = summaryJson.data;
+
+          container.innerHTML = `
+            <div class="stat-card">
+              <div class="stat-label">Invoices</div>
+              <div class="stat-value">${s.count}</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Revenue</div>
+              <div class="stat-value">${euro(s.totalAmount)}</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Average Invoice</div>
+              <div class="stat-value">${euro(s.averageAmount)}</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Latest Invoice</div>
+              <div class="stat-value" style="font-size: 18px;">${escapeHtml(s.lastInvoiceNumber || "-")}</div>
+            </div>
+          `;
+        } catch (e) {
+          console.error(e);
+          container.innerHTML = `
+            <div class="stat-card"><div class="stat-label">Invoices</div><div class="stat-value">-</div></div>
+            <div class="stat-card"><div class="stat-label">Revenue</div><div class="stat-value">-</div></div>
+            <div class="stat-card"><div class="stat-label">Average Invoice</div><div class="stat-value">-</div></div>
+            <div class="stat-card"><div class="stat-label">Latest Invoice</div><div class="stat-value">-</div></div>
+          `;
+        }
+      }
+
+      function buildInvoiceHistoryUrl() {
+        const params = new URLSearchParams();
+        params.set("page", invoicePage);
+        params.set("size", invoiceSize);
+        params.set("sort", invoiceSort);
+
+        if (invoicePayerType) params.set("payerType", invoicePayerType);
+        if (invoiceSearch) params.set("invoiceNumber", invoiceSearch);
+
+        return `${API}:8083/api/invoices/history?${params.toString()}`;
+      }
+
+      async function renderInvoiceHistory() {
+        const container = document.getElementById("invoiceHistory");
+        const summaryContainer = document.getElementById("invoiceSummary");
+        const paginationContainer =
+          document.getElementById("invoicePagination");
+
+        try {
+          const [historyJson, summaryJson] = await Promise.all([
+            safeJson(buildInvoiceHistoryUrl()),
+            safeJson(`${API}:8083/api/invoices/summary`),
+          ]);
+
+          const pageData = historyJson.data;
+          const invoices = pageData.content || [];
+          const summary = summaryJson.data;
+
+          summaryContainer.innerHTML = `
+            <div class="invoice-summary-card">
+              <div class="label">Invoice Count</div>
+              <div class="value">${summary.count}</div>
+            </div>
+            <div class="invoice-summary-card">
+              <div class="label">Total Value</div>
+              <div class="value">${euro(summary.totalAmount)}</div>
+            </div>
+            <div class="invoice-summary-card">
+              <div class="label">Business Orders</div>
+              <div class="value">${summary.businessCount}</div>
+            </div>
+            <div class="invoice-summary-card">
+              <div class="label">Private Orders</div>
+              <div class="value">${summary.privateCount}</div>
+            </div>
+          `;
+
+          if (!invoices.length) {
+            container.innerHTML = `<div class="empty-state">No invoices found.</div>`;
+            paginationContainer.innerHTML = "";
+            return;
+          }
+
+          container.innerHTML = `<div class="invoice-list">${invoices
+            .map((inv) => {
+              const payerBadge =
+                inv.payerType === "BUSINESS"
+                  ? `<span class="badge badge-business">Business</span>`
+                  : `<span class="badge badge-private">Private</span>`;
+
+              return `
+                <div class="invoice-row">
+                  <div class="invoice-row-head">
+                    <div>
+                      <div class="invoice-row-title">${escapeHtml(inv.invoiceNumber || "-")}</div>
+                      <div class="subtle">Order: ${escapeHtml(inv.orderId)}</div>
+                    </div>
+                    <div>${payerBadge}</div>
+                  </div>
+
+                  <div class="invoice-row-grid">
+                    <div><span class="subtle">Date</span><br><strong>${escapeHtml(inv.createdAt || "-")}</strong></div>
+                    <div><span class="subtle">Total</span><br><strong>${euro(inv.grossTotal)}</strong></div>
+                    <div><span class="subtle">Payment ID</span><br><strong>${escapeHtml(inv.paymentId || "-")}</strong></div>
+                    <div><span class="subtle">Company</span><br><strong>${escapeHtml(inv.companyName || "-")}</strong></div>
+                    <div><span class="subtle">VAT ID</span><br><strong>${escapeHtml(inv.vatId || "-")}</strong></div>
+                    <div><span class="subtle">VAT</span><br><strong>${euro(inv.totalVat)}</strong></div>
+                  </div>
+
+                  <a class="download-btn" href="${API}:8083/api/invoices/${encodeURIComponent(inv.orderId)}" target="_blank">Open Invoice</a>
+                </div>
+              `;
+            })
+            .join("")}</div>`;
+
+          paginationContainer.innerHTML = `
+            <button class="secondary-btn" onclick="previousInvoicePage()" ${pageData.first ? "disabled" : ""}>Previous</button>
+            <span class="subtle">Page ${pageData.page + 1} of ${pageData.totalPages || 1}</span>
+            <button class="secondary-btn" onclick="nextInvoicePage()" ${pageData.last ? "disabled" : ""}>Next</button>
+          `;
+        } catch (e) {
+          console.error(e);
+          summaryContainer.innerHTML = "";
+          container.innerHTML = `<div class="error">Failed to load invoice history.<br>${escapeHtml(e.message)}</div>`;
+          paginationContainer.innerHTML = "";
+        }
+      }
+
+      function applyInvoiceFilters() {
+        invoiceSearch = document.getElementById("invoiceSearch").value.trim();
+        invoicePayerType = document.getElementById("payerTypeFilter").value;
+        invoiceSort = document.getElementById("sortFilter").value;
+        invoicePage = 0;
+        renderInvoiceHistory();
+      }
+
+      function resetInvoiceFilters() {
+        invoiceSearch = "";
+        invoicePayerType = "";
+        invoiceSort = "desc";
+        invoicePage = 0;
+
+        document.getElementById("invoiceSearch").value = "";
+        document.getElementById("payerTypeFilter").value = "";
+        document.getElementById("sortFilter").value = "desc";
+
+        renderInvoiceHistory();
+      }
+
+      function previousInvoicePage() {
+        if (invoicePage > 0) {
+          invoicePage--;
+          renderInvoiceHistory();
+        }
+      }
+
+      function nextInvoicePage() {
+        invoicePage++;
+        renderInvoiceHistory();
+      }
+
+      async function clearInvoiceHistory() {
+        const confirmed = confirm(
+          "Are you sure you want to delete all invoice history?",
+        );
+        if (!confirmed) return;
+
+        try {
+          await safeJson(`${API}:8083/api/invoices/history`, {
+            method: "DELETE",
+          });
+          invoicePage = 0;
+          await renderTopStats();
+          await renderInvoiceHistory();
+          await renderTaxAnalytics();
+          await renderBlockchainExplorer();
+          document.getElementById("results").innerHTML =
+            `<p class="status-positive">Invoice history cleared successfully.</p>`;
+        } catch (e) {
+          console.error(e);
+          document.getElementById("results").innerHTML =
+            `<div class="error">Failed to clear history.<br>${escapeHtml(e.message)}</div>`;
+        }
+      }
+
+      function checkoutPrivate() {
+        checkout("PRIVATE", null);
+      }
+
+      function checkoutBusiness() {
+        const companyName = document.getElementById("companyName").value.trim();
+        const vatId = document.getElementById("vatId").value.trim();
+
+        if (!companyName) {
+          alert("Company name is required.");
+          return;
+        }
+
+        if (!vatId) {
+          alert("VAT ID is required.");
+          return;
+        }
+
+        checkout("BUSINESS", { companyName, vatId });
+      }
+
+      async function prepareNfcPayment() {
+        const resultsDiv = document.getElementById("results");
+
+        if (!cart.length) {
+          alert("Your cart is empty.");
+          return;
+        }
+
+        const total = calculateCartTotal();
+        const orderId = "nfc-ui-" + Date.now();
+
+        const payload = {
+          cardToken: "demo-card-001",
+          orderId,
+          amount: Number(total.toFixed(2)),
+          payerType: "PRIVATE",
+          items: cart.map((item) => ({
+            productId: item.id,
+            quantity: item.qty,
+          })),
+        };
+
+        try {
+          const response = await safeJson(
+            `${API}:8088/api/nfc/checkout-intent`,
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payload),
+            },
+          );
+
+          pendingNfcOrder = {
+            orderId,
+            amount: payload.amount,
+            payerType: payload.payerType,
+            cardToken: payload.cardToken,
+          };
+
+          startNfcResolutionPolling();
+
+          resultsDiv.innerHTML = `
             <div class="result-box">
               <p class="status-positive">NFC payment prepared successfully.</p>
               <p><strong>Order ID:</strong> ${escapeHtml(response.orderId)}</p>
@@ -1680,215 +1617,350 @@
               <p><strong>Next Step:</strong> Tap the NFC card using the Android device.</p>
             </div>
           `;
-              } catch (e) {
-                console.error(e);
-                resultsDiv.innerHTML = `<div class="error">Failed to prepare NFC payment.<br>${escapeHtml(e.message)}</div>`;
-              }
-            }
-            function startNfcResolutionPolling() {
-              if (!pendingNfcOrder) return;
-
-              if (nfcPollingInterval) {
-                clearInterval(nfcPollingInterval);
-              }
-
-              nfcPollingInterval = setInterval(async () => {
-                try {
-                  const resolution = await safeJson(
-                    `${API}:8088/api/nfc/last-resolution`,
-                  );
-
-                  if (
-                    resolution &&
-                    resolution.resolved === true &&
-                    resolution.orderId === pendingNfcOrder.orderId
-                  ) {
-                    clearInterval(nfcPollingInterval);
-                    nfcPollingInterval = null;
-
-                    const resultsDiv = document.getElementById("results");
-                   try {
-        const invoiceRes = await safeJson(`${API}:8083/api/invoices/history?page=0&size=1&sort=desc`);
-        const invoice = invoiceRes?.data?.content?.[0];
-
-        if (invoice) {
-          resultsDiv.innerHTML = `
-            <div class="result-box">
-              <p class="status-positive">Payment completed via NFC.</p>
-
-              <p><strong>Invoice Number:</strong> ${escapeHtml(invoice.invoiceNumber || "-")}</p>
-              <p><strong>Order ID:</strong> ${escapeHtml(invoice.orderId || "-")}</p>
-              <p><strong>Date:</strong> ${escapeHtml(invoice.createdAt || "-")}</p>
-              <p><strong>Payer:</strong> ${escapeHtml(invoice.payerType || "-")}</p>
-              <p><strong>Total:</strong> ${euro(invoice.grossTotal || 0)}</p>
-              <p><strong>VAT:</strong> ${euro(invoice.totalVat || 0)}</p>
-              <p><strong>Payment ID:</strong> ${escapeHtml(invoice.paymentId || "-")}</p>
-              <p><strong>Company:</strong> ${escapeHtml(invoice.companyName || "-")}</p>
-              <p><strong>VAT ID:</strong> ${escapeHtml(invoice.vatId || "-")}</p>
-
-              <a class="download-btn" href="${API}:8083/api/invoices/${encodeURIComponent(invoice.orderId)}" target="_blank">
-                Open Invoice PDF
-              </a>
-            </div>
-          `;
-        } else {
-          resultsDiv.innerHTML = `
-            <div class="result-box">
-              <p class="status-positive">NFC payment resolved, but no invoice was found yet.</p>
-            </div>
-          `;
+        } catch (e) {
+          console.error(e);
+          resultsDiv.innerHTML = `<div class="error">Failed to prepare NFC payment.<br>${escapeHtml(e.message)}</div>`;
         }
-      } catch (err) {
-        console.error(err);
-        resultsDiv.innerHTML = `
-          <div class="result-box">
-            <p class="status-positive">NFC payment resolved.</p>
-            <p class="error">Failed to load invoice history entry.</p>
-          </div>
-        `;
       }
-                    }
 
-                    pendingNfcOrder = null;
-                  }
-                } catch (e) {
-                  console.error("NFC polling failed:", e);
-                }
-              }, 2000);
-            }
-            async function checkout(payerType, businessDetails) {
+      async function prepareNfcBusinessPayment() {
+        const resultsDiv = document.getElementById("results");
+        const companyName = document.getElementById("companyName").value.trim();
+        const vatId = document.getElementById("vatId").value.trim();
+
+        if (!cart.length) {
+          alert("Your cart is empty.");
+          return;
+        }
+
+        if (!companyName) {
+          alert("Company name is required.");
+          return;
+        }
+
+        if (!vatId) {
+          alert("VAT ID is required.");
+          return;
+        }
+
+        const total = calculateCartTotal();
+        const orderId = "nfc-ui-" + Date.now();
+
+        const payload = {
+          cardToken: "demo-card-001",
+          orderId,
+          amount: Number(total.toFixed(2)),
+          payerType: "BUSINESS",
+          items: cart.map((item) => ({
+            productId: item.id,
+            quantity: item.qty,
+          })),
+          businessDetails: {
+            companyName,
+            vatId,
+          },
+        };
+
+        try {
+          const response = await safeJson(
+            `${API}:8088/api/nfc/checkout-intent`,
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payload),
+            },
+          );
+
+          pendingNfcOrder = {
+            orderId,
+            amount: payload.amount,
+            payerType: payload.payerType,
+            cardToken: payload.cardToken,
+          };
+
+          startNfcResolutionPolling();
+
+          resultsDiv.innerHTML = `
+            <div class="result-box">
+              <p class="status-positive">Business NFC payment prepared successfully.</p>
+              <p><strong>Order ID:</strong> ${escapeHtml(response.orderId)}</p>
+              <p><strong>Card Token:</strong> ${escapeHtml(response.cardToken)}</p>
+              <p><strong>Amount:</strong> ${euro(response.amount)}</p>
+              <p><strong>Payer Type:</strong> ${escapeHtml(response.payerType)}</p>
+              <p><strong>Company:</strong> ${escapeHtml(companyName)}</p>
+              <p><strong>VAT ID:</strong> ${escapeHtml(vatId)}</p>
+              <p><strong>Next Step:</strong> Tap the NFC card using the Android device.</p>
+            </div>
+          `;
+        } catch (e) {
+          console.error(e);
+          resultsDiv.innerHTML = `<div class="error">Failed to prepare business NFC payment.<br>${escapeHtml(e.message)}</div>`;
+        }
+      }
+
+      function startNfcResolutionPolling() {
+        if (!pendingNfcOrder) return;
+
+        if (nfcPollingInterval) {
+          clearInterval(nfcPollingInterval);
+        }
+
+        nfcPollingInterval = setInterval(async () => {
+          try {
+            const resolution = await safeJson(
+              `${API}:8088/api/nfc/last-resolution`,
+            );
+
+            if (
+              resolution &&
+              resolution.resolved === true &&
+              resolution.orderId === pendingNfcOrder.orderId
+            ) {
+              clearInterval(nfcPollingInterval);
+              nfcPollingInterval = null;
+
               const resultsDiv = document.getElementById("results");
 
-              if (!cart.length) {
-                alert("Your cart is empty.");
-                return;
-              }
-
-              const payload = {
-                orderId: "order-ui-" + Date.now(),
-                payerType,
-                items: cart.map((c) => ({
-                  productId: c.id,
-                  quantity: c.qty,
-                })),
-              };
-
-              if (payerType === "BUSINESS") {
-                payload.businessDetails = businessDetails;
-              }
-
               try {
-                setLoadingButtons(true);
+                const invoiceRes = await safeJson(
+                  `${API}:8083/api/invoices/history?page=0&size=1&sort=desc`,
+                );
+                const invoice = invoiceRes?.data?.content?.[0];
 
-                const result = await safeJson(`${API}:8083/api/orders/checkout`, {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify(payload),
-                });
+                if (invoice) {
+                  resultsDiv.innerHTML = `
+                    <div class="receipt-card" style="padding:20px;">
+                      <div class="receipt-head">
+                        <div class="receipt-title">NFC Payment Receipt</div>
+                        <div class="receipt-badge">Paid</div>
+                      </div>
 
-                await loadResults(result.data, payerType);
-                invoicePage = 0;
-                await renderTopStats();
-                await renderInvoiceHistory();
-                await renderTaxAnalytics();
-                await renderBlockchainExplorer();
-              } catch (e) {
-                console.error(e);
-                resultsDiv.innerHTML = `<div class="error">Checkout failed.<br>${escapeHtml(e.message)}</div>`;
-              } finally {
-                setLoadingButtons(false);
-              }
-            }
+                      <div class="receipt-grid">
+                        <div class="receipt-item">
+                          <div class="label">Invoice Number</div>
+                          <div class="value">${escapeHtml(invoice.invoiceNumber || "-")}</div>
+                        </div>
 
-            async function loadResults(orderData, payerType) {
-              const div = document.getElementById("results");
-              const orderId = orderData.orderId;
+                        <div class="receipt-item">
+                          <div class="label">Order ID</div>
+                          <div class="value">${escapeHtml(invoice.orderId || "-")}</div>
+                        </div>
 
-              try {
-                div.innerHTML = `<div class="loading-state"><div class="loading"><div class="spinner"></div><span>Loading order details...</span></div></div>`;
+                        <div class="receipt-item">
+                          <div class="label">Date</div>
+                          <div class="value">${escapeHtml(invoice.createdAt || "-")}</div>
+                        </div>
 
-                const [payment, vat, wallets, blockchain, linkedBlock] =
-                  await Promise.all([
-                    safeJson(
-                      `${API}:8084/api/payments/by-order/${encodeURIComponent(orderId)}`,
-                    ),
-                    safeJson(
-                      `${API}:8086/api/vat/records/${encodeURIComponent(orderId)}`,
-                    ),
-                    safeJson(`${API}:8085/api/wallets`),
-                    safeJson(`${API}:8087/api/blockchain/validate/details`),
-                    safeJson(
-                      `${API}:8087/api/blockchain/blocks/order/${encodeURIComponent(orderId)}`,
-                    ),
-                  ]);
+                        <div class="receipt-item">
+                          <div class="label">Payer</div>
+                          <div class="value">${escapeHtml(invoice.payerType || "-")}</div>
+                        </div>
 
-                const payerBadge =
-                  payerType === "BUSINESS"
-                    ? `<span class="badge badge-business">Business</span>`
-                    : `<span class="badge badge-private">Private</span>`;
+                        <div class="receipt-item">
+                          <div class="label">Total</div>
+                          <div class="value">${euro(invoice.grossTotal || 0)}</div>
+                        </div>
 
-                div.innerHTML = `
-                  <p class="status-positive">Order completed successfully.</p>
+                        <div class="receipt-item">
+                          <div class="label">VAT</div>
+                          <div class="value">${euro(invoice.totalVat || 0)}</div>
+                        </div>
 
-                  <div class="results-grid">
-                    <div class="result-box">
-                      <p><strong>Payer Type:</strong> ${payerBadge}</p>
-                      <p><strong>Invoice Number:</strong> ${escapeHtml(orderData.invoiceNumber || "-")}</p>
-                      <p><strong>Order ID:</strong> ${escapeHtml(orderId)}</p>
-                      <p><strong>Payment ID:</strong> ${escapeHtml(payment.data.id)}</p>
-                      ${orderData.companyName ? `<p><strong>Company:</strong> ${escapeHtml(orderData.companyName)}</p>` : ""}
-                      ${orderData.vatId ? `<p><strong>VAT ID:</strong> ${escapeHtml(orderData.vatId)}</p>` : ""}
+                        <div class="receipt-item">
+                          <div class="label">Payment ID</div>
+                          <div class="value">${escapeHtml(invoice.paymentId || "-")}</div>
+                        </div>
+
+                        <div class="receipt-item">
+                          <div class="label">Company</div>
+                          <div class="value">${escapeHtml(invoice.companyName || "-")}</div>
+                        </div>
+
+                        <div class="receipt-item">
+                          <div class="label">VAT ID</div>
+                          <div class="value">${escapeHtml(invoice.vatId || "-")}</div>
+                        </div>
+
+                        <div class="receipt-item">
+                          <div class="label">Tap Device</div>
+                          <div class="value">${escapeHtml(resolution.deviceId || "-")}</div>
+                        </div>
+                      </div>
+
+                      <a class="download-btn" href="${API}:8083/api/invoices/${encodeURIComponent(invoice.orderId)}" target="_blank">
+                        Open Invoice PDF
+                      </a>
+
+                      <p class="receipt-note">
+                        Payment was resolved through the NFC flow and completed successfully.
+                      </p>
                     </div>
-
+                  `;
+                } else {
+                  resultsDiv.innerHTML = `
                     <div class="result-box">
-                      <p><strong>Total:</strong> ${euro(vat.data.grossTotal)}</p>
-                      <p><strong>Net:</strong> ${euro(vat.data.netTotal)}</p>
-                      <p><strong>VAT:</strong> ${euro(vat.data.totalVat)}</p>
-                      <p><strong>Payment Status:</strong> ${escapeHtml(payment.data.status)}</p>
-                      <p><strong>Blockchain Status:</strong> ${
-                        blockchain.data.valid
-                          ? `<span class="badge-valid">Valid</span>`
-                          : `<span class="badge-invalid">Invalid</span>`
-                      }</p>
+                      <p class="status-positive">NFC payment resolved, but no invoice was found yet.</p>
                     </div>
+                  `;
+                }
+              } catch (err) {
+                console.error(err);
+                resultsDiv.innerHTML = `
+                  <div class="result-box">
+                    <p class="status-positive">NFC payment resolved.</p>
+                    <p class="error">Failed to load invoice history entry.</p>
                   </div>
-
-                  <div class="result-box" style="margin-top: 14px;">
-                    <p><strong>Wallets</strong></p>
-                    ${wallets.data.map((w) => `<p>${escapeHtml(w.type)}: ${euro(w.balance)}</p>`).join("")}
-                  </div>
-                  <div class="result-box" style="margin-top: 14px;">
-        <p><strong>Linked Blockchain Block</strong></p>
-
-        <p><strong>Block Index:</strong> ${escapeHtml(linkedBlock.data.blockIndex)}</p>
-        <p><strong>Order ID:</strong> ${escapeHtml(linkedBlock.data.orderId)}</p>
-
-        <div class="hash-box">Hash: ${escapeHtml(linkedBlock.data.hash)}</div>
-        <div class="hash-box">Previous Hash: ${escapeHtml(linkedBlock.data.previousHash)}</div>
-      </div>
-
-                  <a class="download-btn" href="${API}:8083/api/invoices/${encodeURIComponent(orderId)}" target="_blank">Open Invoice PDF</a>
                 `;
-
-                cart = [];
-                renderCart();
-                document.getElementById("companyName").value = "";
-                document.getElementById("vatId").value = "";
-                document.getElementById("businessForm").classList.add("hidden");
-              } catch (e) {
-                console.error(e);
-                div.innerHTML = `<div class="error">Failed to load results.<br>${escapeHtml(e.message)}</div>`;
               }
-            }
 
-            (async function init() {
-              await loadMenu();
+              pendingNfcOrder = null;
+              cart = [];
               renderCart();
+              document.getElementById("companyName").value = "";
+              document.getElementById("vatId").value = "";
+              document.getElementById("businessForm").classList.add("hidden");
+              selectedBusinessPaymentMode = null;
+
               await renderTopStats();
               await renderInvoiceHistory();
               await renderTaxAnalytics();
               await renderBlockchainExplorer();
-            })();
+            }
+          } catch (e) {
+            console.error("NFC polling failed:", e);
+          }
+        }, 2000);
+      }
+
+      async function checkout(payerType, businessDetails) {
+        const resultsDiv = document.getElementById("results");
+
+        if (!cart.length) {
+          alert("Your cart is empty.");
+          return;
+        }
+
+        const payload = {
+          orderId: "order-ui-" + Date.now(),
+          payerType,
+          items: cart.map((c) => ({
+            productId: c.id,
+            quantity: c.qty,
+          })),
+        };
+
+        if (payerType === "BUSINESS") {
+          payload.businessDetails = businessDetails;
+        }
+
+        try {
+          const result = await safeJson(`${API}:8083/api/orders/checkout`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          });
+
+          await loadResults(result.data, payerType);
+          invoicePage = 0;
+          await renderTopStats();
+          await renderInvoiceHistory();
+          await renderTaxAnalytics();
+          await renderBlockchainExplorer();
+        } catch (e) {
+          console.error(e);
+          resultsDiv.innerHTML = `<div class="error">Checkout failed.<br>${escapeHtml(e.message)}</div>`;
+        }
+      }
+
+      async function loadResults(orderData, payerType) {
+        const div = document.getElementById("results");
+        const orderId = orderData.orderId;
+
+        try {
+          div.innerHTML = `<div class="loading-state"><div class="loading"><div class="spinner"></div><span>Loading order details...</span></div></div>`;
+
+          const [payment, vat, wallets, blockchain, linkedBlock] =
+            await Promise.all([
+              safeJson(
+                `${API}:8084/api/payments/by-order/${encodeURIComponent(orderId)}`,
+              ),
+              safeJson(
+                `${API}:8086/api/vat/records/${encodeURIComponent(orderId)}`,
+              ),
+              safeJson(`${API}:8085/api/wallets`),
+              safeJson(`${API}:8087/api/blockchain/validate/details`),
+              safeJson(
+                `${API}:8087/api/blockchain/blocks/order/${encodeURIComponent(orderId)}`,
+              ),
+            ]);
+
+          const payerBadge =
+            payerType === "BUSINESS"
+              ? `<span class="badge badge-business">Business</span>`
+              : `<span class="badge badge-private">Private</span>`;
+
+          div.innerHTML = `
+            <p class="status-positive">Order completed successfully.</p>
+
+            <div class="results-grid">
+              <div class="result-box">
+                <p><strong>Payer Type:</strong> ${payerBadge}</p>
+                <p><strong>Invoice Number:</strong> ${escapeHtml(orderData.invoiceNumber || "-")}</p>
+                <p><strong>Order ID:</strong> ${escapeHtml(orderId)}</p>
+                <p><strong>Payment ID:</strong> ${escapeHtml(payment.data.id)}</p>
+                ${orderData.companyName ? `<p><strong>Company:</strong> ${escapeHtml(orderData.companyName)}</p>` : ""}
+                ${orderData.vatId ? `<p><strong>VAT ID:</strong> ${escapeHtml(orderData.vatId)}</p>` : ""}
+              </div>
+
+              <div class="result-box">
+                <p><strong>Total:</strong> ${euro(vat.data.grossTotal)}</p>
+                <p><strong>Net:</strong> ${euro(vat.data.netTotal)}</p>
+                <p><strong>VAT:</strong> ${euro(vat.data.totalVat)}</p>
+                <p><strong>Payment Status:</strong> ${escapeHtml(payment.data.status)}</p>
+                <p><strong>Blockchain Status:</strong> ${
+                  blockchain.data.valid
+                    ? `<span class="badge-valid">Valid</span>`
+                    : `<span class="badge-invalid">Invalid</span>`
+                }</p>
+              </div>
+            </div>
+
+            <div class="result-box" style="margin-top: 14px;">
+              <p><strong>Wallets</strong></p>
+              ${wallets.data.map((w) => `<p>${escapeHtml(w.type)}: ${euro(w.balance)}</p>`).join("")}
+            </div>
+
+            <div class="result-box" style="margin-top: 14px;">
+              <p><strong>Linked Blockchain Block</strong></p>
+              <p><strong>Block Index:</strong> ${escapeHtml(linkedBlock.data.blockIndex)}</p>
+              <p><strong>Order ID:</strong> ${escapeHtml(linkedBlock.data.orderId)}</p>
+              <div class="hash-box">Hash: ${escapeHtml(linkedBlock.data.hash)}</div>
+              <div class="hash-box">Previous Hash: ${escapeHtml(linkedBlock.data.previousHash)}</div>
+            </div>
+
+            <a class="download-btn" href="${API}:8083/api/invoices/${encodeURIComponent(orderId)}" target="_blank">Open Invoice PDF</a>
+          `;
+
+          cart = [];
+          renderCart();
+          document.getElementById("companyName").value = "";
+          document.getElementById("vatId").value = "";
+          document.getElementById("businessForm").classList.add("hidden");
+          selectedBusinessPaymentMode = null;
+        } catch (e) {
+          console.error(e);
+          div.innerHTML = `<div class="error">Failed to load results.<br>${escapeHtml(e.message)}</div>`;
+        }
+      }
+
+      (async function init() {
+        await loadMenu();
+        renderCart();
+        await renderTopStats();
+        await renderInvoiceHistory();
+        await renderTaxAnalytics();
+        await renderBlockchainExplorer();
+      })();
     </script>
   </body>
 </html>
