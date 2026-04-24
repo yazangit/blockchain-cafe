@@ -207,8 +207,6 @@ This is a prototype system:
 
 **Yazan Al Hussein**
 
-Fintech & Blockchain Engineer  
-Focused on building transparent financial systems using distributed technologies.
 
 This project was developed as a practical demonstration of:
 
