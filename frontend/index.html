@@ -5,216 +5,78 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Blockchain Café</title>
     <style>
-      .blockchain-panel {
-        background: #111827;
-        color: #fff;
-        padding: 20px;
-        border-radius: 14px;
-        margin-top: 20px;
-      }
-
-      .blockchain-panel h2 {
-        margin: 0 0 14px;
-      }
-
-      .blockchain-grid {
+      /* ─── Receipt card — shown after a successful order ─── */
+      .receipt {
+        background: rgba(255, 255, 255, 0.82);
+        border: 1px solid rgba(0, 0, 0, 0.06);
+        border-radius: var(--radius-lg);
+        padding: 20px 22px;
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 12px;
+        gap: 0;
+      }
+
+      .receipt-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
         margin-bottom: 16px;
-      }
-
-      .blockchain-card {
-        background: rgba(255, 255, 255, 0.06);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 12px;
-        padding: 14px;
-      }
-
-      .blockchain-card .label {
-        font-size: 12px;
-        opacity: 0.75;
-        margin-bottom: 8px;
-      }
-
-      .blockchain-card .value {
-        font-size: 20px;
-        font-weight: 700;
-        word-break: break-word;
-      }
-
-      .blockchain-list {
-        display: grid;
         gap: 12px;
-        margin-top: 14px;
       }
 
-      .block-item {
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 12px;
-        padding: 14px;
-      }
-
-      .hash-box {
-        margin-top: 8px;
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 10px;
-        padding: 10px;
-        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-        font-size: 12px;
-        line-height: 1.5;
-        word-break: break-all;
-        color: rgba(255, 255, 255, 0.85);
-      }
-
-      .badge-valid {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 28px;
-        padding: 0 10px;
-        border-radius: 999px;
-        background: rgba(34, 197, 94, 0.15);
-        color: #86efac;
-        font-size: 12px;
+      .receipt-title {
+        font-size: 18px;
         font-weight: 700;
+        letter-spacing: -0.02em;
+        margin-bottom: 3px;
       }
 
-      .badge-invalid {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 28px;
-        padding: 0 10px;
-        border-radius: 999px;
-        background: rgba(239, 68, 68, 0.15);
-        color: #fca5a5;
-        font-size: 12px;
-        font-weight: 700;
-      }
-
-      @media (max-width: 900px) {
-        .blockchain-grid {
-          grid-template-columns: repeat(2, 1fr);
-        }
-      }
-
-      @media (max-width: 640px) {
-        .blockchain-grid {
-          grid-template-columns: 1fr;
-        }
-      }
-      .analytics {
-        background: #1e293b;
-        padding: 20px;
-        border-radius: 10px;
-        margin-top: 20px;
-        color: #fff;
-      }
-      .analytics h2 {
-        margin-top: 0;
-        margin-bottom: 16px;
-      }
-      .analytics-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 12px;
-        margin-bottom: 20px;
-      }
-      .analytics-card {
-        background: #0f172a;
-        padding: 14px;
-        border-radius: 10px;
-        border: 1px solid rgba(255, 255, 255, 0.08);
-      }
-      .analytics-card .label {
-        font-size: 12px;
-        opacity: 0.8;
-        margin-bottom: 8px;
-      }
-      .analytics-card .value {
-        font-size: 22px;
-        font-weight: bold;
-      }
-      .chart {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
-        gap: 12px;
-        align-items: end;
-        min-height: 240px;
-      }
-      .chart-col {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-      }
-      .chart-bars {
-        height: 180px;
-        display: flex;
-        align-items: end;
-        gap: 6px;
-      }
-      .bar {
-        width: 14px;
-        border-radius: 999px;
-        min-height: 6px;
-      }
-      .bar-gross {
-        background: #38bdf8;
-      }
-      .bar-net {
-        background: #22c55e;
-      }
-      .bar-vat {
-        background: #f59e0b;
-      }
-      .chart-label {
-        font-size: 12px;
-        opacity: 0.85;
-        text-align: center;
-        word-break: break-word;
-      }
-      .legend {
-        display: flex;
-        gap: 16px;
-        flex-wrap: wrap;
-        margin-bottom: 14px;
+      .receipt-subtitle {
         font-size: 13px;
-        opacity: 0.9;
+        color: var(--muted);
       }
-      .legend span {
+
+      .receipt-divider {
+        height: 1px;
+        background: rgba(0, 0, 0, 0.06);
+        margin: 14px 0;
+      }
+
+      .receipt-row {
         display: flex;
+        justify-content: space-between;
         align-items: center;
+        padding: 7px 0;
+        font-size: 14px;
+        gap: 12px;
+      }
+
+      .receipt-row-label { color: var(--muted); }
+      .receipt-row-val   { font-weight: 650; }
+
+      .receipt-row.total {
+        font-size: 18px;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        padding-top: 12px;
+        border-top: 1px solid rgba(0, 0, 0, 0.07);
+        margin-top: 6px;
+      }
+
+      .receipt-items {
+        display: grid;
+        gap: 6px;
+        margin-bottom: 4px;
+      }
+
+      .receipt-item {
+        display: flex;
+        justify-content: space-between;
+        font-size: 14px;
         gap: 8px;
       }
-      .dot {
-        width: 10px;
-        height: 10px;
-        border-radius: 999px;
-        display: inline-block;
-      }
-      .dot-gross {
-        background: #38bdf8;
-      }
-      .dot-net {
-        background: #22c55e;
-      }
-      .dot-vat {
-        background: #f59e0b;
-      }
-      @media (max-width: 900px) {
-        .analytics-grid {
-          grid-template-columns: repeat(2, 1fr);
-        }
-      }
-      @media (max-width: 640px) {
-        .analytics-grid {
-          grid-template-columns: 1fr;
-        }
-      }
+
+      .receipt-item-name { color: var(--text); }
+      .receipt-item-price { color: var(--muted); white-space: nowrap; }
       :root {
         --bg: #f5f5f7;
         --panel: rgba(255, 255, 255, 0.72);
@@ -324,36 +186,7 @@
         box-shadow: var(--shadow-soft);
       }
 
-      .stats-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 18px;
-        margin-bottom: 24px;
-      }
-
-      .stat-card {
-        background: var(--panel);
-        backdrop-filter: blur(24px);
-        -webkit-backdrop-filter: blur(24px);
-        border: 1px solid rgba(255, 255, 255, 0.65);
-        box-shadow: var(--shadow-soft);
-        border-radius: var(--radius-xl);
-        padding: 22px 22px 20px;
-      }
-
-      .stat-label {
-        font-size: 13px;
-        color: var(--muted);
-        margin-bottom: 10px;
-        font-weight: 600;
-      }
-
-      .stat-value {
-        font-size: 32px;
-        line-height: 1;
-        font-weight: 700;
-        letter-spacing: -0.04em;
-      }
+      /* Stats grid removed — internal data, not shown to customers */
 
       .dashboard {
         display: grid;
@@ -532,76 +365,7 @@
         gap: 8px;
       }
 
-      .invoice-summary {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 14px;
-        margin-bottom: 18px;
-      }
-
-      .invoice-summary-card {
-        background: rgba(255, 255, 255, 0.82);
-        border: 1px solid rgba(0, 0, 0, 0.05);
-        border-radius: var(--radius-lg);
-        padding: 16px 18px;
-      }
-
-      .invoice-summary-card .label {
-        color: var(--muted);
-        font-size: 12px;
-        margin-bottom: 6px;
-        font-weight: 600;
-      }
-
-      .invoice-summary-card .value {
-        font-size: 24px;
-        font-weight: 700;
-        letter-spacing: -0.03em;
-      }
-
-      .toolbar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 12px;
-        margin-bottom: 14px;
-        flex-wrap: wrap;
-      }
-
-      .filters {
-        display: grid;
-        grid-template-columns: 1.4fr 1fr 1fr auto auto;
-        gap: 10px;
-        margin-bottom: 18px;
-      }
-
-      .invoice-row-head {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        gap: 12px;
-        margin-bottom: 12px;
-      }
-
-      .invoice-row-title {
-        font-size: 16px;
-        font-weight: 650;
-        margin-bottom: 4px;
-      }
-
-      .invoice-row-grid {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 12px;
-      }
-
-      .pagination {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 12px;
-        margin-top: 18px;
-      }
+      /* Invoice history styles removed — search/filter/pagination only needed in tax-authority.html */
 
       .status-positive {
         color: var(--green);
@@ -744,11 +508,6 @@
         box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
       }
 
-      .clear-history {
-        background: #1d1d1f;
-        color: #fff;
-      }
-
       .download-btn {
         margin-top: 14px;
         padding: 0 18px;
@@ -889,18 +648,16 @@
         <div class="hero-copy">
           <h1>Blockchain Café</h1>
           <p>
-            A clean interface for crypto checkout, invoice history, VAT
-            tracking, and blockchain-backed payment transparency.
+            Order your favourite coffee, pay your way, and receive a
+            blockchain-verified invoice instantly.
           </p>
         </div>
         <div class="hero-badges">
-          <div class="badge-chip">Invoice History</div>
-          <div class="badge-chip">VAT Summary</div>
-          <div class="badge-chip">Blockchain Validation</div>
+          <div class="badge-chip">Fresh Menu</div>
+          <div class="badge-chip">Private & Business Checkout</div>
+          <div class="badge-chip">Instant Invoice</div>
         </div>
       </div>
-
-      <div id="topStats" class="stats-grid"></div>
 
       <div class="dashboard">
         <div class="column">
@@ -921,28 +678,17 @@
             </div>
           </div>
 
-          <div class="card">
+          <!-- Last order receipt — hidden until a checkout completes -->
+          <div class="card hidden" id="receiptCard">
             <div class="card-head">
               <div>
-                <h2>Order Result</h2>
-                <p>
-                  Checkout result, VAT split, wallets, and blockchain
-                  validation.
-                </p>
+                <h2>Your Receipt</h2>
+                <p>Summary of your completed order.</p>
               </div>
             </div>
             <div class="card-body">
-              <div id="results">No results yet.</div>
+              <div id="results"></div>
             </div>
-          </div>
-
-          <div class="analytics">
-            <h2>Tax Analytics</h2>
-            <div id="taxAnalytics">No tax analytics yet</div>
-          </div>
-          <div class="blockchain-panel">
-            <h2>Blockchain Explorer</h2>
-            <div id="blockchainExplorer">No blockchain data yet</div>
           </div>
         </div>
 
@@ -999,52 +745,6 @@
             </div>
           </div>
 
-          <div class="card">
-            <div class="card-head">
-              <div>
-                <h2>Invoice History</h2>
-                <p>Search, filter, sort, and paginate stored invoices.</p>
-              </div>
-            </div>
-            <div class="card-body">
-              <div id="invoiceSummary" class="invoice-summary"></div>
-
-              <div class="toolbar">
-                <div class="subtle">
-                  Manage invoice history directly from the interface.
-                </div>
-                <button class="clear-history" onclick="clearInvoiceHistory()">
-                  Delete All History
-                </button>
-              </div>
-
-              <div class="filters">
-                <input
-                  id="invoiceSearch"
-                  type="text"
-                  placeholder="Search by invoice number"
-                />
-                <select id="payerTypeFilter">
-                  <option value="">All payer types</option>
-                  <option value="PRIVATE">Private</option>
-                  <option value="BUSINESS">Business</option>
-                </select>
-                <select id="sortFilter">
-                  <option value="desc">Newest first</option>
-                  <option value="asc">Oldest first</option>
-                </select>
-                <button class="secondary-btn" onclick="applyInvoiceFilters()">
-                  Apply
-                </button>
-                <button class="secondary-btn" onclick="resetInvoiceFilters()">
-                  Reset
-                </button>
-              </div>
-
-              <div id="invoiceHistory">No invoices yet.</div>
-              <div id="invoicePagination" class="pagination"></div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -1053,103 +753,15 @@
       const API = "http://localhost";
 
       let products = [];
-      let cart = [];
+      let cart     = [];
 
-      let invoicePage = 0;
-      let invoiceSize = 5;
-      let invoiceSearch = "";
-      let invoicePayerType = "";
-      let invoiceSort = "desc";
-
-      async function renderBlockchainExplorer() {
-        const container = document.getElementById("blockchainExplorer");
-
-        try {
-          const [overviewJson, validationJson, blocksJson] = await Promise.all([
-            safeJson(`${API}:8087/api/blockchain/overview`),
-            safeJson(`${API}:8087/api/blockchain/validate/details`),
-            safeJson(`${API}:8087/api/blockchain/blocks`),
-          ]);
-
-          const overview = overviewJson.data;
-          const validation = validationJson.data;
-          const blocks = blocksJson.data || [];
-          const latestBlocks = [...blocks].reverse().slice(0, 5);
-
-          container.innerHTML = `
-      <div class="blockchain-grid">
-        <div class="blockchain-card">
-          <div class="label">Total Blocks</div>
-          <div class="value">${overview.totalBlocks}</div>
-        </div>
-        <div class="blockchain-card">
-          <div class="label">Latest Block Index</div>
-          <div class="value">${overview.latestBlockIndex}</div>
-        </div>
-        <div class="blockchain-card">
-          <div class="label">Chain VAT Total</div>
-          <div class="value">€${Number(overview.totalVat || 0).toFixed(2)}</div>
-        </div>
-        <div class="blockchain-card">
-          <div class="label">Validation</div>
-          <div class="value">
-            ${
-              validation.valid
-                ? `<span class="badge-valid">Valid</span>`
-                : `<span class="badge-invalid">Invalid</span>`
-            }
-          </div>
-        </div>
-      </div>
-
-      <div class="blockchain-card">
-        <div class="label">Validation Reason</div>
-        <div class="value" style="font-size:16px;">${escapeHtml(validation.message || "-")}</div>
-        <div class="hash-box">Stored Hash: ${escapeHtml(validation.storedHash || "-")}</div>
-        <div class="hash-box">Recalculated Hash: ${escapeHtml(validation.recalculatedHash || "-")}</div>
-        <div class="hash-box">Expected Previous Hash: ${escapeHtml(validation.expectedPreviousHash || "-")}</div>
-        <div class="hash-box">Actual Previous Hash: ${escapeHtml(validation.actualPreviousHash || "-")}</div>
-      </div>
-
-      <div class="blockchain-list">
-        ${
-          latestBlocks.length
-            ? latestBlocks
-                .map(
-                  (block) => `
-          <div class="block-item">
-            <div><strong>Block #${escapeHtml(block.blockIndex)}</strong></div>
-            <div class="subtle">Order: ${escapeHtml(block.orderId)}</div>
-            <div class="subtle">VAT: €${Number(block.totalVat || 0).toFixed(2)}</div>
-            <div class="hash-box">Hash: ${escapeHtml(block.hash)}</div>
-            <div class="hash-box">Previous Hash: ${escapeHtml(block.previousHash)}</div>
-          </div>
-        `,
-                )
-                .join("")
-            : `<div class="subtle">No blocks yet</div>`
-        }
-      </div>
-    `;
-        } catch (e) {
-          console.error(e);
-          container.innerHTML = `<div class="error">Failed to load blockchain explorer.<br>${escapeHtml(e.message)}</div>`;
-        }
-      }
-
+      /* ─── Generic fetch wrapper ─── */
       async function safeJson(url, options) {
-        const res = await fetch(url, options);
+        const res  = await fetch(url, options);
         const text = await res.text();
-        let json = null;
-
-        try {
-          json = JSON.parse(text);
-        } catch (_) {}
-
-        if (!res.ok) {
-          throw new Error(`${url} -> ${res.status} ${text}`);
-        }
-
+        let json   = null;
+        try { json = JSON.parse(text); } catch (_) {}
+        if (!res.ok) throw new Error(`${url} -> ${res.status} ${text}`);
         return json;
       }
 
@@ -1166,117 +778,9 @@
           .replaceAll("'", "&#39;");
       }
 
-      async function renderTaxAnalytics() {
-        const container = document.getElementById("taxAnalytics");
-
-        try {
-          const json = await safeJson(`${API}:8086/api/vat/analytics/tax`);
-          const analytics = json.data;
-          const points = analytics.points || [];
-
-          const maxValue = Math.max(
-            1,
-            ...points.map((p) => Number(p.grossTotal || 0)),
-            ...points.map((p) => Number(p.netTotal || 0)),
-            ...points.map((p) => Number(p.totalVat || 0)),
-          );
-
-          const chartHtml = points.length
-            ? `
-              <div class="legend">
-                <span><i class="dot dot-gross"></i>Gross</span>
-                <span><i class="dot dot-net"></i>Net</span>
-                <span><i class="dot dot-vat"></i>VAT</span>
-              </div>
-              <div class="chart">
-                ${points
-                  .map((point) => {
-                    const grossHeight = Math.max(
-                      6,
-                      (Number(point.grossTotal || 0) / maxValue) * 100,
-                    );
-                    const netHeight = Math.max(
-                      6,
-                      (Number(point.netTotal || 0) / maxValue) * 100,
-                    );
-                    const vatHeight = Math.max(
-                      6,
-                      (Number(point.totalVat || 0) / maxValue) * 100,
-                    );
-
-                    return `
-                      <div class="chart-col">
-                        <div class="chart-bars">
-                          <div class="bar bar-gross" style="height:${grossHeight}%"></div>
-                          <div class="bar bar-net" style="height:${netHeight}%"></div>
-                          <div class="bar bar-vat" style="height:${vatHeight}%"></div>
-                        </div>
-                        <div class="chart-label">${escapeHtml(point.label)}</div>
-                      </div>
-                    `;
-                  })
-                  .join("")}
-              </div>
-            `
-            : `<div class="subtle">No tax records yet</div>`;
-
-          container.innerHTML = `
-            <div class="analytics-grid">
-              <div class="analytics-card">
-                <div class="label">Gross Total</div>
-                <div class="value">€${Number(analytics.grossTotal || 0).toFixed(2)}</div>
-              </div>
-              <div class="analytics-card">
-                <div class="label">Net Total</div>
-                <div class="value">€${Number(analytics.netTotal || 0).toFixed(2)}</div>
-              </div>
-              <div class="analytics-card">
-                <div class="label">VAT Total</div>
-                <div class="value">€${Number(analytics.totalVat || 0).toFixed(2)}</div>
-              </div>
-              <div class="analytics-card">
-                <div class="label">VAT 19 / VAT 7</div>
-                <div class="value">€${Number(analytics.vat19Total || 0).toFixed(2)} / €${Number(analytics.vat7Total || 0).toFixed(2)}</div>
-              </div>
-            </div>
-
-            <div class="analytics-grid">
-              <div class="analytics-card">
-                <div class="label">Private VAT</div>
-                <div class="value">€${Number(analytics.privateVatTotal || 0).toFixed(2)}</div>
-              </div>
-              <div class="analytics-card">
-                <div class="label">Business VAT</div>
-                <div class="value">€${Number(analytics.businessVatTotal || 0).toFixed(2)}</div>
-              </div>
-              <div class="analytics-card">
-                <div class="label">Records</div>
-                <div class="value">${analytics.totalRecords || 0}</div>
-              </div>
-            </div>
-
-            ${chartHtml}
-          `;
-        } catch (e) {
-          console.error(e);
-          container.innerHTML = `<div class="error">Failed to load tax analytics.<br>${escapeHtml(e.message)}</div>`;
-        }
-      }
-
-      function setLoadingButtons(loading) {
-        document.getElementById("privateBtn").disabled = loading;
-        document.getElementById("businessBtn").disabled = loading;
-        document.getElementById("privateBtn").textContent = loading
-          ? "Processing..."
-          : "Checkout as Private";
-        document.getElementById("businessBtn").textContent = loading
-          ? "Processing..."
-          : "Checkout as Business";
-      }
-
+      /* ─── Menu ─── */
       async function loadMenu() {
         const menuDiv = document.getElementById("menu");
-
         try {
           const json = await safeJson(`${API}:8082/api/products`);
           products = (json.data || []).filter((p) => p.active !== false);
@@ -1289,33 +793,27 @@
 
       function renderMenu() {
         const menuDiv = document.getElementById("menu");
-
         if (!products.length) {
           menuDiv.innerHTML = `<div class="empty-state">No active products returned from the backend.</div>`;
           return;
         }
-
-        menuDiv.innerHTML = `<div class="menu-grid">${products
-          .map(
-            (p) => `
-              <div class="menu-item">
-                <div class="menu-item-top">
-                  <div>
-                    <div class="menu-item-name">${escapeHtml(p.name)}</div>
-                    <div class="menu-item-meta">
-                      Product ID: ${escapeHtml(p.id)}<br>
-                      VAT Rate: ${escapeHtml(p.vatRateType || "-")}
-                    </div>
-                  </div>
-                  <div class="price">${euro(p.priceGross)}</div>
+        menuDiv.innerHTML = `<div class="menu-grid">${products.map((p) => `
+          <div class="menu-item">
+            <div class="menu-item-top">
+              <div>
+                <div class="menu-item-name">${escapeHtml(p.name)}</div>
+                <div class="menu-item-meta">
+                  VAT Rate: ${escapeHtml(p.vatRateType || "-")}
                 </div>
-                <button class="add" onclick="addToCart('${escapeHtml(p.id)}')">Add to Cart</button>
               </div>
-            `,
-          )
-          .join("")}</div>`;
+              <div class="price">${euro(p.priceGross)}</div>
+            </div>
+            <button class="add" onclick="addToCart('${escapeHtml(p.id)}')">Add to Cart</button>
+          </div>
+        `).join("")}</div>`;
       }
 
+      /* ─── Cart ─── */
       function addToCart(id) {
         const item = cart.find((i) => String(i.id) === String(id));
         if (item) item.qty++;
@@ -1325,18 +823,14 @@
 
       function increaseQty(id) {
         const item = cart.find((i) => String(i.id) === String(id));
-        if (!item) return;
-        item.qty++;
-        renderCart();
+        if (item) { item.qty++; renderCart(); }
       }
 
       function decreaseQty(id) {
         const item = cart.find((i) => String(i.id) === String(id));
         if (!item) return;
         item.qty--;
-        if (item.qty <= 0) {
-          cart = cart.filter((i) => String(i.id) !== String(id));
-        }
+        if (item.qty <= 0) cart = cart.filter((i) => String(i.id) !== String(id));
         renderCart();
       }
 
@@ -1353,8 +847,7 @@
       function calculateCartTotal() {
         return cart.reduce((sum, c) => {
           const p = products.find((x) => String(x.id) === String(c.id));
-          if (!p) return sum;
-          return sum + Number(p.priceGross) * c.qty;
+          return p ? sum + Number(p.priceGross) * c.qty : sum;
         }, 0);
       }
 
@@ -1363,7 +856,7 @@
       }
 
       function renderCart() {
-        const cartDiv = document.getElementById("cartItems");
+        const cartDiv    = document.getElementById("cartItems");
         const summaryDiv = document.getElementById("cartSummary");
 
         if (!cart.length) {
@@ -1375,390 +868,210 @@
           return;
         }
 
-        cartDiv.innerHTML = `<div class="cart-list">${cart
-          .map((c) => {
-            const p = products.find((x) => String(x.id) === String(c.id));
-            const lineTotal = p ? Number(p.priceGross) * c.qty : 0;
-
-            return `
-              <div class="cart-item">
-                <div class="cart-item-inner">
-                  <div>
-                    <div class="cart-item-name">${escapeHtml(p ? p.name : c.id)}</div>
-                    <div class="subtle">Line total: ${euro(lineTotal)}</div>
-                  </div>
-
-                  <div class="qty-controls">
-                    <button class="qty-btn" onclick="decreaseQty('${escapeHtml(c.id)}')">−</button>
-                    <strong>${c.qty}</strong>
-                    <button class="qty-btn" onclick="increaseQty('${escapeHtml(c.id)}')">+</button>
-                    <button class="qty-btn remove-btn" onclick="removeFromCart('${escapeHtml(c.id)}')">×</button>
-                  </div>
+        cartDiv.innerHTML = `<div class="cart-list">${cart.map((c) => {
+          const p         = products.find((x) => String(x.id) === String(c.id));
+          const lineTotal = p ? Number(p.priceGross) * c.qty : 0;
+          return `
+            <div class="cart-item">
+              <div class="cart-item-inner">
+                <div>
+                  <div class="cart-item-name">${escapeHtml(p ? p.name : c.id)}</div>
+                  <div class="subtle">Line total: ${euro(lineTotal)}</div>
+                </div>
+                <div class="qty-controls">
+                  <button class="qty-btn" onclick="decreaseQty('${escapeHtml(c.id)}')">−</button>
+                  <strong>${c.qty}</strong>
+                  <button class="qty-btn" onclick="increaseQty('${escapeHtml(c.id)}')">+</button>
+                  <button class="qty-btn remove-btn" onclick="removeFromCart('${escapeHtml(c.id)}')">×</button>
                 </div>
               </div>
-            `;
-          })
-          .join("")}</div>`;
+            </div>
+          `;
+        }).join("")}</div>`;
 
-        const total = calculateCartTotal();
+        const total     = calculateCartTotal();
         const itemCount = calculateCartItemCount();
-
         summaryDiv.innerHTML = `
           <div class="summary-row"><span>Items</span><strong>${itemCount}</strong></div>
           <div class="summary-row summary-total"><span>Total</span><strong>${euro(total)}</strong></div>
         `;
       }
 
+      /* ─── Business form toggle ─── */
       function toggleBusinessForm() {
         document.getElementById("businessForm").classList.toggle("hidden");
       }
 
-      async function renderTopStats() {
-        const container = document.getElementById("topStats");
-
-        try {
-          const summaryJson = await safeJson(
-            `${API}:8083/api/invoices/summary`,
-          );
-          const s = summaryJson.data;
-
-          container.innerHTML = `
-            <div class="stat-card">
-              <div class="stat-label">Invoices</div>
-              <div class="stat-value">${s.count}</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-label">Revenue</div>
-              <div class="stat-value">${euro(s.totalAmount)}</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-label">Average Invoice</div>
-              <div class="stat-value">${euro(s.averageAmount)}</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-label">Latest Invoice</div>
-              <div class="stat-value" style="font-size: 18px;">${escapeHtml(s.lastInvoiceNumber || "-")}</div>
-            </div>
-          `;
-        } catch (e) {
-          console.error(e);
-          container.innerHTML = `
-            <div class="stat-card"><div class="stat-label">Invoices</div><div class="stat-value">-</div></div>
-            <div class="stat-card"><div class="stat-label">Revenue</div><div class="stat-value">-</div></div>
-            <div class="stat-card"><div class="stat-label">Average Invoice</div><div class="stat-value">-</div></div>
-            <div class="stat-card"><div class="stat-label">Latest Invoice</div><div class="stat-value">-</div></div>
-          `;
-        }
+      /* ─── Checkout buttons state ─── */
+      function setLoadingButtons(loading) {
+        document.getElementById("privateBtn").disabled = loading;
+        document.getElementById("businessBtn").disabled = loading;
+        document.getElementById("privateBtn").textContent = loading ? "Processing..." : "Checkout as Private";
+        document.getElementById("businessBtn").textContent = loading ? "Processing..." : "Checkout as Business";
       }
 
-      function buildInvoiceHistoryUrl() {
-        const params = new URLSearchParams();
-        params.set("page", invoicePage);
-        params.set("size", invoiceSize);
-        params.set("sort", invoiceSort);
-
-        if (invoicePayerType) params.set("payerType", invoicePayerType);
-        if (invoiceSearch) params.set("invoiceNumber", invoiceSearch);
-
-        return `${API}:8083/api/invoices/history?${params.toString()}`;
-      }
-
-      async function renderInvoiceHistory() {
-        const container = document.getElementById("invoiceHistory");
-        const summaryContainer = document.getElementById("invoiceSummary");
-        const paginationContainer =
-          document.getElementById("invoicePagination");
-
-        try {
-          const [historyJson, summaryJson] = await Promise.all([
-            safeJson(buildInvoiceHistoryUrl()),
-            safeJson(`${API}:8083/api/invoices/summary`),
-          ]);
-
-          const pageData = historyJson.data;
-          const invoices = pageData.content || [];
-          const summary = summaryJson.data;
-
-          summaryContainer.innerHTML = `
-            <div class="invoice-summary-card">
-              <div class="label">Invoice Count</div>
-              <div class="value">${summary.count}</div>
-            </div>
-            <div class="invoice-summary-card">
-              <div class="label">Total Value</div>
-              <div class="value">${euro(summary.totalAmount)}</div>
-            </div>
-            <div class="invoice-summary-card">
-              <div class="label">Business Orders</div>
-              <div class="value">${summary.businessCount}</div>
-            </div>
-            <div class="invoice-summary-card">
-              <div class="label">Private Orders</div>
-              <div class="value">${summary.privateCount}</div>
-            </div>
-          `;
-
-          if (!invoices.length) {
-            container.innerHTML = `<div class="empty-state">No invoices found.</div>`;
-            paginationContainer.innerHTML = "";
-            return;
-          }
-
-          container.innerHTML = `<div class="invoice-list">${invoices
-            .map((inv) => {
-              const payerBadge =
-                inv.payerType === "BUSINESS"
-                  ? `<span class="badge badge-business">Business</span>`
-                  : `<span class="badge badge-private">Private</span>`;
-
-              return `
-                <div class="invoice-row">
-                  <div class="invoice-row-head">
-                    <div>
-                      <div class="invoice-row-title">${escapeHtml(inv.invoiceNumber || "-")}</div>
-                      <div class="subtle">Order: ${escapeHtml(inv.orderId)}</div>
-                    </div>
-                    <div>${payerBadge}</div>
-                  </div>
-
-                  <div class="invoice-row-grid">
-                    <div><span class="subtle">Date</span><br><strong>${escapeHtml(inv.createdAt || "-")}</strong></div>
-                    <div><span class="subtle">Total</span><br><strong>${euro(inv.grossTotal)}</strong></div>
-                    <div><span class="subtle">Payment ID</span><br><strong>${escapeHtml(inv.paymentId || "-")}</strong></div>
-                    <div><span class="subtle">Company</span><br><strong>${escapeHtml(inv.companyName || "-")}</strong></div>
-                    <div><span class="subtle">VAT ID</span><br><strong>${escapeHtml(inv.vatId || "-")}</strong></div>
-                    <div><span class="subtle">VAT</span><br><strong>${euro(inv.totalVat)}</strong></div>
-                  </div>
-
-                  <a class="download-btn" href="${API}:8083/api/invoices/${encodeURIComponent(inv.orderId)}" target="_blank">Open Invoice</a>
-                </div>
-              `;
-            })
-            .join("")}</div>`;
-
-          paginationContainer.innerHTML = `
-            <button class="secondary-btn" onclick="previousInvoicePage()" ${pageData.first ? "disabled" : ""}>Previous</button>
-            <span class="subtle">Page ${pageData.page + 1} of ${pageData.totalPages || 1}</span>
-            <button class="secondary-btn" onclick="nextInvoicePage()" ${pageData.last ? "disabled" : ""}>Next</button>
-          `;
-        } catch (e) {
-          console.error(e);
-          summaryContainer.innerHTML = "";
-          container.innerHTML = `<div class="error">Failed to load invoice history.<br>${escapeHtml(e.message)}</div>`;
-          paginationContainer.innerHTML = "";
-        }
-      }
-
-      function applyInvoiceFilters() {
-        invoiceSearch = document.getElementById("invoiceSearch").value.trim();
-        invoicePayerType = document.getElementById("payerTypeFilter").value;
-        invoiceSort = document.getElementById("sortFilter").value;
-        invoicePage = 0;
-        renderInvoiceHistory();
-      }
-
-      function resetInvoiceFilters() {
-        invoiceSearch = "";
-        invoicePayerType = "";
-        invoiceSort = "desc";
-        invoicePage = 0;
-
-        document.getElementById("invoiceSearch").value = "";
-        document.getElementById("payerTypeFilter").value = "";
-        document.getElementById("sortFilter").value = "desc";
-
-        renderInvoiceHistory();
-      }
-
-      function previousInvoicePage() {
-        if (invoicePage > 0) {
-          invoicePage--;
-          renderInvoiceHistory();
-        }
-      }
-
-      function nextInvoicePage() {
-        invoicePage++;
-        renderInvoiceHistory();
-      }
-
-      async function clearInvoiceHistory() {
-        const confirmed = confirm(
-          "Are you sure you want to delete all invoice history?",
-        );
-        if (!confirmed) return;
-
-        try {
-          await safeJson(`${API}:8083/api/invoices/history`, {
-            method: "DELETE",
-          });
-          invoicePage = 0;
-          await renderTopStats();
-          await renderInvoiceHistory();
-          await renderTaxAnalytics();
-          await renderBlockchainExplorer();
-          document.getElementById("results").innerHTML =
-            `<p class="status-positive">Invoice history cleared successfully.</p>`;
-        } catch (e) {
-          console.error(e);
-          document.getElementById("results").innerHTML =
-            `<div class="error">Failed to clear history.<br>${escapeHtml(e.message)}</div>`;
-        }
-      }
-
+      /* ─── Checkout flow ─── */
       function checkoutPrivate() {
         checkout("PRIVATE", null);
       }
 
       function checkoutBusiness() {
         const companyName = document.getElementById("companyName").value.trim();
-        const vatId = document.getElementById("vatId").value.trim();
-
-        if (!companyName) {
-          alert("Company name is required.");
-          return;
-        }
-
-        if (!vatId) {
-          alert("VAT ID is required.");
-          return;
-        }
-
+        const vatId       = document.getElementById("vatId").value.trim();
+        if (!companyName) { alert("Company name is required."); return; }
+        if (!vatId)       { alert("VAT ID is required.");       return; }
         checkout("BUSINESS", { companyName, vatId });
       }
 
       async function checkout(payerType, businessDetails) {
-        const resultsDiv = document.getElementById("results");
-
-        if (!cart.length) {
-          alert("Your cart is empty.");
-          return;
-        }
+        if (!cart.length) { alert("Your cart is empty."); return; }
 
         const payload = {
           orderId: "order-ui-" + Date.now(),
           payerType,
-          items: cart.map((c) => ({
-            productId: c.id,
-            quantity: c.qty,
-          })),
+          items: cart.map((c) => ({ productId: c.id, quantity: c.qty })),
         };
-
-        if (payerType === "BUSINESS") {
-          payload.businessDetails = businessDetails;
-        }
+        if (payerType === "BUSINESS") payload.businessDetails = businessDetails;
 
         try {
           setLoadingButtons(true);
 
           const result = await safeJson(`${API}:8083/api/orders/checkout`, {
-            method: "POST",
+            method:  "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload),
+            body:    JSON.stringify(payload),
           });
 
-          await loadResults(result.data, payerType);
-          invoicePage = 0;
-          await renderTopStats();
-          await renderInvoiceHistory();
-          await renderTaxAnalytics();
-          await renderBlockchainExplorer();
+          /* Snapshot the cart items before clearing for the receipt */
+          const orderedItems = cart.map((c) => {
+            const p = products.find((x) => String(x.id) === String(c.id));
+            return { name: p ? p.name : c.id, qty: c.qty, price: p ? Number(p.priceGross) * c.qty : 0 };
+          });
+
+          await renderReceipt(result.data, payerType, orderedItems);
+
+          /* Clear cart and forms after a successful order */
+          cart = [];
+          renderCart();
+          document.getElementById("companyName").value = "";
+          document.getElementById("vatId").value       = "";
+          document.getElementById("businessForm").classList.add("hidden");
+
         } catch (e) {
           console.error(e);
-          resultsDiv.innerHTML = `<div class="error">Checkout failed.<br>${escapeHtml(e.message)}</div>`;
+          /* Show error inside the receipt card */
+          document.getElementById("receiptCard").classList.remove("hidden");
+          document.getElementById("results").innerHTML =
+            `<div class="error">Checkout failed.<br>${escapeHtml(e.message)}</div>`;
         } finally {
           setLoadingButtons(false);
         }
       }
 
-      async function loadResults(orderData, payerType) {
-        const div = document.getElementById("results");
-        const orderId = orderData.orderId;
+      /* ─── Receipt — shown to the customer after a successful checkout ─── */
+      async function renderReceipt(orderData, payerType, orderedItems) {
+        const resultsDiv = document.getElementById("results");
+        const orderId    = orderData.orderId;
+
+        /* Reveal the receipt card */
+        document.getElementById("receiptCard").classList.remove("hidden");
+
+        resultsDiv.innerHTML = `
+          <div class="loading-state">
+            <div class="loading"><div class="spinner"></div><span>Loading your receipt...</span></div>
+          </div>`;
 
         try {
-          div.innerHTML = `<div class="loading-state"><div class="loading"><div class="spinner"></div><span>Loading order details...</span></div></div>`;
+          /* Fetch VAT breakdown and payment confirmation for the receipt */
+          const [vat, payment] = await Promise.all([
+            safeJson(`${API}:8086/api/vat/records/${encodeURIComponent(orderId)}`),
+            safeJson(`${API}:8084/api/payments/by-order/${encodeURIComponent(orderId)}`),
+          ]);
 
-          const [payment, vat, wallets, blockchain, linkedBlock] =
-            await Promise.all([
-              safeJson(
-                `${API}:8084/api/payments/by-order/${encodeURIComponent(orderId)}`,
-              ),
-              safeJson(
-                `${API}:8086/api/vat/records/${encodeURIComponent(orderId)}`,
-              ),
-              safeJson(`${API}:8085/api/wallets`),
-              safeJson(`${API}:8087/api/blockchain/validate/details`),
-              safeJson(
-                `${API}:8087/api/blockchain/blocks/order/${encodeURIComponent(orderId)}`,
-              ),
-            ]);
+          const payerBadge = payerType === "BUSINESS"
+            ? `<span class="badge badge-business">Business</span>`
+            : `<span class="badge badge-private">Private</span>`;
 
-          const payerBadge =
-            payerType === "BUSINESS"
-              ? `<span class="badge badge-business">Business</span>`
-              : `<span class="badge badge-private">Private</span>`;
+          /* Build ordered items list */
+          const itemsHtml = orderedItems.length
+            ? `<div class="receipt-items">
+                ${orderedItems.map((i) => `
+                  <div class="receipt-item">
+                    <span class="receipt-item-name">${escapeHtml(i.name)} × ${i.qty}</span>
+                    <span class="receipt-item-price">${euro(i.price)}</span>
+                  </div>
+                `).join("")}
+               </div>`
+            : "";
 
-          div.innerHTML = `
-            <p class="status-positive">Order completed successfully.</p>
-
-            <div class="results-grid">
-              <div class="result-box">
-                <p><strong>Payer Type:</strong> ${payerBadge}</p>
-                <p><strong>Invoice Number:</strong> ${escapeHtml(orderData.invoiceNumber || "-")}</p>
-                <p><strong>Order ID:</strong> ${escapeHtml(orderId)}</p>
-                <p><strong>Payment ID:</strong> ${escapeHtml(payment.data.id)}</p>
-                ${orderData.companyName ? `<p><strong>Company:</strong> ${escapeHtml(orderData.companyName)}</p>` : ""}
-                ${orderData.vatId ? `<p><strong>VAT ID:</strong> ${escapeHtml(orderData.vatId)}</p>` : ""}
+          resultsDiv.innerHTML = `
+            <div class="receipt">
+              <div class="receipt-header">
+                <div>
+                  <div class="receipt-title">${escapeHtml(orderData.invoiceNumber || "Invoice")}</div>
+                  <div class="receipt-subtitle">Order confirmed · ${new Date().toLocaleDateString("en-GB")}</div>
+                </div>
+                ${payerBadge}
               </div>
 
-              <div class="result-box">
-                <p><strong>Total:</strong> ${euro(vat.data.grossTotal)}</p>
-                <p><strong>Net:</strong> ${euro(vat.data.netTotal)}</p>
-                <p><strong>VAT:</strong> ${euro(vat.data.totalVat)}</p>
-                <p><strong>Payment Status:</strong> ${escapeHtml(payment.data.status)}</p>
-                <p><strong>Blockchain Status:</strong> ${
-                  blockchain.data.valid
-                    ? `<span class="badge-valid">Valid</span>`
-                    : `<span class="badge-invalid">Invalid</span>`
-                }</p>
+              ${orderedItems.length ? `
+                <div class="section-title">Items</div>
+                ${itemsHtml}
+                <div class="receipt-divider"></div>
+              ` : ""}
+
+              <div class="section-title">Payment Summary</div>
+              <div class="receipt-row"><span class="receipt-row-label">Subtotal (net)</span><span class="receipt-row-val">${euro(vat.data.netTotal)}</span></div>
+              <div class="receipt-row"><span class="receipt-row-label">VAT (19%)</span><span class="receipt-row-val">${euro(vat.data.vat19)}</span></div>
+              <div class="receipt-row"><span class="receipt-row-label">VAT (7%)</span><span class="receipt-row-val">${euro(vat.data.vat7)}</span></div>
+              <div class="receipt-row total"><span>Total</span><span>${euro(vat.data.grossTotal)}</span></div>
+
+              ${(orderData.companyName || orderData.vatId) ? `
+                <div class="receipt-divider"></div>
+                <div class="section-title">Business Details</div>
+                ${orderData.companyName ? `<div class="receipt-row"><span class="receipt-row-label">Company</span><span class="receipt-row-val">${escapeHtml(orderData.companyName)}</span></div>` : ""}
+                ${orderData.vatId      ? `<div class="receipt-row"><span class="receipt-row-label">VAT ID</span><span class="receipt-row-val">${escapeHtml(orderData.vatId)}</span></div>` : ""}
+              ` : ""}
+
+              <div class="receipt-divider"></div>
+              <div class="receipt-row">
+                <span class="receipt-row-label">Payment status</span>
+                <span class="ok">${escapeHtml(payment.data.status)}</span>
               </div>
             </div>
 
-            <div class="result-box" style="margin-top: 14px;">
-              <p><strong>Wallets</strong></p>
-              ${wallets.data.map((w) => `<p>${escapeHtml(w.type)}: ${euro(w.balance)}</p>`).join("")}
-            </div>
-            <div class="result-box" style="margin-top: 14px;">
-  <p><strong>Linked Blockchain Block</strong></p>
+            <a class="download-btn"
+               href="${API}:8083/api/invoices/${encodeURIComponent(orderId)}"
+               target="_blank"
+               style="width:100%;margin-top:14px;box-sizing:border-box;">
+              Download Invoice PDF
+            </a>
 
-  <p><strong>Block Index:</strong> ${escapeHtml(linkedBlock.data.blockIndex)}</p>
-  <p><strong>Order ID:</strong> ${escapeHtml(linkedBlock.data.orderId)}</p>
-
-  <div class="hash-box">Hash: ${escapeHtml(linkedBlock.data.hash)}</div>
-  <div class="hash-box">Previous Hash: ${escapeHtml(linkedBlock.data.previousHash)}</div>
-</div>
-
-            <a class="download-btn" href="${API}:8083/api/invoices/${encodeURIComponent(orderId)}" target="_blank">Open Invoice PDF</a>
+            <button class="clear-cart" style="margin-top:10px;" onclick="newOrder()">
+              Start New Order
+            </button>
           `;
 
-          cart = [];
-          renderCart();
-          document.getElementById("companyName").value = "";
-          document.getElementById("vatId").value = "";
-          document.getElementById("businessForm").classList.add("hidden");
+          /* Scroll the receipt into view smoothly */
+          document.getElementById("receiptCard").scrollIntoView({ behavior: "smooth", block: "start" });
+
         } catch (e) {
           console.error(e);
-          div.innerHTML = `<div class="error">Failed to load results.<br>${escapeHtml(e.message)}</div>`;
+          resultsDiv.innerHTML = `<div class="error">Order was placed but we couldn't load the receipt.<br>${escapeHtml(e.message)}</div>`;
         }
       }
 
+      /* ─── New order — hide receipt and scroll back to menu ─── */
+      function newOrder() {
+        document.getElementById("receiptCard").classList.add("hidden");
+        document.getElementById("results").innerHTML = "";
+        document.getElementById("menu").scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      /* ─── Init — load menu on page load ─── */
       (async function init() {
         await loadMenu();
         renderCart();
-        await renderTopStats();
-        await renderInvoiceHistory();
-        await renderTaxAnalytics();
-        await renderBlockchainExplorer();
       })();
     </script>
   </body>
