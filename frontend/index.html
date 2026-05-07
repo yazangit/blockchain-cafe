@@ -981,7 +981,7 @@
     </div>
 
     <script>
-      const API = "http://192.168.0.189";
+      const API = "http://192.168.1.189";
       let products = [];
       let cart = [];
       let pendingNfcOrder = null;
@@ -1589,6 +1589,9 @@
         };
 
         try {
+          await safeJson(`${API}:8083/api/nfc/status/demo-card-001`, {
+            method: "DELETE",
+          });
           const response = await safeJson(
             `${API}:8088/api/nfc/checkout-intent`,
             {
@@ -1603,9 +1606,8 @@
             amount: payload.amount,
             payerType: payload.payerType,
             cardToken: payload.cardToken,
+            businessDetails: null,
           };
-
-          startNfcResolutionPolling();
 
           resultsDiv.innerHTML = `
             <div class="result-box">
@@ -1617,6 +1619,7 @@
               <p><strong>Next Step:</strong> Tap the NFC card using the Android device.</p>
             </div>
           `;
+          startNfcPolling("demo-card-001");
         } catch (e) {
           console.error(e);
           resultsDiv.innerHTML = `<div class="error">Failed to prepare NFC payment.<br>${escapeHtml(e.message)}</div>`;
@@ -1662,6 +1665,9 @@
         };
 
         try {
+          await safeJson(`${API}:8083/api/nfc/status/demo-card-001`, {
+            method: "DELETE",
+          });
           const response = await safeJson(
             `${API}:8088/api/nfc/checkout-intent`,
             {
@@ -1676,9 +1682,11 @@
             amount: payload.amount,
             payerType: payload.payerType,
             cardToken: payload.cardToken,
+            businessDetails: {
+              companyName,
+              vatId,
+            },
           };
-
-          startNfcResolutionPolling();
 
           resultsDiv.innerHTML = `
             <div class="result-box">
@@ -1692,6 +1700,7 @@
               <p><strong>Next Step:</strong> Tap the NFC card using the Android device.</p>
             </div>
           `;
+          startNfcPolling("demo-card-001");
         } catch (e) {
           console.error(e);
           resultsDiv.innerHTML = `<div class="error">Failed to prepare business NFC payment.<br>${escapeHtml(e.message)}</div>`;
@@ -1961,6 +1970,43 @@
         await renderTaxAnalytics();
         await renderBlockchainExplorer();
       })();
+      async function startNfcPolling(cardToken) {
+        if (nfcPollingInterval) {
+          clearInterval(nfcPollingInterval);
+        }
+
+        nfcPollingInterval = setInterval(async () => {
+          try {
+            const data = await safeJson(
+              `${API}:8083/api/nfc/status/${cardToken}`,
+            );
+
+            if (data.paid === true) {
+              clearInterval(nfcPollingInterval);
+              nfcPollingInterval = null;
+
+              document.getElementById("results").innerHTML = `
+          <div class="loading-state">
+            <div class="loading">
+              <div class="spinner"></div>
+              <span>NFC confirmed. Creating invoice...</span>
+            </div>
+          </div>
+        `;
+
+              if (pendingNfcOrder?.payerType === "BUSINESS") {
+                await checkout("BUSINESS", pendingNfcOrder.businessDetails);
+              } else {
+                await checkout("PRIVATE", null);
+              }
+
+              pendingNfcOrder = null;
+            }
+          } catch (error) {
+            console.error("NFC polling error:", error);
+          }
+        }, 2000);
+      }
     </script>
   </body>
 </html>
