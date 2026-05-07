@@ -5,235 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Blockchain Café</title>
     <style>
-      .blockchain-panel {
-        background: #111827;
-        color: #fff;
-        padding: 20px;
-        border-radius: 14px;
-        margin-top: 20px;
-      }
-
-      .blockchain-panel h2 {
-        margin: 0 0 14px;
-      }
-
-      .blockchain-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 12px;
-        margin-bottom: 16px;
-      }
-
-      .blockchain-card {
-        background: rgba(255, 255, 255, 0.06);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 12px;
-        padding: 14px;
-      }
-
-      .blockchain-card .label {
-        font-size: 12px;
-        opacity: 0.75;
-        margin-bottom: 8px;
-      }
-
-      .blockchain-card .value {
-        font-size: 20px;
-        font-weight: 700;
-        word-break: break-word;
-      }
-
-      .blockchain-list {
-        display: grid;
-        gap: 12px;
-        margin-top: 14px;
-      }
-
-      .block-item {
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 12px;
-        padding: 14px;
-      }
-
-      .hash-box {
-        margin-top: 8px;
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 10px;
-        padding: 10px;
-        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-        font-size: 12px;
-        line-height: 1.5;
-        word-break: break-all;
-        color: rgba(255, 255, 255, 0.85);
-      }
-
-      .badge-valid {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 28px;
-        padding: 0 10px;
-        border-radius: 999px;
-        background: rgba(34, 197, 94, 0.15);
-        color: #86efac;
-        font-size: 12px;
-        font-weight: 700;
-      }
-
-      .badge-invalid {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 28px;
-        padding: 0 10px;
-        border-radius: 999px;
-        background: rgba(239, 68, 68, 0.15);
-        color: #fca5a5;
-        font-size: 12px;
-        font-weight: 700;
-      }
-
-      @media (max-width: 900px) {
-        .blockchain-grid {
-          grid-template-columns: repeat(2, 1fr);
-        }
-      }
-
-      @media (max-width: 640px) {
-        .blockchain-grid {
-          grid-template-columns: 1fr;
-        }
-      }
-      .analytics {
-        background: #1e293b;
-        padding: 20px;
-        border-radius: 10px;
-        margin-top: 20px;
-        color: #fff;
-      }
-      .analytics h2 {
-        margin-top: 0;
-        margin-bottom: 16px;
-      }
-      .analytics-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 12px;
-        margin-bottom: 20px;
-      }
-      .analytics-card {
-        background: #0f172a;
-        padding: 14px;
-        border-radius: 10px;
-        border: 1px solid rgba(255, 255, 255, 0.08);
-      }
-      .analytics-card .label {
-        font-size: 12px;
-        opacity: 0.8;
-        margin-bottom: 8px;
-      }
-      .analytics-card .value {
-        font-size: 22px;
-        font-weight: bold;
-      }
-      .chart {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
-        gap: 12px;
-        align-items: end;
-        min-height: 240px;
-      }
-      .chart-col {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-      }
-      .chart-bars {
-        height: 180px;
-        display: flex;
-        align-items: end;
-        gap: 6px;
-      }
-      .bar {
-        width: 14px;
-        border-radius: 999px;
-        min-height: 6px;
-      }
-      .bar-gross {
-        background: #38bdf8;
-      }
-      .bar-net {
-        background: #22c55e;
-      }
-      .bar-vat {
-        background: #f59e0b;
-      }
-      .chart-label {
-        font-size: 12px;
-        opacity: 0.85;
-        text-align: center;
-        word-break: break-word;
-      }
-      .legend {
-        display: flex;
-        gap: 16px;
-        flex-wrap: wrap;
-        margin-bottom: 14px;
-        font-size: 13px;
-        opacity: 0.9;
-      }
-      .legend span {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-      .dot {
-        width: 10px;
-        height: 10px;
-        border-radius: 999px;
-        display: inline-block;
-      }
-      .dot-gross {
-        background: #38bdf8;
-      }
-      .dot-net {
-        background: #22c55e;
-      }
-      .dot-vat {
-        background: #f59e0b;
-      }
-      @media (max-width: 900px) {
-        .analytics-grid {
-          grid-template-columns: repeat(2, 1fr);
-        }
-      }
-      @media (max-width: 640px) {
-        .analytics-grid {
-          grid-template-columns: 1fr;
-        }
-      }
       :root {
-        --bg: #f5f5f7;
-        --panel: rgba(255, 255, 255, 0.72);
-        --panel-solid: #ffffff;
-        --text: #1d1d1f;
-        --muted: #6e6e73;
-        --line: rgba(0, 0, 0, 0.08);
-        --shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
-        --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.05);
-        --blue: #0071e3;
-        --blue-hover: #0077ed;
-        --green: #34c759;
+        --bg: #050507;
+        --bg-soft: #0b0b10;
+        --panel: rgba(18, 18, 24, 0.78);
+        --panel-strong: rgba(24, 24, 31, 0.88);
+        --panel-light: rgba(255, 255, 255, 0.04);
+        --text: #f5f5f7;
+        --muted: #a1a1aa;
+        --line: rgba(255, 255, 255, 0.08);
+        --line-strong: rgba(255, 255, 255, 0.14);
+        --blue: #2997ff;
+        --blue-hover: #46a7ff;
+        --green: #32d74b;
         --orange: #ff9f0a;
-        --red: #ff3b30;
-        --purple: #5856d6;
-        --radius-xl: 28px;
-        --radius-lg: 22px;
-        --radius-md: 16px;
-        --radius-sm: 12px;
+        --red: #ff453a;
+        --purple: #bf5af2;
+        --shadow-xl: 0 30px 80px rgba(0, 0, 0, 0.45);
+        --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.28);
+        --radius-2xl: 32px;
+        --radius-xl: 24px;
+        --radius-lg: 18px;
+        --radius-md: 14px;
+        --radius-sm: 10px;
         --max-width: 1480px;
       }
 
@@ -247,6 +41,7 @@
 
       body {
         margin: 0;
+        min-height: 100vh;
         font-family:
           Inter,
           ui-sans-serif,
@@ -259,18 +54,17 @@
         color: var(--text);
         background:
           radial-gradient(
-            circle at top left,
-            rgba(0, 113, 227, 0.1),
-            transparent 22%
+            circle at top center,
+            rgba(41, 151, 255, 0.14),
+            transparent 26%
           ),
           radial-gradient(
             circle at top right,
-            rgba(88, 86, 214, 0.08),
-            transparent 18%
+            rgba(191, 90, 242, 0.1),
+            transparent 20%
           ),
-          linear-gradient(180deg, #fbfbfd 0%, #f5f5f7 100%);
-        min-height: 100vh;
-        padding: 28px;
+          linear-gradient(180deg, #06070a 0%, #050507 45%, #09090c 100%);
+        padding: 30px;
         letter-spacing: -0.01em;
       }
 
@@ -283,45 +77,46 @@
         display: flex;
         align-items: flex-end;
         justify-content: space-between;
-        gap: 24px;
-        margin-bottom: 28px;
+        gap: 28px;
+        margin-bottom: 30px;
+        padding: 10px 4px 0;
       }
 
       .hero-copy h1 {
         margin: 0;
-        font-size: 46px;
-        line-height: 1.02;
-        letter-spacing: -0.04em;
+        font-size: 56px;
+        line-height: 0.98;
+        letter-spacing: -0.05em;
         font-weight: 700;
       }
 
       .hero-copy p {
-        margin: 12px 0 0;
-        max-width: 720px;
+        margin: 16px 0 0;
+        max-width: 760px;
         color: var(--muted);
-        font-size: 16px;
-        line-height: 1.55;
+        font-size: 17px;
+        line-height: 1.6;
       }
 
       .hero-badges {
         display: flex;
         flex-wrap: wrap;
-        gap: 10px;
+        gap: 12px;
         justify-content: flex-end;
       }
 
       .badge-chip {
         border: 1px solid var(--line);
-        background: rgba(255, 255, 255, 0.72);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        color: var(--muted);
+        background: rgba(255, 255, 255, 0.04);
+        color: #d6d6db;
         border-radius: 999px;
-        padding: 10px 14px;
+        padding: 11px 16px;
         font-size: 13px;
         font-weight: 600;
         white-space: nowrap;
-        box-shadow: var(--shadow-soft);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        box-shadow: var(--shadow-lg);
       }
 
       .stats-grid {
@@ -332,27 +127,34 @@
       }
 
       .stat-card {
-        background: var(--panel);
-        backdrop-filter: blur(24px);
-        -webkit-backdrop-filter: blur(24px);
-        border: 1px solid rgba(255, 255, 255, 0.65);
-        box-shadow: var(--shadow-soft);
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.06),
+          rgba(255, 255, 255, 0.03)
+        );
+        border: 1px solid var(--line);
         border-radius: var(--radius-xl);
-        padding: 22px 22px 20px;
+        padding: 24px;
+        box-shadow: var(--shadow-lg);
+        backdrop-filter: blur(22px);
+        -webkit-backdrop-filter: blur(22px);
       }
 
       .stat-label {
-        font-size: 13px;
+        font-size: 12px;
         color: var(--muted);
-        margin-bottom: 10px;
+        margin-bottom: 12px;
         font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
       }
 
       .stat-value {
-        font-size: 32px;
+        font-size: 34px;
         line-height: 1;
         font-weight: 700;
-        letter-spacing: -0.04em;
+        color: var(--text);
+        letter-spacing: -0.05em;
       }
 
       .dashboard {
@@ -367,19 +169,38 @@
         align-self: start;
       }
 
-      .card {
-        background: var(--panel);
-        backdrop-filter: blur(24px);
-        -webkit-backdrop-filter: blur(24px);
-        border: 1px solid rgba(255, 255, 255, 0.68);
-        border-radius: var(--radius-xl);
-        box-shadow: var(--shadow);
+      .card,
+      .analytics,
+      .blockchain-panel {
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.06),
+          rgba(255, 255, 255, 0.03)
+        );
+        border: 1px solid var(--line);
+        border-radius: var(--radius-2xl);
+        box-shadow: var(--shadow-xl);
         overflow: hidden;
+        backdrop-filter: blur(26px);
+        -webkit-backdrop-filter: blur(26px);
+      }
+
+      .analytics,
+      .blockchain-panel {
+        padding: 24px;
+        margin-top: 22px;
+      }
+
+      .blockchain-panel h2,
+      .analytics h2 {
+        margin: 0 0 16px;
+        font-size: 24px;
+        letter-spacing: -0.03em;
       }
 
       .card-head {
-        padding: 22px 24px 18px;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        padding: 24px 26px 18px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
         display: flex;
         justify-content: space-between;
         align-items: flex-start;
@@ -388,20 +209,20 @@
 
       .card-head h2 {
         margin: 0;
-        font-size: 22px;
+        font-size: 24px;
         font-weight: 650;
         letter-spacing: -0.03em;
       }
 
       .card-head p {
-        margin: 6px 0 0;
+        margin: 7px 0 0;
         color: var(--muted);
         font-size: 14px;
-        line-height: 1.45;
+        line-height: 1.55;
       }
 
       .card-body {
-        padding: 22px 24px 24px;
+        padding: 24px 26px 26px;
       }
 
       .menu-grid {
@@ -410,88 +231,104 @@
         gap: 16px;
       }
 
-      .menu-item {
+      .menu-item,
+      .cart-item,
+      .invoice-row,
+      .result-box,
+      .invoice-summary-card,
+      .analytics-card,
+      .blockchain-card,
+      .block-item,
+      .receipt-card,
+      .payment-section {
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.06),
+          rgba(255, 255, 255, 0.035)
+        );
+        border: 1px solid rgba(255, 255, 255, 0.08);
         border-radius: var(--radius-lg);
-        background: rgba(255, 255, 255, 0.82);
-        border: 1px solid rgba(0, 0, 0, 0.06);
-        padding: 18px;
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      }
+
+      .menu-item {
+        padding: 20px;
         transition:
           transform 0.18s ease,
+          border-color 0.18s ease,
           box-shadow 0.18s ease;
       }
 
-      .menu-item:hover {
+      .menu-item:hover,
+      .cart-item:hover,
+      .invoice-row:hover,
+      .block-item:hover {
         transform: translateY(-2px);
-        box-shadow: 0 18px 30px rgba(0, 0, 0, 0.06);
+        border-color: rgba(255, 255, 255, 0.14);
       }
 
-      .menu-item-top {
+      .menu-item-top,
+      .cart-item-inner,
+      .invoice-row-head,
+      .receipt-head {
         display: flex;
         justify-content: space-between;
-        gap: 16px;
-        margin-bottom: 16px;
+        gap: 14px;
+        align-items: flex-start;
       }
 
-      .menu-item-name {
+      .menu-item-name,
+      .cart-item-name,
+      .invoice-row-title,
+      .receipt-title {
         font-size: 17px;
         font-weight: 650;
+        color: var(--text);
         line-height: 1.3;
       }
 
-      .menu-item-meta {
-        margin-top: 6px;
-        font-size: 13px;
+      .menu-item-meta,
+      .subtle,
+      .small,
+      .receipt-note,
+      .chart-label,
+      .legend {
         color: var(--muted);
-        line-height: 1.5;
+        font-size: 13px;
+        line-height: 1.55;
       }
 
       .price {
-        font-size: 22px;
+        font-size: 28px;
         font-weight: 700;
-        letter-spacing: -0.03em;
+        letter-spacing: -0.05em;
         white-space: nowrap;
       }
 
       .cart-list,
-      .invoice-list {
+      .invoice-list,
+      .blockchain-list {
         display: grid;
         gap: 14px;
       }
 
       .cart-item,
-      .invoice-row {
-        background: rgba(255, 255, 255, 0.8);
-        border: 1px solid rgba(0, 0, 0, 0.05);
-        border-radius: var(--radius-lg);
+      .invoice-row,
+      .result-box,
+      .block-item {
         padding: 16px 18px;
       }
 
-      .cart-item-inner {
-        display: flex;
-        justify-content: space-between;
-        gap: 14px;
-        align-items: center;
-      }
-
-      .cart-item-name {
-        font-size: 16px;
-        font-weight: 640;
-        margin-bottom: 4px;
-      }
-
-      .subtle {
-        color: var(--muted);
-        font-size: 13px;
-        line-height: 1.45;
+      .summary,
+      .hash-box {
+        margin-top: 18px;
+        border-radius: var(--radius-lg);
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        padding: 16px 18px;
       }
 
       .summary {
-        margin-top: 18px;
-        border-radius: var(--radius-lg);
-        background: rgba(255, 255, 255, 0.78);
-        border: 1px solid rgba(0, 0, 0, 0.05);
-        padding: 16px 18px;
         display: grid;
         gap: 10px;
       }
@@ -501,11 +338,12 @@
         justify-content: space-between;
         gap: 12px;
         align-items: center;
+        color: #dddddf;
       }
 
       .summary-total {
         padding-top: 10px;
-        border-top: 1px solid rgba(0, 0, 0, 0.06);
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
         font-size: 18px;
         font-weight: 700;
       }
@@ -516,47 +354,54 @@
         gap: 8px;
       }
 
-      .results-grid {
+      .results-grid,
+      .invoice-summary,
+      .invoice-row-grid,
+      .analytics-grid,
+      .blockchain-grid,
+      .receipt-grid {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 14px;
-        margin-top: 14px;
       }
 
-      .result-box {
-        background: rgba(255, 255, 255, 0.82);
-        border: 1px solid rgba(0, 0, 0, 0.05);
-        border-radius: var(--radius-lg);
-        padding: 16px 18px;
-        display: grid;
-        gap: 8px;
+      .analytics-grid {
+        grid-template-columns: repeat(4, 1fr);
+        margin-bottom: 16px;
       }
 
-      .invoice-summary {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 14px;
-        margin-bottom: 18px;
+      .blockchain-grid {
+        grid-template-columns: repeat(4, 1fr);
+        margin-bottom: 16px;
       }
 
-      .invoice-summary-card {
-        background: rgba(255, 255, 255, 0.82);
-        border: 1px solid rgba(0, 0, 0, 0.05);
-        border-radius: var(--radius-lg);
+      .analytics-card,
+      .blockchain-card,
+      .invoice-summary-card,
+      .receipt-item {
         padding: 16px 18px;
       }
 
-      .invoice-summary-card .label {
+      .analytics-card .label,
+      .blockchain-card .label,
+      .invoice-summary-card .label,
+      .receipt-item .label {
         color: var(--muted);
         font-size: 12px;
-        margin-bottom: 6px;
+        margin-bottom: 7px;
         font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
       }
 
-      .invoice-summary-card .value {
-        font-size: 24px;
+      .analytics-card .value,
+      .blockchain-card .value,
+      .invoice-summary-card .value,
+      .receipt-item .value {
+        font-size: 22px;
         font-weight: 700;
         letter-spacing: -0.03em;
+        word-break: break-word;
       }
 
       .toolbar {
@@ -575,26 +420,6 @@
         margin-bottom: 18px;
       }
 
-      .invoice-row-head {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        gap: 12px;
-        margin-bottom: 12px;
-      }
-
-      .invoice-row-title {
-        font-size: 16px;
-        font-weight: 650;
-        margin-bottom: 4px;
-      }
-
-      .invoice-row-grid {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 12px;
-      }
-
       .pagination {
         display: flex;
         align-items: center;
@@ -603,7 +428,8 @@
         margin-top: 18px;
       }
 
-      .status-positive {
+      .status-positive,
+      .ok {
         color: var(--green);
         font-weight: 650;
       }
@@ -611,9 +437,9 @@
       .empty-state,
       .loading-state {
         border-radius: var(--radius-lg);
-        background: rgba(255, 255, 255, 0.76);
-        border: 1px solid rgba(0, 0, 0, 0.05);
-        padding: 28px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        padding: 30px;
         text-align: center;
         color: var(--muted);
         font-size: 15px;
@@ -629,8 +455,8 @@
         width: 18px;
         height: 18px;
         border-radius: 999px;
-        border: 2px solid rgba(0, 0, 0, 0.12);
-        border-top-color: var(--text);
+        border: 2px solid rgba(255, 255, 255, 0.14);
+        border-top-color: #ffffff;
         animation: spin 0.8s linear infinite;
       }
 
@@ -643,32 +469,33 @@
       input,
       select {
         width: 100%;
-        height: 46px;
+        height: 48px;
         border-radius: 14px;
-        border: 1px solid rgba(0, 0, 0, 0.08);
-        background: rgba(255, 255, 255, 0.86);
+        border: 1px solid rgba(255, 255, 255, 0.09);
+        background: rgba(255, 255, 255, 0.05);
         color: var(--text);
         padding: 0 14px;
         font-size: 14px;
         outline: none;
         transition:
           border-color 0.15s ease,
-          box-shadow 0.15s ease;
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+          box-shadow 0.15s ease,
+          background 0.15s ease;
       }
 
       input::placeholder {
-        color: #8e8e93;
+        color: #8d8d95;
       }
 
       input:focus,
       select:focus {
-        border-color: rgba(0, 113, 227, 0.45);
-        box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.12);
+        border-color: rgba(41, 151, 255, 0.55);
+        box-shadow: 0 0 0 4px rgba(41, 151, 255, 0.14);
+        background: rgba(255, 255, 255, 0.07);
       }
 
       button {
-        height: 46px;
+        height: 48px;
         border: none;
         border-radius: 999px;
         padding: 0 18px;
@@ -681,15 +508,15 @@
           opacity 0.18s ease,
           background 0.18s ease,
           box-shadow 0.18s ease;
-        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
       }
 
       button:hover {
-        opacity: 0.96;
+        opacity: 0.97;
       }
 
       button:active {
-        transform: scale(0.985);
+        transform: scale(0.986);
       }
 
       button:disabled {
@@ -701,6 +528,10 @@
       .add,
       .pay-private,
       .pay-business,
+      .pay-nfc-private,
+      .pay-nfc-business,
+      .pay-cash-private,
+      .pay-cash-business,
       .download-btn {
         text-decoration: none;
         display: inline-flex;
@@ -710,53 +541,46 @@
 
       .add,
       .pay-private,
-      .pay-business {
+      .pay-business,
+      .pay-nfc-private,
+      .pay-nfc-business {
         width: 100%;
-      }
-
-      .add,
-      .pay-private,
-      .pay-business {
-        background: var(--blue);
+        background: linear-gradient(180deg, var(--blue), #1278dc);
         color: #fff;
       }
 
       .add:hover,
       .pay-private:hover,
       .pay-business:hover,
+      .pay-nfc-private:hover,
+      .pay-nfc-business:hover,
       .download-btn:hover {
-        background: var(--blue-hover);
+        background: linear-gradient(180deg, var(--blue-hover), #2997ff);
       }
 
-      .secondary-btn {
-        background: rgba(255, 255, 255, 0.9);
+      .secondary-btn,
+      .clear-cart,
+      .pay-cash-private,
+      .pay-cash-business {
+        background: rgba(255, 255, 255, 0.06);
         color: var(--text);
-        border: 1px solid rgba(0, 0, 0, 0.08);
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
-      }
-
-      .clear-cart {
-        width: 100%;
-        margin-top: 10px;
-        background: rgba(255, 255, 255, 0.9);
-        color: var(--text);
-        border: 1px solid rgba(0, 0, 0, 0.08);
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: none;
       }
 
       .clear-history {
-        background: #1d1d1f;
-        color: #fff;
+        background: rgba(255, 69, 58, 0.16);
+        color: #ffd2cf;
+        border: 1px solid rgba(255, 69, 58, 0.24);
       }
 
       .download-btn {
         margin-top: 14px;
         padding: 0 18px;
         height: 42px;
-        background: var(--blue);
+        background: linear-gradient(180deg, var(--blue), #1278dc);
         color: #fff;
         border-radius: 999px;
-        box-shadow: 0 8px 20px rgba(0, 113, 227, 0.22);
       }
 
       .qty-btn {
@@ -765,14 +589,14 @@
         height: 36px;
         padding: 0;
         border-radius: 999px;
-        background: rgba(255, 255, 255, 0.9);
+        background: rgba(255, 255, 255, 0.06);
         color: var(--text);
-        border: 1px solid rgba(0, 0, 0, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.08);
         box-shadow: none;
       }
 
       .remove-btn {
-        color: var(--red);
+        color: #ffb4ae;
       }
 
       .section-title {
@@ -785,22 +609,42 @@
         font-weight: 700;
       }
 
+      .payment-section {
+        margin-top: 18px;
+        padding: 18px;
+      }
+
+      .payment-section:first-of-type {
+        margin-top: 20px;
+      }
+
+      .payment-title {
+        margin: 0 0 12px;
+        font-size: 13px;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        font-weight: 700;
+      }
+
+      .payment-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
       .hidden {
         display: none;
       }
 
       .error {
-        color: var(--red);
+        color: #ff9b94;
         font-weight: 600;
         line-height: 1.5;
       }
 
-      .ok {
-        color: var(--green);
-        font-weight: 650;
-      }
-
-      .badge {
+      .badge,
+      .receipt-badge {
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -813,13 +657,74 @@
       }
 
       .badge-private {
-        background: rgba(255, 159, 10, 0.14);
-        color: #a15c00;
+        background: rgba(255, 159, 10, 0.16);
+        color: #ffd19b;
       }
 
       .badge-business {
-        background: rgba(0, 113, 227, 0.12);
-        color: #005bb5;
+        background: rgba(41, 151, 255, 0.16);
+        color: #a8d5ff;
+      }
+
+      .receipt-badge {
+        background: rgba(50, 215, 75, 0.16);
+        color: #baf5c4;
+      }
+
+      .legend span {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        display: inline-block;
+      }
+
+      .dot-gross,
+      .bar-gross {
+        background: #4db2ff;
+      }
+
+      .dot-net,
+      .bar-net {
+        background: #30d158;
+      }
+
+      .dot-vat,
+      .bar-vat {
+        background: #ff9f0a;
+      }
+
+      .chart {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(72px, 1fr));
+        gap: 14px;
+        align-items: end;
+        min-height: 240px;
+      }
+
+      .chart-col {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .chart-bars {
+        height: 180px;
+        display: flex;
+        align-items: end;
+        gap: 6px;
+      }
+
+      .bar {
+        width: 14px;
+        border-radius: 999px;
+        min-height: 6px;
       }
 
       @media (max-width: 1180px) {
@@ -827,15 +732,15 @@
           grid-template-columns: 1fr;
         }
 
-        .stats-grid {
+        .stats-grid,
+        .analytics-grid,
+        .blockchain-grid {
           grid-template-columns: repeat(2, 1fr);
         }
 
-        .menu-grid {
-          grid-template-columns: 1fr;
-        }
-
-        .filters {
+        .menu-grid,
+        .filters,
+        .payment-grid {
           grid-template-columns: 1fr 1fr;
         }
       }
@@ -851,28 +756,33 @@
         }
 
         .hero-copy h1 {
-          font-size: 36px;
+          font-size: 38px;
         }
 
         .stats-grid,
-        .invoice-summary,
         .results-grid,
-        .invoice-row-grid {
-          grid-template-columns: 1fr;
-        }
-
-        .filters {
+        .invoice-summary,
+        .invoice-row-grid,
+        .receipt-grid,
+        .analytics-grid,
+        .blockchain-grid,
+        .filters,
+        .menu-grid,
+        .payment-grid {
           grid-template-columns: 1fr;
         }
 
         .card-head,
-        .card-body {
+        .card-body,
+        .analytics,
+        .blockchain-panel {
           padding-left: 18px;
           padding-right: 18px;
         }
 
         .cart-item-inner,
-        .invoice-row-head {
+        .invoice-row-head,
+        .receipt-head {
           flex-direction: column;
           align-items: flex-start;
         }
@@ -940,6 +850,7 @@
             <h2>Tax Analytics</h2>
             <div id="taxAnalytics">No tax analytics yet</div>
           </div>
+
           <div class="blockchain-panel">
             <h2>Blockchain Explorer</h2>
             <div id="blockchainExplorer">No blockchain data yet</div>
@@ -966,20 +877,36 @@
                 </div>
               </div>
 
-              <button
-                id="privateBtn"
-                class="pay-private"
-                onclick="checkoutPrivate()"
-              >
-                Checkout as Private
-              </button>
-              <button
-                id="businessBtn"
-                class="pay-business"
-                onclick="toggleBusinessForm()"
-              >
-                Checkout as Business
-              </button>
+              <div class="payment-section">
+                <div class="payment-title">Pay by NFC Card</div>
+                <div class="payment-grid">
+                  <button class="pay-nfc-private" onclick="prepareNfcPayment()">
+                    Pay as Private
+                  </button>
+                  <button
+                    class="pay-nfc-business"
+                    onclick="showBusinessPaymentForm('NFC')"
+                  >
+                    Pay as Business
+                  </button>
+                </div>
+              </div>
+
+              <div class="payment-section">
+                <div class="payment-title">Cash</div>
+                <div class="payment-grid">
+                  <button class="pay-cash-private" onclick="checkoutPrivate()">
+                    Pay as Private
+                  </button>
+                  <button
+                    class="pay-cash-business"
+                    onclick="showBusinessPaymentForm('CASH')"
+                  >
+                    Pay as Business
+                  </button>
+                </div>
+              </div>
+
               <button class="clear-cart" onclick="clearCart()">
                 Clear Cart
               </button>
@@ -992,8 +919,12 @@
                   placeholder="Company name"
                 />
                 <input id="vatId" type="text" placeholder="VAT ID" />
-                <button class="pay-business" onclick="checkoutBusiness()">
-                  Confirm Business Checkout
+                <button
+                  id="businessActionBtn"
+                  class="pay-business"
+                  onclick="submitBusinessPayment()"
+                >
+                  Continue
                 </button>
               </div>
             </div>
@@ -1050,16 +981,17 @@
     </div>
 
     <script>
-      const API = "http://localhost";
-
+      const API = "http://192.168.1.189";
       let products = [];
       let cart = [];
-
+      let pendingNfcOrder = null;
+      let nfcPollingInterval = null;
       let invoicePage = 0;
       let invoiceSize = 5;
       let invoiceSearch = "";
       let invoicePayerType = "";
       let invoiceSort = "desc";
+      let selectedBusinessPaymentMode = null;
 
       async function renderBlockchainExplorer() {
         const container = document.getElementById("blockchainExplorer");
@@ -1077,60 +1009,60 @@
           const latestBlocks = [...blocks].reverse().slice(0, 5);
 
           container.innerHTML = `
-      <div class="blockchain-grid">
-        <div class="blockchain-card">
-          <div class="label">Total Blocks</div>
-          <div class="value">${overview.totalBlocks}</div>
-        </div>
-        <div class="blockchain-card">
-          <div class="label">Latest Block Index</div>
-          <div class="value">${overview.latestBlockIndex}</div>
-        </div>
-        <div class="blockchain-card">
-          <div class="label">Chain VAT Total</div>
-          <div class="value">€${Number(overview.totalVat || 0).toFixed(2)}</div>
-        </div>
-        <div class="blockchain-card">
-          <div class="label">Validation</div>
-          <div class="value">
-            ${
-              validation.valid
-                ? `<span class="badge-valid">Valid</span>`
-                : `<span class="badge-invalid">Invalid</span>`
-            }
-          </div>
-        </div>
-      </div>
+            <div class="blockchain-grid">
+              <div class="blockchain-card">
+                <div class="label">Total Blocks</div>
+                <div class="value">${overview.totalBlocks}</div>
+              </div>
+              <div class="blockchain-card">
+                <div class="label">Latest Block Index</div>
+                <div class="value">${overview.latestBlockIndex}</div>
+              </div>
+              <div class="blockchain-card">
+                <div class="label">Chain VAT Total</div>
+                <div class="value">€${Number(overview.totalVat || 0).toFixed(2)}</div>
+              </div>
+              <div class="blockchain-card">
+                <div class="label">Validation</div>
+                <div class="value">
+                  ${
+                    validation.valid
+                      ? `<span class="badge-valid">Valid</span>`
+                      : `<span class="badge-invalid">Invalid</span>`
+                  }
+                </div>
+              </div>
+            </div>
 
-      <div class="blockchain-card">
-        <div class="label">Validation Reason</div>
-        <div class="value" style="font-size:16px;">${escapeHtml(validation.message || "-")}</div>
-        <div class="hash-box">Stored Hash: ${escapeHtml(validation.storedHash || "-")}</div>
-        <div class="hash-box">Recalculated Hash: ${escapeHtml(validation.recalculatedHash || "-")}</div>
-        <div class="hash-box">Expected Previous Hash: ${escapeHtml(validation.expectedPreviousHash || "-")}</div>
-        <div class="hash-box">Actual Previous Hash: ${escapeHtml(validation.actualPreviousHash || "-")}</div>
-      </div>
+            <div class="blockchain-card" style="padding:16px 18px; margin-bottom:14px;">
+              <div class="label">Validation Reason</div>
+              <div class="value" style="font-size:16px;">${escapeHtml(validation.message || "-")}</div>
+              <div class="hash-box">Stored Hash: ${escapeHtml(validation.storedHash || "-")}</div>
+              <div class="hash-box">Recalculated Hash: ${escapeHtml(validation.recalculatedHash || "-")}</div>
+              <div class="hash-box">Expected Previous Hash: ${escapeHtml(validation.expectedPreviousHash || "-")}</div>
+              <div class="hash-box">Actual Previous Hash: ${escapeHtml(validation.actualPreviousHash || "-")}</div>
+            </div>
 
-      <div class="blockchain-list">
-        ${
-          latestBlocks.length
-            ? latestBlocks
-                .map(
-                  (block) => `
-          <div class="block-item">
-            <div><strong>Block #${escapeHtml(block.blockIndex)}</strong></div>
-            <div class="subtle">Order: ${escapeHtml(block.orderId)}</div>
-            <div class="subtle">VAT: €${Number(block.totalVat || 0).toFixed(2)}</div>
-            <div class="hash-box">Hash: ${escapeHtml(block.hash)}</div>
-            <div class="hash-box">Previous Hash: ${escapeHtml(block.previousHash)}</div>
-          </div>
-        `,
-                )
-                .join("")
-            : `<div class="subtle">No blocks yet</div>`
-        }
-      </div>
-    `;
+            <div class="blockchain-list">
+              ${
+                latestBlocks.length
+                  ? latestBlocks
+                      .map(
+                        (block) => `
+                  <div class="block-item">
+                    <div><strong>Block #${escapeHtml(block.blockIndex)}</strong></div>
+                    <div class="subtle">Order: ${escapeHtml(block.orderId)}</div>
+                    <div class="subtle">VAT: €${Number(block.totalVat || 0).toFixed(2)}</div>
+                    <div class="hash-box">Hash: ${escapeHtml(block.hash)}</div>
+                    <div class="hash-box">Previous Hash: ${escapeHtml(block.previousHash)}</div>
+                  </div>
+                `,
+                      )
+                      .join("")
+                  : `<div class="subtle">No blocks yet</div>`
+              }
+            </div>
+          `;
         } catch (e) {
           console.error(e);
           container.innerHTML = `<div class="error">Failed to load blockchain explorer.<br>${escapeHtml(e.message)}</div>`;
@@ -1263,17 +1195,6 @@
         }
       }
 
-      function setLoadingButtons(loading) {
-        document.getElementById("privateBtn").disabled = loading;
-        document.getElementById("businessBtn").disabled = loading;
-        document.getElementById("privateBtn").textContent = loading
-          ? "Processing..."
-          : "Checkout as Private";
-        document.getElementById("businessBtn").textContent = loading
-          ? "Processing..."
-          : "Checkout as Business";
-      }
-
       async function loadMenu() {
         const menuDiv = document.getElementById("menu");
 
@@ -1304,7 +1225,7 @@
                     <div class="menu-item-name">${escapeHtml(p.name)}</div>
                     <div class="menu-item-meta">
                       Product ID: ${escapeHtml(p.id)}<br>
-                      VAT Rate: ${escapeHtml(p.vatRateType || "-")}
+                      VAT Rate: ${escapeHtml(p.vatRate || "-")}
                     </div>
                   </div>
                   <div class="price">${euro(p.priceGross)}</div>
@@ -1409,8 +1330,26 @@
         `;
       }
 
-      function toggleBusinessForm() {
-        document.getElementById("businessForm").classList.toggle("hidden");
+      function showBusinessPaymentForm(mode) {
+        selectedBusinessPaymentMode = mode;
+        const form = document.getElementById("businessForm");
+        const btn = document.getElementById("businessActionBtn");
+
+        form.classList.remove("hidden");
+
+        if (mode === "NFC") {
+          btn.textContent = "Prepare NFC Business Payment";
+        } else {
+          btn.textContent = "Pay as Business";
+        }
+      }
+
+      function submitBusinessPayment() {
+        if (selectedBusinessPaymentMode === "NFC") {
+          prepareNfcBusinessPayment();
+        } else {
+          checkoutBusiness();
+        }
       }
 
       async function renderTopStats() {
@@ -1627,6 +1566,281 @@
         checkout("BUSINESS", { companyName, vatId });
       }
 
+      async function prepareNfcPayment() {
+        const resultsDiv = document.getElementById("results");
+
+        if (!cart.length) {
+          alert("Your cart is empty.");
+          return;
+        }
+
+        const total = calculateCartTotal();
+        const orderId = "nfc-ui-" + Date.now();
+
+        const payload = {
+          cardToken: "demo-card-001",
+          orderId,
+          amount: Number(total.toFixed(2)),
+          payerType: "PRIVATE",
+          items: cart.map((item) => ({
+            productId: item.id,
+            quantity: item.qty,
+          })),
+        };
+
+        try {
+          await safeJson(`${API}:8083/api/nfc/status/demo-card-001`, {
+            method: "DELETE",
+          });
+          const response = await safeJson(
+            `${API}:8088/api/nfc/checkout-intent`,
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payload),
+            },
+          );
+
+          pendingNfcOrder = {
+            orderId,
+            amount: payload.amount,
+            payerType: payload.payerType,
+            cardToken: payload.cardToken,
+            businessDetails: null,
+          };
+
+          resultsDiv.innerHTML = `
+            <div class="result-box">
+              <p class="status-positive">NFC payment prepared successfully.</p>
+              <p><strong>Order ID:</strong> ${escapeHtml(response.orderId)}</p>
+              <p><strong>Card Token:</strong> ${escapeHtml(response.cardToken)}</p>
+              <p><strong>Amount:</strong> ${euro(response.amount)}</p>
+              <p><strong>Payer Type:</strong> ${escapeHtml(response.payerType)}</p>
+              <p><strong>Next Step:</strong> Tap the NFC card using the Android device.</p>
+            </div>
+          `;
+          startNfcPolling("demo-card-001");
+        } catch (e) {
+          console.error(e);
+          resultsDiv.innerHTML = `<div class="error">Failed to prepare NFC payment.<br>${escapeHtml(e.message)}</div>`;
+        }
+      }
+
+      async function prepareNfcBusinessPayment() {
+        const resultsDiv = document.getElementById("results");
+        const companyName = document.getElementById("companyName").value.trim();
+        const vatId = document.getElementById("vatId").value.trim();
+
+        if (!cart.length) {
+          alert("Your cart is empty.");
+          return;
+        }
+
+        if (!companyName) {
+          alert("Company name is required.");
+          return;
+        }
+
+        if (!vatId) {
+          alert("VAT ID is required.");
+          return;
+        }
+
+        const total = calculateCartTotal();
+        const orderId = "nfc-ui-" + Date.now();
+
+        const payload = {
+          cardToken: "demo-card-001",
+          orderId,
+          amount: Number(total.toFixed(2)),
+          payerType: "BUSINESS",
+          items: cart.map((item) => ({
+            productId: item.id,
+            quantity: item.qty,
+          })),
+          businessDetails: {
+            companyName,
+            vatId,
+          },
+        };
+
+        try {
+          await safeJson(`${API}:8083/api/nfc/status/demo-card-001`, {
+            method: "DELETE",
+          });
+          const response = await safeJson(
+            `${API}:8088/api/nfc/checkout-intent`,
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payload),
+            },
+          );
+
+          pendingNfcOrder = {
+            orderId,
+            amount: payload.amount,
+            payerType: payload.payerType,
+            cardToken: payload.cardToken,
+            businessDetails: {
+              companyName,
+              vatId,
+            },
+          };
+
+          resultsDiv.innerHTML = `
+            <div class="result-box">
+              <p class="status-positive">Business NFC payment prepared successfully.</p>
+              <p><strong>Order ID:</strong> ${escapeHtml(response.orderId)}</p>
+              <p><strong>Card Token:</strong> ${escapeHtml(response.cardToken)}</p>
+              <p><strong>Amount:</strong> ${euro(response.amount)}</p>
+              <p><strong>Payer Type:</strong> ${escapeHtml(response.payerType)}</p>
+              <p><strong>Company:</strong> ${escapeHtml(companyName)}</p>
+              <p><strong>VAT ID:</strong> ${escapeHtml(vatId)}</p>
+              <p><strong>Next Step:</strong> Tap the NFC card using the Android device.</p>
+            </div>
+          `;
+          startNfcPolling("demo-card-001");
+        } catch (e) {
+          console.error(e);
+          resultsDiv.innerHTML = `<div class="error">Failed to prepare business NFC payment.<br>${escapeHtml(e.message)}</div>`;
+        }
+      }
+
+      function startNfcResolutionPolling() {
+        if (!pendingNfcOrder) return;
+
+        if (nfcPollingInterval) {
+          clearInterval(nfcPollingInterval);
+        }
+
+        nfcPollingInterval = setInterval(async () => {
+          try {
+            const resolution = await safeJson(
+              `${API}:8088/api/nfc/last-resolution`,
+            );
+
+            if (
+              resolution &&
+              resolution.resolved === true &&
+              resolution.orderId === pendingNfcOrder.orderId
+            ) {
+              clearInterval(nfcPollingInterval);
+              nfcPollingInterval = null;
+
+              const resultsDiv = document.getElementById("results");
+
+              try {
+                const invoiceRes = await safeJson(
+                  `${API}:8083/api/invoices/history?page=0&size=1&sort=desc`,
+                );
+                const invoice = invoiceRes?.data?.content?.[0];
+
+                if (invoice) {
+                  resultsDiv.innerHTML = `
+                    <div class="receipt-card" style="padding:20px;">
+                      <div class="receipt-head">
+                        <div class="receipt-title">NFC Payment Receipt</div>
+                        <div class="receipt-badge">Paid</div>
+                      </div>
+
+                      <div class="receipt-grid">
+                        <div class="receipt-item">
+                          <div class="label">Invoice Number</div>
+                          <div class="value">${escapeHtml(invoice.invoiceNumber || "-")}</div>
+                        </div>
+
+                        <div class="receipt-item">
+                          <div class="label">Order ID</div>
+                          <div class="value">${escapeHtml(invoice.orderId || "-")}</div>
+                        </div>
+
+                        <div class="receipt-item">
+                          <div class="label">Date</div>
+                          <div class="value">${escapeHtml(invoice.createdAt || "-")}</div>
+                        </div>
+
+                        <div class="receipt-item">
+                          <div class="label">Payer</div>
+                          <div class="value">${escapeHtml(invoice.payerType || "-")}</div>
+                        </div>
+
+                        <div class="receipt-item">
+                          <div class="label">Total</div>
+                          <div class="value">${euro(invoice.grossTotal || 0)}</div>
+                        </div>
+
+                        <div class="receipt-item">
+                          <div class="label">VAT</div>
+                          <div class="value">${euro(invoice.totalVat || 0)}</div>
+                        </div>
+
+                        <div class="receipt-item">
+                          <div class="label">Payment ID</div>
+                          <div class="value">${escapeHtml(invoice.paymentId || "-")}</div>
+                        </div>
+
+                        <div class="receipt-item">
+                          <div class="label">Company</div>
+                          <div class="value">${escapeHtml(invoice.companyName || "-")}</div>
+                        </div>
+
+                        <div class="receipt-item">
+                          <div class="label">VAT ID</div>
+                          <div class="value">${escapeHtml(invoice.vatId || "-")}</div>
+                        </div>
+
+                        <div class="receipt-item">
+                          <div class="label">Tap Device</div>
+                          <div class="value">${escapeHtml(resolution.deviceId || "-")}</div>
+                        </div>
+                      </div>
+
+                      <a class="download-btn" href="${API}:8083/api/invoices/${encodeURIComponent(invoice.orderId)}" target="_blank">
+                        Open Invoice PDF
+                      </a>
+
+                      <p class="receipt-note">
+                        Payment was resolved through the NFC flow and completed successfully.
+                      </p>
+                    </div>
+                  `;
+                } else {
+                  resultsDiv.innerHTML = `
+                    <div class="result-box">
+                      <p class="status-positive">NFC payment resolved, but no invoice was found yet.</p>
+                    </div>
+                  `;
+                }
+              } catch (err) {
+                console.error(err);
+                resultsDiv.innerHTML = `
+                  <div class="result-box">
+                    <p class="status-positive">NFC payment resolved.</p>
+                    <p class="error">Failed to load invoice history entry.</p>
+                  </div>
+                `;
+              }
+
+              pendingNfcOrder = null;
+              cart = [];
+              renderCart();
+              document.getElementById("companyName").value = "";
+              document.getElementById("vatId").value = "";
+              document.getElementById("businessForm").classList.add("hidden");
+              selectedBusinessPaymentMode = null;
+
+              await renderTopStats();
+              await renderInvoiceHistory();
+              await renderTaxAnalytics();
+              await renderBlockchainExplorer();
+            }
+          } catch (e) {
+            console.error("NFC polling failed:", e);
+          }
+        }, 2000);
+      }
+
       async function checkout(payerType, businessDetails) {
         const resultsDiv = document.getElementById("results");
 
@@ -1649,8 +1863,6 @@
         }
 
         try {
-          setLoadingButtons(true);
-
           const result = await safeJson(`${API}:8083/api/orders/checkout`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -1666,8 +1878,6 @@
         } catch (e) {
           console.error(e);
           resultsDiv.innerHTML = `<div class="error">Checkout failed.<br>${escapeHtml(e.message)}</div>`;
-        } finally {
-          setLoadingButtons(false);
         }
       }
 
@@ -1728,15 +1938,14 @@
               <p><strong>Wallets</strong></p>
               ${wallets.data.map((w) => `<p>${escapeHtml(w.type)}: ${euro(w.balance)}</p>`).join("")}
             </div>
+
             <div class="result-box" style="margin-top: 14px;">
-  <p><strong>Linked Blockchain Block</strong></p>
-
-  <p><strong>Block Index:</strong> ${escapeHtml(linkedBlock.data.blockIndex)}</p>
-  <p><strong>Order ID:</strong> ${escapeHtml(linkedBlock.data.orderId)}</p>
-
-  <div class="hash-box">Hash: ${escapeHtml(linkedBlock.data.hash)}</div>
-  <div class="hash-box">Previous Hash: ${escapeHtml(linkedBlock.data.previousHash)}</div>
-</div>
+              <p><strong>Linked Blockchain Block</strong></p>
+              <p><strong>Block Index:</strong> ${escapeHtml(linkedBlock.data.blockIndex)}</p>
+              <p><strong>Order ID:</strong> ${escapeHtml(linkedBlock.data.orderId)}</p>
+              <div class="hash-box">Hash: ${escapeHtml(linkedBlock.data.hash)}</div>
+              <div class="hash-box">Previous Hash: ${escapeHtml(linkedBlock.data.previousHash)}</div>
+            </div>
 
             <a class="download-btn" href="${API}:8083/api/invoices/${encodeURIComponent(orderId)}" target="_blank">Open Invoice PDF</a>
           `;
@@ -1746,6 +1955,7 @@
           document.getElementById("companyName").value = "";
           document.getElementById("vatId").value = "";
           document.getElementById("businessForm").classList.add("hidden");
+          selectedBusinessPaymentMode = null;
         } catch (e) {
           console.error(e);
           div.innerHTML = `<div class="error">Failed to load results.<br>${escapeHtml(e.message)}</div>`;
@@ -1760,6 +1970,43 @@
         await renderTaxAnalytics();
         await renderBlockchainExplorer();
       })();
+      async function startNfcPolling(cardToken) {
+        if (nfcPollingInterval) {
+          clearInterval(nfcPollingInterval);
+        }
+
+        nfcPollingInterval = setInterval(async () => {
+          try {
+            const data = await safeJson(
+              `${API}:8083/api/nfc/status/${cardToken}`,
+            );
+
+            if (data.paid === true) {
+              clearInterval(nfcPollingInterval);
+              nfcPollingInterval = null;
+
+              document.getElementById("results").innerHTML = `
+          <div class="loading-state">
+            <div class="loading">
+              <div class="spinner"></div>
+              <span>NFC confirmed. Creating invoice...</span>
+            </div>
+          </div>
+        `;
+
+              if (pendingNfcOrder?.payerType === "BUSINESS") {
+                await checkout("BUSINESS", pendingNfcOrder.businessDetails);
+              } else {
+                await checkout("PRIVATE", null);
+              }
+
+              pendingNfcOrder = null;
+            }
+          } catch (error) {
+            console.error("NFC polling error:", error);
+          }
+        }, 2000);
+      }
     </script>
   </body>
 </html>

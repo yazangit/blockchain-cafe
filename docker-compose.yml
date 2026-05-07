@@ -69,6 +69,17 @@ services:
     ports:
       - "8087:8087"
 
+  nfc-bridge-service:
+    build:
+      context: ./nfc-bridge-service
+      dockerfile: Dockerfile
+    container_name: nfc-bridge-service
+    depends_on:
+      mysql:
+        condition: service_healthy
+    ports:
+      - "8088:8088"
+
   order-service:
     build:
       context: ./order-service
@@ -80,6 +91,7 @@ services:
       - vat-service
       - wallet-service
       - blockchain-service
+      - nfc-bridge-service
     ports:
       - "8083:8083"
 
