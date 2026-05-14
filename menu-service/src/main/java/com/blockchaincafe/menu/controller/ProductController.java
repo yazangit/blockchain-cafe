@@ -8,14 +8,13 @@ import com.blockchaincafe.shared.dto.SuccessResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/products")
 public class ProductController {
 
     private final ProductService productService;
@@ -39,7 +38,7 @@ public class ProductController {
                 .build();
     }
 
-    @GetMapping("/api/products/{productId}")
+    @GetMapping("/{productId}")
     public SuccessResponse<ProductResponse> getById(@PathVariable("productId") String productId) {
         return SuccessResponse.<ProductResponse>builder()
                 .success(true)
@@ -47,7 +46,7 @@ public class ProductController {
                 .build();
     }
 
-    @GetMapping("/api/products")
+   @GetMapping
     public SuccessResponse<List<ProductResponse>> getAll(
             @RequestParam(name = "activeOnly", defaultValue = "false") boolean activeOnly
     ) {
