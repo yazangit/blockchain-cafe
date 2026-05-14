@@ -4,27 +4,26 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tax Authority — Blockchain Café Audit Portal</title>
+
     <style>
-      /* ─────────────────────────────────────────────────────────────────
-         Design tokens — identical to index.html
-      ───────────────────────────────────────────────────────────────── */
       :root {
-        --bg: #f5f5f7;
-        --panel: rgba(255, 255, 255, 0.72);
-        --panel-solid: #ffffff;
-        --text: #1d1d1f;
-        --muted: #6e6e73;
-        --line: rgba(0, 0, 0, 0.08);
-        --shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
-        --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.05);
-        --blue: #0071e3;
-        --blue-hover: #0077ed;
-        --green: #34c759;
+        --bg: #050507;
+        --panel: rgba(18, 18, 24, 0.78);
+        --panel-solid: rgba(18, 18, 24, 0.95);
+        --text: #f5f5f7;
+        --muted: #a1a1aa;
+        --line: rgba(255, 255, 255, 0.08);
+        --blue: #2997ff;
+        --blue-hover: #46a7ff;
+        --green: #32d74b;
         --orange: #ff9f0a;
-        --red: #ff3b30;
-        --purple: #5856d6;
-        --radius-xl: 28px;
-        --radius-lg: 22px;
+        --red: #ff453a;
+        --purple: #bf5af2;
+        --shadow-xl: 0 30px 80px rgba(0, 0, 0, 0.45);
+        --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.28);
+        --radius-2xl: 32px;
+        --radius-xl: 24px;
+        --radius-lg: 18px;
         --radius-md: 16px;
         --radius-sm: 12px;
         --max-width: 1480px;
@@ -38,33 +37,25 @@
         scroll-behavior: smooth;
       }
 
-      /* ─── Body — copied verbatim from index.html ─── */
       body {
         margin: 0;
+        min-height: 100vh;
         font-family:
           Inter,
-          ui-sans-serif,
           system-ui,
           -apple-system,
           BlinkMacSystemFont,
-          "SF Pro Display",
           "Segoe UI",
           sans-serif;
         color: var(--text);
         background:
           radial-gradient(
-            circle at top left,
-            rgba(0, 113, 227, 0.1),
-            transparent 22%
+            circle at top center,
+            rgba(41, 151, 255, 0.14),
+            transparent 26%
           ),
-          radial-gradient(
-            circle at top right,
-            rgba(88, 86, 214, 0.08),
-            transparent 18%
-          ),
-          linear-gradient(180deg, #fbfbfd 0%, #f5f5f7 100%);
-        min-height: 100vh;
-        padding: 28px;
+          linear-gradient(180deg, #06070a 0%, #050507 45%, #09090c 100%);
+        padding: 30px;
         letter-spacing: -0.01em;
       }
 
@@ -73,54 +64,57 @@
         margin: 0 auto;
       }
 
-      /* ─── Hero ─── */
       .hero {
         display: flex;
-        align-items: flex-end;
         justify-content: space-between;
-        gap: 24px;
-        margin-bottom: 28px;
+        align-items: flex-end;
+        gap: 28px;
+        margin-bottom: 30px;
       }
 
       .hero-copy h1 {
         margin: 0;
-        font-size: 46px;
-        line-height: 1.02;
-        letter-spacing: -0.04em;
-        font-weight: 700;
+        font-size: 56px;
+        line-height: 0.98;
+        letter-spacing: -0.05em;
+        font-weight: 750;
       }
 
       .hero-copy p {
-        margin: 12px 0 0;
-        max-width: 720px;
         color: var(--muted);
-        font-size: 16px;
-        line-height: 1.55;
+        font-size: 17px;
+        line-height: 1.6;
+        max-width: 820px;
+        margin: 14px 0 0;
       }
 
       .hero-badges {
         display: flex;
+        gap: 12px;
         flex-wrap: wrap;
-        gap: 10px;
         justify-content: flex-end;
       }
 
-      /* ─── Badge chips — same as index.html ─── */
-      .badge-chip {
+      .badge-chip,
+      .tab-btn,
+      .btn-secondary,
+      input,
+      select {
         border: 1px solid var(--line);
-        background: rgba(255, 255, 255, 0.72);
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--muted);
         backdrop-filter: blur(16px);
         -webkit-backdrop-filter: blur(16px);
-        color: var(--muted);
-        border-radius: 999px;
-        padding: 10px 14px;
-        font-size: 13px;
-        font-weight: 600;
-        white-space: nowrap;
-        box-shadow: var(--shadow-soft);
       }
 
-      /* ─── Stats grid — same as index.html ─── */
+      .badge-chip {
+        border-radius: 999px;
+        padding: 11px 16px;
+        font-size: 13px;
+        font-weight: 600;
+        box-shadow: var(--shadow-lg);
+      }
+
       .stats-grid {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
@@ -128,19 +122,31 @@
         margin-bottom: 24px;
       }
 
+      .stat-card,
+      .card,
+      .declaration-box {
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.06),
+          rgba(255, 255, 255, 0.03)
+        );
+        border: 1px solid var(--line);
+        border-radius: var(--radius-2xl);
+        box-shadow: var(--shadow-xl);
+        backdrop-filter: blur(26px);
+        -webkit-backdrop-filter: blur(26px);
+      }
+
       .stat-card {
-        background: var(--panel);
-        backdrop-filter: blur(24px);
-        -webkit-backdrop-filter: blur(24px);
-        border: 1px solid rgba(255, 255, 255, 0.65);
-        box-shadow: var(--shadow-soft);
-        border-radius: var(--radius-xl);
         padding: 22px 22px 20px;
       }
 
-      .stat-label {
-        font-size: 13px;
+      .stat-label,
+      .summary-card .label,
+      .analytics-card .label,
+      .blockchain-card .label {
         color: var(--muted);
+        font-size: 13px;
         margin-bottom: 10px;
         font-weight: 600;
       }
@@ -148,11 +154,10 @@
       .stat-value {
         font-size: 32px;
         line-height: 1;
-        font-weight: 700;
+        font-weight: 750;
         letter-spacing: -0.04em;
       }
 
-      /* ─── Tab navigation ─── */
       .tab-nav {
         display: flex;
         gap: 8px;
@@ -161,79 +166,104 @@
         align-items: center;
       }
 
-      .tab-btn {
-        height: 40px;
-        padding: 0 18px;
+      .tab-btn,
+      button,
+      .download-btn {
+        height: 46px;
         border-radius: 999px;
-        border: 1px solid var(--line);
-        background: rgba(255, 255, 255, 0.72);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        color: var(--muted);
+        padding: 0 18px;
         font-size: 14px;
-        font-weight: 600;
+        font-weight: 650;
         cursor: pointer;
-        box-shadow: var(--shadow-soft);
-        transition: all 0.18s ease;
-        letter-spacing: -0.01em;
+        transition:
+          transform 0.12s ease,
+          opacity 0.18s ease,
+          background 0.18s ease,
+          box-shadow 0.18s ease;
         font-family: inherit;
       }
 
-      .tab-btn:hover {
+      button {
+        border: none;
+      }
+
+      .tab-btn:hover,
+      .btn-secondary:hover {
         color: var(--text);
-        background: rgba(255, 255, 255, 0.9);
+        background: rgba(255, 255, 255, 0.07);
       }
 
-      .tab-btn.active {
-        background: var(--blue);
+      .tab-btn.active,
+      .btn-primary,
+      .download-btn {
+        background: linear-gradient(180deg, var(--blue), #1278dc);
         color: #fff;
-        border-color: var(--blue);
-        box-shadow: 0 8px 20px rgba(0, 113, 227, 0.25);
+        border-color: rgba(41, 151, 255, 0.45);
+        box-shadow: 0 10px 28px rgba(41, 151, 255, 0.22);
       }
 
-      /* ─── Panel visibility ─── */
-      .panel { display: none; }
-      .panel.active { display: block; }
+      .tab-btn.active:hover,
+      .btn-primary:hover,
+      .download-btn:hover {
+        background: linear-gradient(180deg, var(--blue-hover), #2997ff);
+      }
 
-      /* ─── Card — same as index.html ─── */
+      button:hover,
+      .download-btn:hover {
+        opacity: 0.96;
+      }
+
+      button:active {
+        transform: scale(0.985);
+      }
+
+      button:disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .panel {
+        display: none;
+      }
+
+      .panel.active {
+        display: block;
+      }
+
       .card {
-        background: var(--panel);
-        backdrop-filter: blur(24px);
-        -webkit-backdrop-filter: blur(24px);
-        border: 1px solid rgba(255, 255, 255, 0.68);
-        border-radius: var(--radius-xl);
-        box-shadow: var(--shadow);
         overflow: hidden;
       }
 
       .card-head {
-        padding: 22px 24px 18px;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        padding: 24px 26px 18px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
         display: flex;
         justify-content: space-between;
         align-items: flex-start;
         gap: 16px;
       }
 
-      .card-head h2 {
+      .card-head h2,
+      .analytics h2,
+      .blockchain-panel h2 {
         margin: 0;
-        font-size: 22px;
-        font-weight: 650;
+        font-size: 24px;
+        font-weight: 700;
         letter-spacing: -0.03em;
       }
 
       .card-head p {
-        margin: 6px 0 0;
+        margin: 7px 0 0;
         color: var(--muted);
         font-size: 14px;
         line-height: 1.45;
       }
 
       .card-body {
-        padding: 22px 24px 24px;
+        padding: 24px 26px 26px;
       }
 
-      /* ─── Two-column layout ─── */
       .two-col {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -241,25 +271,34 @@
         margin-bottom: 22px;
       }
 
-      /* ─── Key-value rows inside cards ─── */
-      .kv-row {
+      .kv-row,
+      .declaration-row {
         display: flex;
         justify-content: space-between;
         align-items: center;
         padding: 12px 0;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         font-size: 14px;
         gap: 12px;
       }
 
-      .kv-row:last-child { border-bottom: none; }
-      .kv-label { color: var(--muted); }
-      .kv-val   { font-weight: 650; }
+      .kv-row:last-child,
+      .declaration-row:last-child {
+        border-bottom: none;
+      }
 
-      /* ─── Progress bar ─── */
+      .kv-label,
+      .subtle {
+        color: var(--muted);
+      }
+
+      .kv-val {
+        font-weight: 650;
+      }
+
       .progress-bg {
         height: 6px;
-        background: rgba(0, 0, 0, 0.06);
+        background: rgba(255, 255, 255, 0.07);
         border-radius: 999px;
         overflow: hidden;
         margin-top: 8px;
@@ -272,55 +311,9 @@
         transition: width 0.5s ease;
       }
 
-      /* ─── Payer badges — same as index.html ─── */
-      .badge {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 30px;
-        padding: 0 12px;
-        border-radius: 999px;
-        font-size: 12px;
-        font-weight: 700;
-        letter-spacing: 0.01em;
-      }
-
-      .badge-private {
-        background: rgba(255, 159, 10, 0.14);
-        color: #a15c00;
-      }
-
-      .badge-business {
-        background: rgba(0, 113, 227, 0.12);
-        color: #005bb5;
-      }
-
-      .badge-valid {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 28px;
-        padding: 0 10px;
-        border-radius: 999px;
-        background: rgba(52, 199, 89, 0.14);
-        color: #1a7f37;
-        font-size: 12px;
-        font-weight: 700;
-      }
-
-      .badge-invalid {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 28px;
-        padding: 0 10px;
-        border-radius: 999px;
-        background: rgba(255, 59, 48, 0.12);
-        color: var(--red);
-        font-size: 12px;
-        font-weight: 700;
-      }
-
+      .badge,
+      .badge-valid,
+      .badge-invalid,
       .badge-warn {
         display: inline-flex;
         align-items: center;
@@ -328,55 +321,84 @@
         min-height: 28px;
         padding: 0 10px;
         border-radius: 999px;
-        background: rgba(255, 159, 10, 0.14);
-        color: #a15c00;
         font-size: 12px;
-        font-weight: 700;
+        font-weight: 750;
       }
 
-      /* ─── Analytics dark panel — identical to index.html .analytics ─── */
-      .analytics {
-        background: #1e293b;
-        padding: 20px;
-        border-radius: var(--radius-xl);
+      .badge-private {
+        background: rgba(255, 159, 10, 0.16);
+        color: #ffd19b;
+      }
+
+      .badge-business {
+        background: rgba(41, 151, 255, 0.16);
+        color: #a8d5ff;
+      }
+
+      .badge-valid {
+        background: rgba(50, 215, 75, 0.16);
+        color: #baf5c4;
+      }
+
+      .badge-invalid {
+        background: rgba(255, 69, 58, 0.14);
+        color: #ffb4ae;
+      }
+
+      .badge-warn {
+        background: rgba(255, 159, 10, 0.16);
+        color: #ffd19b;
+      }
+
+      .analytics,
+      .blockchain-panel {
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.06),
+          rgba(255, 255, 255, 0.03)
+        );
+        border: 1px solid var(--line);
+        border-radius: var(--radius-2xl);
+        box-shadow: var(--shadow-xl);
+        backdrop-filter: blur(26px);
+        -webkit-backdrop-filter: blur(26px);
+        padding: 24px;
         margin-bottom: 22px;
-        color: #fff;
+        color: var(--text);
       }
 
-      .analytics h2 {
-        margin-top: 0;
+      .analytics h2,
+      .blockchain-panel h2 {
         margin-bottom: 16px;
-        font-size: 22px;
-        font-weight: 650;
-        letter-spacing: -0.03em;
       }
 
-      .analytics-grid {
+      .analytics-grid,
+      .blockchain-grid {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         gap: 12px;
         margin-bottom: 20px;
       }
 
-      .analytics-card {
-        background: #0f172a;
-        padding: 14px;
-        border-radius: 10px;
-        border: 1px solid rgba(255, 255, 255, 0.08);
+      .analytics-card,
+      .blockchain-card,
+      .invoice-row,
+      .summary-card,
+      .result-box {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.09);
+        border-radius: var(--radius-lg);
+        padding: 16px 18px;
       }
 
-      .analytics-card .label {
-        font-size: 12px;
-        opacity: 0.8;
-        margin-bottom: 8px;
-      }
-
-      .analytics-card .value {
+      .analytics-card .value,
+      .blockchain-card .value,
+      .summary-card .value {
         font-size: 22px;
-        font-weight: bold;
+        font-weight: 750;
+        word-break: break-word;
       }
 
-      /* ─── Bar chart — identical to index.html ─── */
       .chart {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
@@ -405,9 +427,17 @@
         min-height: 6px;
       }
 
-      .bar-gross { background: #38bdf8; }
-      .bar-net   { background: #22c55e; }
-      .bar-vat   { background: #f59e0b; }
+      .bar-gross {
+        background: #38bdf8;
+      }
+
+      .bar-net {
+        background: #22c55e;
+      }
+
+      .bar-vat {
+        background: #f59e0b;
+      }
 
       .chart-label {
         font-size: 12px;
@@ -422,7 +452,7 @@
         flex-wrap: wrap;
         margin-bottom: 14px;
         font-size: 13px;
-        opacity: 0.9;
+        color: var(--muted);
       }
 
       .legend span {
@@ -438,88 +468,35 @@
         display: inline-block;
       }
 
-      .dot-gross { background: #38bdf8; }
-      .dot-net   { background: #22c55e; }
-      .dot-vat   { background: #f59e0b; }
-
-      /* ─── Blockchain dark panel — identical to index.html .blockchain-panel ─── */
-      .blockchain-panel {
-        background: #111827;
-        color: #fff;
-        padding: 20px;
-        border-radius: var(--radius-xl);
-        margin-bottom: 22px;
+      .dot-gross {
+        background: #38bdf8;
       }
 
-      .blockchain-panel h2 {
-        margin: 0 0 14px;
-        font-size: 22px;
-        font-weight: 650;
-        letter-spacing: -0.03em;
+      .dot-net {
+        background: #22c55e;
       }
 
-      .blockchain-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 12px;
-        margin-bottom: 16px;
+      .dot-vat {
+        background: #f59e0b;
       }
 
-      .blockchain-card {
-        background: rgba(255, 255, 255, 0.06);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 12px;
-        padding: 14px;
-      }
-
-      .blockchain-card .label {
-        font-size: 12px;
-        opacity: 0.75;
-        margin-bottom: 8px;
-      }
-
-      .blockchain-card .value {
-        font-size: 20px;
-        font-weight: 700;
-        word-break: break-word;
-      }
-
-      /* ─── Hash box — identical to index.html ─── */
-      .hash-box {
-        margin-top: 8px;
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: var(--radius-sm);
-        padding: 10px;
-        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-        font-size: 12px;
-        line-height: 1.5;
-        word-break: break-all;
-        color: rgba(255, 255, 255, 0.85);
-      }
-
-      /* ─── Light hash box variant for white cards ─── */
+      .hash-box,
       .hash-box-light {
         margin-top: 8px;
-        background: rgba(0, 0, 0, 0.03);
-        border: 1px solid rgba(0, 0, 0, 0.07);
+        background: rgba(0, 0, 0, 0.25);
+        border: 1px solid rgba(255, 255, 255, 0.08);
         border-radius: var(--radius-sm);
         padding: 10px;
         font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
         font-size: 12px;
         line-height: 1.5;
         word-break: break-all;
-        color: var(--muted);
+        color: #d6d6db;
       }
 
-      /* ─── Invoice / data rows — same as index.html .invoice-row ─── */
-      .invoice-list { display: grid; gap: 14px; }
-
-      .invoice-row {
-        background: rgba(255, 255, 255, 0.8);
-        border: 1px solid rgba(0, 0, 0, 0.05);
-        border-radius: var(--radius-lg);
-        padding: 16px 18px;
+      .invoice-list {
+        display: grid;
+        gap: 14px;
       }
 
       .invoice-row-head {
@@ -532,7 +509,7 @@
 
       .invoice-row-title {
         font-size: 16px;
-        font-weight: 650;
+        font-weight: 700;
         margin-bottom: 4px;
       }
 
@@ -543,12 +520,10 @@
       }
 
       .subtle {
-        color: var(--muted);
         font-size: 13px;
         line-height: 1.45;
       }
 
-      /* ─── Filters — same style as index.html ─── */
       .filters {
         display: grid;
         grid-template-columns: 1.4fr 1fr 1fr auto auto;
@@ -561,63 +536,25 @@
         width: 100%;
         height: 46px;
         border-radius: 14px;
-        border: 1px solid rgba(0, 0, 0, 0.08);
-        background: rgba(255, 255, 255, 0.86);
-        color: var(--text);
         padding: 0 14px;
         font-size: 14px;
         outline: none;
-        transition: border-color 0.15s ease, box-shadow 0.15s ease;
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+        transition:
+          border-color 0.15s ease,
+          box-shadow 0.15s ease;
         font-family: inherit;
       }
 
-      input::placeholder { color: #8e8e93; }
+      input::placeholder {
+        color: #8e8e93;
+      }
 
       input:focus,
       select:focus {
-        border-color: rgba(0, 113, 227, 0.45);
-        box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.12);
+        border-color: rgba(41, 151, 255, 0.45);
+        box-shadow: 0 0 0 4px rgba(41, 151, 255, 0.12);
       }
 
-      /* ─── Buttons — same as index.html ─── */
-      button {
-        height: 46px;
-        border: none;
-        border-radius: 999px;
-        padding: 0 18px;
-        font-size: 14px;
-        font-weight: 650;
-        letter-spacing: -0.01em;
-        cursor: pointer;
-        transition:
-          transform 0.12s ease,
-          opacity 0.18s ease,
-          background 0.18s ease,
-          box-shadow 0.18s ease;
-        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
-        font-family: inherit;
-      }
-
-      button:hover   { opacity: 0.96; }
-      button:active  { transform: scale(0.985); }
-      button:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
-
-      .btn-primary {
-        background: var(--blue);
-        color: #fff;
-      }
-
-      .btn-primary:hover { background: var(--blue-hover); }
-
-      .btn-secondary {
-        background: rgba(255, 255, 255, 0.9);
-        color: var(--text);
-        border: 1px solid rgba(0, 0, 0, 0.08);
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
-      }
-
-      /* ─── Pagination — same as index.html ─── */
       .pagination {
         display: flex;
         align-items: center;
@@ -626,12 +563,11 @@
         margin-top: 18px;
       }
 
-      /* ─── Loading & error states — same as index.html ─── */
       .loading-state,
       .empty-state {
         border-radius: var(--radius-lg);
-        background: rgba(255, 255, 255, 0.76);
-        border: 1px solid rgba(0, 0, 0, 0.05);
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.07);
         padding: 28px;
         text-align: center;
         color: var(--muted);
@@ -648,20 +584,23 @@
         width: 18px;
         height: 18px;
         border-radius: 999px;
-        border: 2px solid rgba(0, 0, 0, 0.12);
-        border-top-color: var(--text);
+        border: 2px solid rgba(255, 255, 255, 0.14);
+        border-top-color: #fff;
         animation: spin 0.8s linear infinite;
       }
 
-      @keyframes spin { to { transform: rotate(360deg); } }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
 
       .error {
-        color: var(--red);
+        color: #ff9b94;
         font-weight: 600;
         line-height: 1.5;
       }
 
-      /* ─── Section sub-label ─── */
       .section-title {
         margin-top: 18px;
         margin-bottom: 8px;
@@ -669,10 +608,9 @@
         font-size: 12px;
         text-transform: uppercase;
         letter-spacing: 0.08em;
-        font-weight: 700;
+        font-weight: 750;
       }
 
-      /* ─── Chain status banner (light card variant) ─── */
       .status-banner {
         border-radius: var(--radius-lg);
         padding: 16px 20px;
@@ -681,19 +619,19 @@
         align-items: center;
         gap: 14px;
         font-size: 15px;
-        font-weight: 600;
+        font-weight: 650;
       }
 
       .status-banner.valid {
-        background: rgba(52, 199, 89, 0.1);
-        border: 1px solid rgba(52, 199, 89, 0.2);
-        color: #1a7f37;
+        background: rgba(50, 215, 75, 0.12);
+        border: 1px solid rgba(50, 215, 75, 0.22);
+        color: #baf5c4;
       }
 
       .status-banner.invalid {
-        background: rgba(255, 59, 48, 0.08);
-        border: 1px solid rgba(255, 59, 48, 0.18);
-        color: var(--red);
+        background: rgba(255, 69, 58, 0.1);
+        border: 1px solid rgba(255, 69, 58, 0.18);
+        color: #ffb4ae;
       }
 
       .status-banner .sub {
@@ -703,30 +641,11 @@
         margin-top: 2px;
       }
 
-      /* ─── Anomaly highlighted row ─── */
       .anomaly-row {
-        background: rgba(255, 59, 48, 0.04);
+        background: rgba(255, 69, 58, 0.08);
       }
 
-      /* ─── Result boxes (same as index.html .result-box) ─── */
-      .result-box {
-        background: rgba(255, 255, 255, 0.82);
-        border: 1px solid rgba(0, 0, 0, 0.05);
-        border-radius: var(--radius-lg);
-        padding: 16px 18px;
-        display: grid;
-        gap: 8px;
-        font-size: 14px;
-      }
-
-      /* ─── Declaration document box ─── */
       .declaration-box {
-        background: var(--panel);
-        backdrop-filter: blur(24px);
-        -webkit-backdrop-filter: blur(24px);
-        border: 1px solid rgba(255, 255, 255, 0.68);
-        border-radius: var(--radius-xl);
-        box-shadow: var(--shadow);
         padding: 28px 30px;
       }
 
@@ -735,7 +654,7 @@
         justify-content: space-between;
         align-items: flex-start;
         padding-bottom: 20px;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         margin-bottom: 4px;
       }
 
@@ -748,7 +667,7 @@
         align-items: center;
         justify-content: center;
         font-size: 9px;
-        font-weight: 700;
+        font-weight: 800;
         color: var(--blue);
         text-align: center;
         letter-spacing: 0.04em;
@@ -756,80 +675,32 @@
         flex-shrink: 0;
       }
 
-      .declaration-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 12px 0;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-        font-size: 14px;
-        gap: 12px;
-      }
-
-      .declaration-row:last-child { border-bottom: none; }
-
       .declaration-row.total {
         font-size: 18px;
-        font-weight: 700;
+        font-weight: 750;
         letter-spacing: -0.02em;
         padding: 16px 0;
         color: var(--blue);
-        border-bottom: 2px solid rgba(0, 0, 0, 0.08);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
       }
 
-      /* ─── Download button — same as index.html .download-btn ─── */
       .download-btn {
-        margin-top: 14px;
-        padding: 0 18px;
-        height: 42px;
-        background: var(--blue);
-        color: #fff;
-        border-radius: 999px;
-        box-shadow: 0 8px 20px rgba(0, 113, 227, 0.22);
+        text-decoration: none;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        text-decoration: none;
-        font-size: 14px;
-        font-weight: 650;
-        cursor: pointer;
-        border: none;
-        font-family: inherit;
-        transition: opacity 0.18s ease;
         gap: 7px;
       }
 
-      .download-btn:hover { opacity: 0.92; }
-
-      /* ─── Summary card (same as index.html .invoice-summary-card) ─── */
-      .summary-card {
-        background: rgba(255, 255, 255, 0.82);
-        border: 1px solid rgba(0, 0, 0, 0.05);
-        border-radius: var(--radius-lg);
-        padding: 16px 18px;
-      }
-
-      .summary-card .label {
-        color: var(--muted);
-        font-size: 12px;
-        margin-bottom: 6px;
-        font-weight: 600;
-      }
-
-      .summary-card .value {
-        font-size: 24px;
-        font-weight: 700;
-        letter-spacing: -0.03em;
-      }
-
-      /* ─── Audit log timeline ─── */
       .audit-step {
         display: flex;
         gap: 14px;
         padding-bottom: 16px;
       }
 
-      .audit-step:last-child { padding-bottom: 0; }
+      .audit-step:last-child {
+        padding-bottom: 0;
+      }
 
       .audit-dot {
         display: flex;
@@ -853,45 +724,70 @@
         margin-top: 4px;
       }
 
-      /* ─── Responsive breakpoints — matching index.html ─── */
       @media (max-width: 1180px) {
-        .stats-grid    { grid-template-columns: repeat(2, 1fr); }
-        .analytics-grid { grid-template-columns: repeat(2, 1fr); }
-        .blockchain-grid { grid-template-columns: repeat(2, 1fr); }
+        .stats-grid,
+        .analytics-grid,
+        .blockchain-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
       }
 
       @media (max-width: 900px) {
-        body { padding: 16px; }
-        .two-col { grid-template-columns: 1fr; }
-        .invoice-row-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-        .filters { grid-template-columns: 1fr 1fr; }
-        .hero { flex-direction: column; align-items: flex-start; }
-        .hero-copy h1 { font-size: 36px; }
-        .hero-badges { justify-content: flex-start; }
+        body {
+          padding: 16px;
+        }
+
+        .two-col {
+          grid-template-columns: 1fr;
+        }
+
+        .invoice-row-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .filters {
+          grid-template-columns: 1fr 1fr;
+        }
+
+        .hero {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .hero-copy h1 {
+          font-size: 38px;
+        }
+
+        .hero-badges {
+          justify-content: flex-start;
+        }
       }
 
       @media (max-width: 640px) {
-        .stats-grid { grid-template-columns: 1fr; }
-        .analytics-grid { grid-template-columns: 1fr; }
-        .blockchain-grid { grid-template-columns: 1fr; }
-        .filters { grid-template-columns: 1fr; }
-        .invoice-row-grid { grid-template-columns: 1fr; }
+        .stats-grid,
+        .analytics-grid,
+        .blockchain-grid,
+        .filters,
+        .invoice-row-grid {
+          grid-template-columns: 1fr;
+        }
       }
     </style>
   </head>
+
   <body>
     <div class="page">
-
-      <!-- ─── Hero ─── -->
       <div class="hero">
         <div class="hero-copy">
           <h1>Tax Authority Portal</h1>
           <p>
             Audit interface for Blockchain Café — real-time VAT analytics,
-            blockchain chain integrity verification, invoice history review,
-            and anomaly detection. All data is fetched live from the backend services.
+            blockchain chain integrity verification, invoice history review, and
+            anomaly detection. All data is fetched live from the backend
+            services.
           </p>
         </div>
+
         <div class="hero-badges">
           <div class="badge-chip">VAT Analytics</div>
           <div class="badge-chip">Blockchain Audit</div>
@@ -900,91 +796,149 @@
         </div>
       </div>
 
-      <!-- ─── Top stat cards ─── -->
       <div class="stats-grid" id="topStats">
-        <div class="stat-card"><div class="stat-label">Gross Revenue</div><div class="loading-state" style="padding:8px 0;border:none;background:none;"><div class="loading"><div class="spinner"></div></div></div></div>
-        <div class="stat-card"><div class="stat-label">VAT Accrued</div><div class="loading-state" style="padding:8px 0;border:none;background:none;"><div class="loading"><div class="spinner"></div></div></div></div>
-        <div class="stat-card"><div class="stat-label">Net Revenue</div><div class="loading-state" style="padding:8px 0;border:none;background:none;"><div class="loading"><div class="spinner"></div></div></div></div>
-        <div class="stat-card"><div class="stat-label">Blockchain Blocks</div><div class="loading-state" style="padding:8px 0;border:none;background:none;"><div class="loading"><div class="spinner"></div></div></div></div>
+        <div class="stat-card">
+          <div class="stat-label">Gross Revenue</div>
+          <div
+            class="loading-state"
+            style="padding: 8px 0; border: none; background: none"
+          >
+            <div class="loading"><div class="spinner"></div></div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">VAT Accrued</div>
+          <div
+            class="loading-state"
+            style="padding: 8px 0; border: none; background: none"
+          >
+            <div class="loading"><div class="spinner"></div></div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Net Revenue</div>
+          <div
+            class="loading-state"
+            style="padding: 8px 0; border: none; background: none"
+          >
+            <div class="loading"><div class="spinner"></div></div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Blockchain Blocks</div>
+          <div
+            class="loading-state"
+            style="padding: 8px 0; border: none; background: none"
+          >
+            <div class="loading"><div class="spinner"></div></div>
+          </div>
+        </div>
       </div>
 
-      <!-- ─── Tab navigation ─── -->
       <div class="tab-nav">
-        <button class="tab-btn active" onclick="switchTab('overview',   this)">Overview</button>
-        <button class="tab-btn"        onclick="switchTab('blockchain', this)">Blockchain Records</button>
-        <button class="tab-btn"        onclick="switchTab('invoices',   this)">Invoice List</button>
-        <button class="tab-btn"        onclick="switchTab('anomaly',    this)">Anomaly Detection</button>
-        <button class="tab-btn"        onclick="switchTab('declaration',this)">VAT Declaration</button>
-        <div style="flex:1;"></div>
-        <button class="btn-secondary"  onclick="refreshAll()" style="display:flex;align-items:center;gap:8px;">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M23 4v6h-6M1 20v-6h6"/>
-            <path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/>
+        <button class="tab-btn active" onclick="switchTab('overview', this)">
+          Overview
+        </button>
+        <button class="tab-btn" onclick="switchTab('blockchain', this)">
+          Blockchain Records
+        </button>
+        <button class="tab-btn" onclick="switchTab('invoices', this)">
+          Invoice List
+        </button>
+        <button class="tab-btn" onclick="switchTab('anomaly', this)">
+          Anomaly Detection
+        </button>
+        <button class="tab-btn" onclick="switchTab('declaration', this)">
+          VAT Declaration
+        </button>
+        <div style="flex: 1"></div>
+        <button
+          class="btn-secondary"
+          onclick="refreshAll()"
+          style="display: flex; align-items: center; gap: 8px"
+        >
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M23 4v6h-6M1 20v-6h6" />
+            <path
+              d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"
+            />
           </svg>
           Refresh
         </button>
       </div>
 
-      <!-- ══════════════════════════════════════════════════════════
-           PANEL: OVERVIEW
-      ════════════════════════════════════════════════════════════ -->
       <div id="panel-overview" class="panel active">
-
         <div class="two-col">
-          <!-- VAT breakdown card -->
           <div class="card">
             <div class="card-head">
               <div>
                 <h2>VAT Breakdown</h2>
-                <p>Standard 19% and reduced 7% VAT totals from the VAT service.</p>
+                <p>
+                  Standard 19% and reduced 7% VAT totals from the VAT service.
+                </p>
               </div>
             </div>
             <div class="card-body" id="vatBreakdown">
-              <div class="loading-state"><div class="loading"><div class="spinner"></div><span>Loading VAT data...</span></div></div>
+              <div class="loading-state">
+                <div class="loading">
+                  <div class="spinner"></div>
+                  <span>Loading VAT data...</span>
+                </div>
+              </div>
             </div>
           </div>
 
-          <!-- Payer distribution card -->
           <div class="card">
             <div class="card-head">
               <div>
                 <h2>Payer Distribution</h2>
-                <p>Business (B2B) vs. private (B2C) invoice split and counts.</p>
+                <p>
+                  Business (B2B) vs. private (B2C) invoice split and counts.
+                </p>
               </div>
             </div>
             <div class="card-body" id="payerDistribution">
-              <div class="loading-state"><div class="loading"><div class="spinner"></div><span>Loading...</span></div></div>
+              <div class="loading-state">
+                <div class="loading">
+                  <div class="spinner"></div>
+                  <span>Loading...</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
-        <!-- Periodic analytics — dark panel, same as index.html -->
         <div class="analytics" id="taxAnalytics">
           <h2>Periodic VAT Analytics</h2>
-          <div class="loading-state" style="background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.08);color:rgba(255,255,255,0.6);">
-            <div class="loading"><div class="spinner" style="border-color:rgba(255,255,255,0.2);border-top-color:#fff;"></div><span>Loading analytics...</span></div>
+          <div class="loading-state">
+            <div class="loading">
+              <div class="spinner"></div>
+              <span>Loading analytics...</span>
+            </div>
           </div>
         </div>
-
       </div>
 
-      <!-- ══════════════════════════════════════════════════════════
-           PANEL: BLOCKCHAIN RECORDS
-      ════════════════════════════════════════════════════════════ -->
       <div id="panel-blockchain" class="panel">
+        <div id="chainBanner" style="display: none"></div>
 
-        <!-- Chain integrity banner -->
-        <div id="chainBanner" style="display:none;"></div>
-
-        <!-- Dark blockchain overview panel — same as index.html -->
         <div class="blockchain-panel" id="blockchainOverview">
           <h2>Chain Overview</h2>
-          <div class="loading-state" style="background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.08);color:rgba(255,255,255,0.6);">
-            <div class="loading"><div class="spinner" style="border-color:rgba(255,255,255,0.2);border-top-color:#fff;"></div><span>Loading blockchain data...</span></div>
+          <div class="loading-state">
+            <div class="loading">
+              <div class="spinner"></div>
+              <span>Loading blockchain data...</span>
+            </div>
           </div>
         </div>
 
-        <!-- Recent blocks list -->
         <div class="card">
           <div class="card-head">
             <div>
@@ -993,31 +947,43 @@
             </div>
           </div>
           <div class="card-body" id="blockList">
-            <div class="loading-state"><div class="loading"><div class="spinner"></div><span>Loading blocks...</span></div></div>
+            <div class="loading-state">
+              <div class="loading">
+                <div class="spinner"></div>
+                <span>Loading blocks...</span>
+              </div>
+            </div>
           </div>
         </div>
-
       </div>
 
-      <!-- ══════════════════════════════════════════════════════════
-           PANEL: INVOICE LIST
-      ════════════════════════════════════════════════════════════ -->
       <div id="panel-invoices" class="panel">
+        <div
+          id="invoiceSummary"
+          style="
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            margin-bottom: 22px;
+          "
+        ></div>
 
-        <!-- Summary cards row -->
-        <div id="invoiceSummary" style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px;"></div>
-
-        <!-- Filterable invoice list -->
         <div class="card">
           <div class="card-head">
             <div>
               <h2>Invoice History</h2>
-              <p>Search, filter, sort, and paginate through all stored invoices.</p>
+              <p>
+                Search, filter, sort, and paginate through all stored invoices.
+              </p>
             </div>
           </div>
-          <div class="card-body" style="padding-bottom:0;">
+          <div class="card-body" style="padding-bottom: 0">
             <div class="filters">
-              <input  id="invSearch" type="text" placeholder="Search by invoice number" />
+              <input
+                id="invSearch"
+                type="text"
+                placeholder="Search by invoice number"
+              />
               <select id="invType">
                 <option value="">All payer types</option>
                 <option value="BUSINESS">Business</option>
@@ -1027,33 +993,41 @@
                 <option value="desc">Newest first</option>
                 <option value="asc">Oldest first</option>
               </select>
-              <button class="btn-primary"   onclick="applyInvoiceFilters()">Apply</button>
-              <button class="btn-secondary" onclick="resetInvoiceFilters()">Reset</button>
+              <button class="btn-primary" onclick="applyInvoiceFilters()">
+                Apply
+              </button>
+              <button class="btn-secondary" onclick="resetInvoiceFilters()">
+                Reset
+              </button>
             </div>
           </div>
-          <div class="card-body" style="padding-top:0;" id="invoiceList">
-            <div class="loading-state"><div class="loading"><div class="spinner"></div><span>Loading invoices...</span></div></div>
+          <div class="card-body" style="padding-top: 0" id="invoiceList">
+            <div class="loading-state">
+              <div class="loading">
+                <div class="spinner"></div>
+                <span>Loading invoices...</span>
+              </div>
+            </div>
           </div>
-          <div id="invoicePagination" class="pagination" style="padding-bottom:22px;"></div>
+          <div
+            id="invoicePagination"
+            class="pagination"
+            style="padding-bottom: 22px"
+          ></div>
         </div>
-
       </div>
 
-      <!-- ══════════════════════════════════════════════════════════
-           PANEL: ANOMALY DETECTION
-      ════════════════════════════════════════════════════════════ -->
       <div id="panel-anomaly" class="panel">
-
-        <!-- Alert banner -->
         <div id="anomalyBanner" class="status-banner valid">
           <div>
             <div id="anomalyBannerTitle">Analysing records...</div>
-            <div class="sub" id="anomalyBannerSub">Comparing VAT service records with blockchain data.</div>
+            <div class="sub" id="anomalyBannerSub">
+              Comparing VAT service records with blockchain data.
+            </div>
           </div>
         </div>
 
         <div class="two-col">
-          <!-- Detection criteria (static) -->
           <div class="card">
             <div class="card-head">
               <div>
@@ -1062,15 +1036,29 @@
               </div>
             </div>
             <div class="card-body">
-              <div class="kv-row"><span class="kv-label">VAT rate check</span><span class="badge-valid">Active</span></div>
-              <div class="kv-row"><span class="kv-label">Rounding consistency</span><span class="badge-valid">Active</span></div>
-              <div class="kv-row"><span class="kv-label">Hash integrity</span><span class="badge-valid">Active</span></div>
-              <div class="kv-row"><span class="kv-label">Chain validation</span><span class="badge-valid">Active</span></div>
-              <div class="kv-row"><span class="kv-label">Tolerance threshold</span><span class="kv-val">≤ €0.02</span></div>
+              <div class="kv-row">
+                <span class="kv-label">VAT rate check</span
+                ><span class="badge-valid">Active</span>
+              </div>
+              <div class="kv-row">
+                <span class="kv-label">Rounding consistency</span
+                ><span class="badge-valid">Active</span>
+              </div>
+              <div class="kv-row">
+                <span class="kv-label">Hash integrity</span
+                ><span class="badge-valid">Active</span>
+              </div>
+              <div class="kv-row">
+                <span class="kv-label">Chain validation</span
+                ><span class="badge-valid">Active</span>
+              </div>
+              <div class="kv-row">
+                <span class="kv-label">Tolerance threshold</span
+                ><span class="kv-val">≤ €0.02</span>
+              </div>
             </div>
           </div>
 
-          <!-- Risk summary (dynamic) -->
           <div class="card">
             <div class="card-head">
               <div>
@@ -1079,40 +1067,49 @@
               </div>
             </div>
             <div class="card-body" id="riskSummary">
-              <div class="loading-state"><div class="loading"><div class="spinner"></div><span>Analysing...</span></div></div>
+              <div class="loading-state">
+                <div class="loading">
+                  <div class="spinner"></div>
+                  <span>Analysing...</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
-        <!-- Block-level comparison -->
         <div class="card">
           <div class="card-head">
             <div>
               <h2>Block-Level VAT Comparison</h2>
-              <p>Recorded VAT vs. expected VAT (19% / 7%) per block. Flagged rows exceed the €0.02 tolerance.</p>
+              <p>
+                Recorded VAT vs. expected VAT (19% / 7%) per block. Flagged rows
+                exceed the €0.02 tolerance.
+              </p>
             </div>
           </div>
           <div class="card-body" id="anomalyList">
-            <div class="loading-state"><div class="loading"><div class="spinner"></div><span>Comparing records...</span></div></div>
+            <div class="loading-state">
+              <div class="loading">
+                <div class="spinner"></div>
+                <span>Comparing records...</span>
+              </div>
+            </div>
           </div>
         </div>
-
       </div>
 
-      <!-- ══════════════════════════════════════════════════════════
-           PANEL: VAT DECLARATION
-      ════════════════════════════════════════════════════════════ -->
       <div id="panel-declaration" class="panel">
-        <div class="two-col" style="align-items:start;">
-
-          <!-- Declaration document -->
+        <div class="two-col" style="align-items: start">
           <div class="declaration-box" id="declarationDoc">
-            <div class="loading-state"><div class="loading"><div class="spinner"></div><span>Generating declaration...</span></div></div>
+            <div class="loading-state">
+              <div class="loading">
+                <div class="spinner"></div>
+                <span>Generating declaration...</span>
+              </div>
+            </div>
           </div>
 
-          <!-- Sidebar: export + audit log -->
-          <div style="display:grid;gap:22px;">
-
+          <div style="display: grid; gap: 22px">
             <div class="card">
               <div class="card-head">
                 <div>
@@ -1120,12 +1117,33 @@
                   <p>Download or print the VAT pre-declaration report.</p>
                 </div>
               </div>
-              <div class="card-body" style="display:grid;gap:10px;">
-                <button class="download-btn" style="width:100%;" onclick="exportCSV()">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              <div class="card-body" style="display: grid; gap: 10px">
+                <button
+                  class="download-btn"
+                  style="width: 100%"
+                  onclick="exportCSV()"
+                >
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+                    <polyline points="7 10 12 15 17 10" />
+                    <line x1="12" y1="15" x2="12" y2="3" />
+                  </svg>
                   Download as CSV
                 </button>
-                <button class="btn-secondary" style="width:100%;" onclick="window.print()">Print Declaration</button>
+                <button
+                  class="btn-secondary"
+                  style="width: 100%"
+                  onclick="window.print()"
+                >
+                  Print Declaration
+                </button>
               </div>
             </div>
 
@@ -1137,45 +1155,52 @@
                 </div>
               </div>
               <div class="card-body" id="auditLog">
-                <div class="loading-state"><div class="loading"><div class="spinner"></div><span>Loading...</span></div></div>
+                <div class="loading-state">
+                  <div class="loading">
+                    <div class="spinner"></div>
+                    <span>Loading...</span>
+                  </div>
+                </div>
               </div>
             </div>
-
           </div>
         </div>
       </div>
-
-    </div><!-- /.page -->
+    </div>
 
     <script>
-      const API = 'http://localhost';
+      const API = "http://localhost";
 
-      /* ─── Invoice pagination state ─── */
-      let invPage      = 0;
-      const invSize    = 5;
-      let invSearch    = '';
-      let invPayerType = '';
-      let invSort      = 'desc';
+      let invPage = 0;
+      const invSize = 5;
+      let invSearch = "";
+      let invPayerType = "";
+      let invSort = "desc";
 
-      /* ─── Generic fetch wrapper matching index.html safeJson() ─── */
       async function safeJson(url, options) {
-        const res  = await fetch(url, options);
+        const res = await fetch(url, options);
         const text = await res.text();
-        let json   = null;
-        try { json = JSON.parse(text); } catch (_) {}
+        let json = null;
+
+        try {
+          json = JSON.parse(text);
+        } catch (_) {}
+
         if (!res.ok) throw new Error(`${url} → ${res.status} ${text}`);
         return json;
       }
 
       function euro(v) {
-        return '€' + Number(v || 0).toFixed(2);
+        return "€" + Number(v || 0).toFixed(2);
       }
 
       function escapeHtml(v) {
-        return String(v ?? '')
-          .replaceAll('&', '&amp;').replaceAll('<', '&lt;')
-          .replaceAll('>', '&gt;').replaceAll('"', '&quot;')
-          .replaceAll("'", '&#39;');
+        return String(v ?? "")
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#39;");
       }
 
       function spinnerHtml(msg) {
@@ -1186,75 +1211,66 @@
         return `<div class="loading-state"><p class="error">Failed to load data.<br>${escapeHtml(msg)}</p></div>`;
       }
 
-      /* ─── Tab switch ─── */
       function switchTab(id, btn) {
-        document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        document.getElementById('panel-' + id).classList.add('active');
-        btn.classList.add('active');
+        document
+          .querySelectorAll(".panel")
+          .forEach((p) => p.classList.remove("active"));
+        document
+          .querySelectorAll(".tab-btn")
+          .forEach((b) => b.classList.remove("active"));
+        document.getElementById("panel-" + id).classList.add("active");
+        btn.classList.add("active");
 
-        /* Lazy-load data the first time a tab is opened */
-        if (id === 'blockchain')  loadBlockchain();
-        if (id === 'invoices')    loadInvoices();
-        if (id === 'anomaly')     loadAnomaly();
-        if (id === 'declaration') loadDeclaration();
+        if (id === "blockchain") loadBlockchain();
+        if (id === "invoices") loadInvoices();
+        if (id === "anomaly") loadAnomaly();
+        if (id === "declaration") loadDeclaration();
       }
 
-      /* ─── Refresh the current active panel ─── */
       async function refreshAll() {
         await loadOverview();
-        const label = document.querySelector('.tab-btn.active').textContent.trim();
-        if (label === 'Blockchain Records') loadBlockchain();
-        if (label === 'Invoice List')       { invPage = 0; loadInvoices(); }
-        if (label === 'Anomaly Detection')  loadAnomaly();
-        if (label === 'VAT Declaration')    loadDeclaration();
+        const label = document
+          .querySelector(".tab-btn.active")
+          .textContent.trim();
+
+        if (label === "Blockchain Records") loadBlockchain();
+        if (label === "Invoice List") {
+          invPage = 0;
+          loadInvoices();
+        }
+        if (label === "Anomaly Detection") loadAnomaly();
+        if (label === "VAT Declaration") loadDeclaration();
       }
 
-      /* ══════════════════════════════════════════════════════════
-         OVERVIEW — top stats + VAT breakdown + analytics chart
-      ════════════════════════════════════════════════════════════ */
       async function loadOverview() {
         try {
-          const [summaryRes, taxRes, chainOverviewRes, validateRes] = await Promise.all([
-            safeJson(`${API}:8083/api/invoices/summary`),
-            safeJson(`${API}:8086/api/vat/analytics/tax`),
-            safeJson(`${API}:8087/api/blockchain/overview`),
-            safeJson(`${API}:8087/api/blockchain/validate/details`),
-          ]);
+          const [summaryRes, taxRes, chainOverviewRes, validateRes] =
+            await Promise.all([
+              safeJson(`${API}:8083/api/invoices/summary`),
+              safeJson(`${API}:8086/api/vat/analytics/tax`),
+              safeJson(`${API}:8087/api/blockchain/overview`),
+              safeJson(`${API}:8087/api/blockchain/validate/details`),
+            ]);
 
           const s = summaryRes.data;
           const t = taxRes.data;
           const b = chainOverviewRes.data;
           const v = validateRes.data;
 
-          /* Chain chip in hero */
-          const chip = document.getElementById('chainChip');
-          chip.textContent = v.valid ? 'Chain: Valid ✓' : 'Chain: INVALID ✗';
-          if (!v.valid) chip.style.cssText =
-            'background:rgba(255,59,48,0.1);color:var(--red);border-color:rgba(255,59,48,0.2);';
+          const chip = document.getElementById("chainChip");
+          chip.textContent = v.valid ? "Chain: Valid ✓" : "Chain: INVALID ✗";
+          chip.style.cssText = v.valid
+            ? "background:rgba(50,215,75,0.14);color:#baf5c4;border-color:rgba(50,215,75,0.22);"
+            : "background:rgba(255,69,58,0.14);color:#ffb4ae;border-color:rgba(255,69,58,0.22);";
 
-          /* Top stat cards */
-          document.getElementById('topStats').innerHTML = `
-            <div class="stat-card">
-              <div class="stat-label">Gross Revenue</div>
-              <div class="stat-value">${euro(t.grossTotal)}</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-label">VAT Accrued</div>
-              <div class="stat-value" style="color:var(--blue);">${euro(t.totalVat)}</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-label">Net Revenue</div>
-              <div class="stat-value" style="color:var(--green);">${euro(t.netTotal)}</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-label">Blockchain Blocks</div>
-              <div class="stat-value" style="color:var(--orange);">${b.totalBlocks}</div>
-            </div>
+          document.getElementById("topStats").innerHTML = `
+            <div class="stat-card"><div class="stat-label">Gross Revenue</div><div class="stat-value">${euro(t.grossTotal)}</div></div>
+            <div class="stat-card"><div class="stat-label">VAT Accrued</div><div class="stat-value" style="color:var(--blue);">${euro(t.totalVat)}</div></div>
+            <div class="stat-card"><div class="stat-label">Net Revenue</div><div class="stat-value" style="color:var(--green);">${euro(t.netTotal)}</div></div>
+            <div class="stat-card"><div class="stat-label">Blockchain Blocks</div><div class="stat-value" style="color:var(--orange);">${b.totalBlocks}</div></div>
           `;
 
-          /* VAT breakdown card */
-          document.getElementById('vatBreakdown').innerHTML = `
+          document.getElementById("vatBreakdown").innerHTML = `
             <div class="kv-row"><span class="kv-label">19% VAT (standard rate)</span><span class="kv-val" style="color:var(--blue);">${euro(t.vat19Total)}</span></div>
             <div class="kv-row"><span class="kv-label">7% VAT (reduced rate)</span><span class="kv-val" style="color:var(--blue);">${euro(t.vat7Total)}</span></div>
             <div class="kv-row"><span class="kv-label">Business VAT</span><span class="kv-val">${euro(t.businessVatTotal)}</span></div>
@@ -1263,51 +1279,64 @@
             <div class="kv-row"><span class="kv-label">Average Invoice</span><span class="kv-val">${euro(s.averageAmount)}</span></div>
           `;
 
-          /* Payer distribution card */
-          const total   = s.count || 1;
-          const bizPct  = Math.round((s.businessCount / total) * 100);
+          const total = s.count || 1;
+          const bizPct = Math.round((s.businessCount / total) * 100);
           const privPct = 100 - bizPct;
-          document.getElementById('payerDistribution').innerHTML = `
+
+          document.getElementById("payerDistribution").innerHTML = `
             <div class="kv-row"><span class="kv-label">Business (B2B)</span><span class="kv-val">${s.businessCount} invoices</span></div>
             <div class="progress-bg"><div class="progress-fill" style="width:${bizPct}%;background:var(--blue);"></div></div>
             <div class="kv-row"><span class="kv-label">Private (B2C)</span><span class="kv-val">${s.privateCount} invoices</span></div>
             <div class="progress-bg"><div class="progress-fill" style="width:${privPct}%;background:var(--green);"></div></div>
             <div class="kv-row"><span class="kv-label">Total Invoices</span><span class="kv-val">${s.count}</span></div>
-            <div class="kv-row"><span class="kv-label">Latest Invoice</span>
-              <span class="kv-val" style="font-family:ui-monospace,monospace;font-size:12px;">${escapeHtml(s.lastInvoiceNumber || '—')}</span>
-            </div>
+            <div class="kv-row"><span class="kv-label">Latest Invoice</span><span class="kv-val" style="font-family:ui-monospace,monospace;font-size:12px;">${escapeHtml(s.lastInvoiceNumber || "—")}</span></div>
           `;
 
-          /* Analytics dark panel with bar chart */
           const points = t.points || [];
-          const maxVal = Math.max(1, ...points.map(p => Number(p.grossTotal || 0)));
+          const maxVal = Math.max(
+            1,
+            ...points.map((p) => Number(p.grossTotal || 0)),
+          );
 
-          const chartHtml = points.length ? `
-            <div class="legend">
-              <span><i class="dot dot-gross"></i>Gross</span>
-              <span><i class="dot dot-net"></i>Net</span>
-              <span><i class="dot dot-vat"></i>VAT</span>
-            </div>
-            <div class="chart">
-              ${points.map(p => {
-                const gh = Math.max(6, (Number(p.grossTotal || 0) / maxVal) * 100);
-                const nh = Math.max(6, (Number(p.netTotal   || 0) / maxVal) * 100);
-                const vh = Math.max(6, (Number(p.totalVat   || 0) / maxVal) * 100);
-                return `
-                  <div class="chart-col">
-                    <div class="chart-bars">
-                      <div class="bar bar-gross" style="height:${gh}%"></div>
-                      <div class="bar bar-net"   style="height:${nh}%"></div>
-                      <div class="bar bar-vat"   style="height:${vh}%"></div>
-                    </div>
-                    <div class="chart-label">${escapeHtml(p.label)}</div>
-                  </div>
-                `;
-              }).join('')}
-            </div>
-          ` : `<div class="subtle">No tax records yet.</div>`;
+          const chartHtml = points.length
+            ? `
+              <div class="legend">
+                <span><i class="dot dot-gross"></i>Gross</span>
+                <span><i class="dot dot-net"></i>Net</span>
+                <span><i class="dot dot-vat"></i>VAT</span>
+              </div>
+              <div class="chart">
+                ${points
+                  .map((p) => {
+                    const gh = Math.max(
+                      6,
+                      (Number(p.grossTotal || 0) / maxVal) * 100,
+                    );
+                    const nh = Math.max(
+                      6,
+                      (Number(p.netTotal || 0) / maxVal) * 100,
+                    );
+                    const vh = Math.max(
+                      6,
+                      (Number(p.totalVat || 0) / maxVal) * 100,
+                    );
+                    return `
+                      <div class="chart-col">
+                        <div class="chart-bars">
+                          <div class="bar bar-gross" style="height:${gh}%"></div>
+                          <div class="bar bar-net" style="height:${nh}%"></div>
+                          <div class="bar bar-vat" style="height:${vh}%"></div>
+                        </div>
+                        <div class="chart-label">${escapeHtml(p.label)}</div>
+                      </div>
+                    `;
+                  })
+                  .join("")}
+              </div>
+            `
+            : `<div class="subtle">No tax records yet.</div>`;
 
-          document.getElementById('taxAnalytics').innerHTML = `
+          document.getElementById("taxAnalytics").innerHTML = `
             <h2>Periodic VAT Analytics</h2>
             <div class="analytics-grid">
               <div class="analytics-card"><div class="label">Gross Total</div><div class="value">${euro(t.grossTotal)}</div></div>
@@ -1317,21 +1346,18 @@
             </div>
             ${chartHtml}
           `;
-
         } catch (e) {
           console.error(e);
-          document.getElementById('topStats').innerHTML =
+          document.getElementById("topStats").innerHTML =
             `<div class="loading-state" style="grid-column:1/-1;"><p class="error">Failed to load data.<br>${escapeHtml(e.message)}</p></div>`;
         }
       }
 
-      /* ══════════════════════════════════════════════════════════
-         BLOCKCHAIN RECORDS
-      ════════════════════════════════════════════════════════════ */
       async function loadBlockchain() {
-        document.getElementById('blockchainOverview').innerHTML =
-          `<h2>Chain Overview</h2>${spinnerHtml('Loading blockchain data...')}`;
-        document.getElementById('blockList').innerHTML = spinnerHtml('Loading blocks...');
+        document.getElementById("blockchainOverview").innerHTML =
+          `<h2>Chain Overview</h2>${spinnerHtml("Loading blockchain data...")}`;
+        document.getElementById("blockList").innerHTML =
+          spinnerHtml("Loading blocks...");
 
         try {
           const [overviewRes, validateRes, blocksRes] = await Promise.all([
@@ -1340,185 +1366,199 @@
             safeJson(`${API}:8087/api/blockchain/blocks`),
           ]);
 
-          const o      = overviewRes.data;
-          const v      = validateRes.data;
+          const o = overviewRes.data;
+          const v = validateRes.data;
           const blocks = (blocksRes.data || []).slice().reverse().slice(0, 10);
 
-          /* Chain integrity banner */
-          const banner = document.getElementById('chainBanner');
-          banner.style.display = 'block';
+          const banner = document.getElementById("chainBanner");
+          banner.style.display = "block";
           banner.innerHTML = `
-            <div class="status-banner ${v.valid ? 'valid' : 'invalid'}" style="margin-bottom:22px;">
+            <div class="status-banner ${v.valid ? "valid" : "invalid"}" style="margin-bottom:22px;">
               <div>
-                <div>${v.valid ? 'Chain integrity verified — all hashes match.' : 'Chain integrity FAILED — manual review required!'}</div>
-                <div class="sub">${escapeHtml(v.message || '')}</div>
+                <div>${v.valid ? "Chain integrity verified — all hashes match." : "Chain integrity FAILED — manual review required!"}</div>
+                <div class="sub">${escapeHtml(v.message || "")}</div>
               </div>
             </div>
           `;
 
-          /* Dark overview panel */
-          document.getElementById('blockchainOverview').innerHTML = `
+          document.getElementById("blockchainOverview").innerHTML = `
             <h2>Chain Overview</h2>
             <div class="blockchain-grid">
               <div class="blockchain-card"><div class="label">Total Blocks</div><div class="value">${o.totalBlocks}</div></div>
               <div class="blockchain-card"><div class="label">Latest Block Index</div><div class="value">${o.latestBlockIndex}</div></div>
               <div class="blockchain-card"><div class="label">Chain VAT Total</div><div class="value">${euro(o.totalVat)}</div></div>
-              <div class="blockchain-card"><div class="label">Validation</div><div class="value">
-                ${v.valid
-                  ? '<span class="badge-valid">Valid</span>'
-                  : '<span class="badge-invalid">Invalid</span>'}
-              </div></div>
+              <div class="blockchain-card"><div class="label">Validation</div><div class="value">${v.valid ? '<span class="badge-valid">Valid</span>' : '<span class="badge-invalid">Invalid</span>'}</div></div>
             </div>
             <div class="label" style="opacity:.75;font-size:12px;margin-bottom:4px;">Stored Hash</div>
-            <div class="hash-box">${escapeHtml(v.storedHash || '—')}</div>
+            <div class="hash-box">${escapeHtml(v.storedHash || "—")}</div>
             <div class="label" style="opacity:.75;font-size:12px;margin-top:12px;margin-bottom:4px;">Recalculated Hash</div>
-            <div class="hash-box">${escapeHtml(v.recalculatedHash || '—')}</div>
+            <div class="hash-box">${escapeHtml(v.recalculatedHash || "—")}</div>
           `;
 
-          /* Block list */
           if (!blocks.length) {
-            document.getElementById('blockList').innerHTML =
+            document.getElementById("blockList").innerHTML =
               '<div class="empty-state">No blocks found.</div>';
             return;
           }
 
-          document.getElementById('blockList').innerHTML = `
+          document.getElementById("blockList").innerHTML = `
             <div style="display:grid;gap:14px;">
-              ${blocks.map(blk => `
-                <div class="invoice-row">
-                  <div class="invoice-row-head">
-                    <div>
-                      <div class="invoice-row-title">Block #${escapeHtml(blk.blockIndex)}</div>
-                      <div class="subtle">Order: ${escapeHtml(blk.orderId)}</div>
+              ${blocks
+                .map(
+                  (blk) => `
+                    <div class="invoice-row">
+                      <div class="invoice-row-head">
+                        <div>
+                          <div class="invoice-row-title">Block #${escapeHtml(blk.blockIndex)}</div>
+                          <div class="subtle">Order: ${escapeHtml(blk.orderId)}</div>
+                        </div>
+                        <span class="badge-valid">Valid</span>
+                      </div>
+                      <div class="invoice-row-grid">
+                        <div><span class="subtle">Gross</span><br><strong>${euro(blk.grossTotal)}</strong></div>
+                        <div><span class="subtle">VAT</span><br><strong style="color:var(--blue);">${euro(blk.totalVat)}</strong></div>
+                        <div><span class="subtle">Net</span><br><strong>${euro(blk.netTotal)}</strong></div>
+                      </div>
+                      <div class="hash-box-light">Hash: ${escapeHtml(blk.hash)}</div>
+                      <div class="hash-box-light" style="margin-top:6px;">Previous: ${escapeHtml(blk.previousHash)}</div>
                     </div>
-                    <span class="badge-valid">Valid</span>
-                  </div>
-                  <div class="invoice-row-grid">
-                    <div><span class="subtle">Gross</span><br><strong>${euro(blk.grossTotal)}</strong></div>
-                    <div><span class="subtle">VAT</span><br><strong style="color:var(--blue);">${euro(blk.totalVat)}</strong></div>
-                    <div><span class="subtle">Net</span><br><strong>${euro(blk.netTotal)}</strong></div>
-                  </div>
-                  <div class="hash-box-light">Hash: ${escapeHtml(blk.hash)}</div>
-                  <div class="hash-box-light" style="margin-top:6px;">Previous: ${escapeHtml(blk.previousHash)}</div>
-                </div>
-              `).join('')}
+                  `,
+                )
+                .join("")}
             </div>
           `;
-
         } catch (e) {
           console.error(e);
-          document.getElementById('blockchainOverview').innerHTML =
+          document.getElementById("blockchainOverview").innerHTML =
             `<h2>Chain Overview</h2>${errorHtml(e.message)}`;
         }
       }
 
-      /* ══════════════════════════════════════════════════════════
-         INVOICE LIST
-      ════════════════════════════════════════════════════════════ */
       async function loadInvoices() {
-        /* Summary cards */
         try {
           const res = await safeJson(`${API}:8083/api/invoices/summary`);
-          const s   = res.data;
-          document.getElementById('invoiceSummary').innerHTML = `
+          const s = res.data;
+          document.getElementById("invoiceSummary").innerHTML = `
             <div class="summary-card"><div class="label">Invoice Count</div><div class="value">${s.count}</div></div>
             <div class="summary-card"><div class="label">Total Value</div><div class="value">${euro(s.totalAmount)}</div></div>
             <div class="summary-card"><div class="label">Business Orders</div><div class="value">${s.businessCount}</div></div>
             <div class="summary-card"><div class="label">Private Orders</div><div class="value">${s.privateCount}</div></div>
           `;
         } catch (e) {
-          document.getElementById('invoiceSummary').innerHTML = errorHtml(e.message);
+          document.getElementById("invoiceSummary").innerHTML = errorHtml(
+            e.message,
+          );
         }
 
         renderInvoiceList();
       }
 
       async function renderInvoiceList() {
-        document.getElementById('invoiceList').innerHTML    = spinnerHtml('Loading invoices...');
-        document.getElementById('invoicePagination').innerHTML = '';
+        document.getElementById("invoiceList").innerHTML = spinnerHtml(
+          "Loading invoices...",
+        );
+        document.getElementById("invoicePagination").innerHTML = "";
 
-        const params = new URLSearchParams({ page: invPage, size: invSize, sort: invSort });
-        if (invPayerType) params.set('payerType',     invPayerType);
-        if (invSearch)    params.set('invoiceNumber', invSearch);
+        const params = new URLSearchParams({
+          page: invPage,
+          size: invSize,
+          sort: invSort,
+        });
+        if (invPayerType) params.set("payerType", invPayerType);
+        if (invSearch) params.set("invoiceNumber", invSearch);
 
         try {
-          const res      = await safeJson(`${API}:8083/api/invoices/history?${params}`);
+          const res = await safeJson(
+            `${API}:8083/api/invoices/history?${params}`,
+          );
           const pageData = res.data;
           const invoices = pageData.content || [];
 
           if (!invoices.length) {
-            document.getElementById('invoiceList').innerHTML = '<div class="empty-state">No invoices found.</div>';
+            document.getElementById("invoiceList").innerHTML =
+              '<div class="empty-state">No invoices found.</div>';
             return;
           }
 
-          /* Invoice cards — same structure as index.html invoice rows */
-          document.getElementById('invoiceList').innerHTML = `
+          document.getElementById("invoiceList").innerHTML = `
             <div class="invoice-list">
-              ${invoices.map(inv => `
-                <div class="invoice-row">
-                  <div class="invoice-row-head">
-                    <div>
-                      <div class="invoice-row-title">${escapeHtml(inv.invoiceNumber || '—')}</div>
-                      <div class="subtle">Order: ${escapeHtml(inv.orderId)}</div>
+              ${invoices
+                .map(
+                  (inv) => `
+                    <div class="invoice-row">
+                      <div class="invoice-row-head">
+                        <div>
+                          <div class="invoice-row-title">${escapeHtml(inv.invoiceNumber || "—")}</div>
+                          <div class="subtle">Order: ${escapeHtml(inv.orderId)}</div>
+                        </div>
+                        ${inv.payerType === "BUSINESS" ? '<span class="badge badge-business">Business</span>' : '<span class="badge badge-private">Private</span>'}
+                      </div>
+                      <div class="invoice-row-grid">
+                        <div><span class="subtle">Date</span><br><strong>${escapeHtml((inv.createdAt || "—").substring(0, 10))}</strong></div>
+                        <div><span class="subtle">Gross</span><br><strong>${euro(inv.grossTotal)}</strong></div>
+                        <div><span class="subtle">VAT</span><br><strong style="color:var(--blue);">${euro(inv.totalVat)}</strong></div>
+                        <div><span class="subtle">Net</span><br><strong>${euro(inv.netTotal)}</strong></div>
+                        <div><span class="subtle">Company</span><br><strong>${escapeHtml(inv.companyName || "—")}</strong></div>
+                        <div><span class="subtle">VAT ID</span><br><strong>${escapeHtml(inv.vatId || "—")}</strong></div>
+                      </div>
+                      <a class="download-btn" href="${API}:8083/api/invoices/${encodeURIComponent(inv.orderId)}" target="_blank" style="margin-top:12px;">Open Invoice PDF</a>
                     </div>
-                    ${inv.payerType === 'BUSINESS'
-                      ? '<span class="badge badge-business">Business</span>'
-                      : '<span class="badge badge-private">Private</span>'}
-                  </div>
-                  <div class="invoice-row-grid">
-                    <div><span class="subtle">Date</span><br><strong>${escapeHtml((inv.createdAt || '—').substring(0, 10))}</strong></div>
-                    <div><span class="subtle">Gross</span><br><strong>${euro(inv.grossTotal)}</strong></div>
-                    <div><span class="subtle">VAT</span><br><strong style="color:var(--blue);">${euro(inv.totalVat)}</strong></div>
-                    <div><span class="subtle">Net</span><br><strong>${euro(inv.netTotal)}</strong></div>
-                    <div><span class="subtle">Company</span><br><strong>${escapeHtml(inv.companyName || '—')}</strong></div>
-                    <div><span class="subtle">VAT ID</span><br><strong>${escapeHtml(inv.vatId || '—')}</strong></div>
-                  </div>
-                  <a class="download-btn" href="${API}:8083/api/invoices/${encodeURIComponent(inv.orderId)}" target="_blank" style="margin-top:12px;">
-                    Open Invoice PDF
-                  </a>
-                </div>
-              `).join('')}
+                  `,
+                )
+                .join("")}
             </div>
           `;
 
-          /* Pagination */
-          document.getElementById('invoicePagination').innerHTML = `
-            <button class="btn-secondary" onclick="prevInvPage()" ${pageData.first ? 'disabled' : ''}>Previous</button>
+          document.getElementById("invoicePagination").innerHTML = `
+            <button class="btn-secondary" onclick="prevInvPage()" ${pageData.first ? "disabled" : ""}>Previous</button>
             <span class="subtle">Page ${(pageData.page || 0) + 1} of ${pageData.totalPages || 1}</span>
-            <button class="btn-secondary" onclick="nextInvPage()" ${pageData.last ? 'disabled' : ''}>Next</button>
+            <button class="btn-secondary" onclick="nextInvPage()" ${pageData.last ? "disabled" : ""}>Next</button>
           `;
-
         } catch (e) {
           console.error(e);
-          document.getElementById('invoiceList').innerHTML = errorHtml(e.message);
+          document.getElementById("invoiceList").innerHTML = errorHtml(
+            e.message,
+          );
         }
       }
 
       function applyInvoiceFilters() {
-        invSearch    = document.getElementById('invSearch').value.trim();
-        invPayerType = document.getElementById('invType').value;
-        invSort      = document.getElementById('invSort').value;
-        invPage      = 0;
+        invSearch = document.getElementById("invSearch").value.trim();
+        invPayerType = document.getElementById("invType").value;
+        invSort = document.getElementById("invSort").value;
+        invPage = 0;
         renderInvoiceList();
       }
 
       function resetInvoiceFilters() {
-        invSearch = ''; invPayerType = ''; invSort = 'desc'; invPage = 0;
-        document.getElementById('invSearch').value = '';
-        document.getElementById('invType').value   = '';
-        document.getElementById('invSort').value   = 'desc';
+        invSearch = "";
+        invPayerType = "";
+        invSort = "desc";
+        invPage = 0;
+        document.getElementById("invSearch").value = "";
+        document.getElementById("invType").value = "";
+        document.getElementById("invSort").value = "desc";
         renderInvoiceList();
       }
 
-      function prevInvPage() { if (invPage > 0) { invPage--; renderInvoiceList(); } }
-      function nextInvPage() { invPage++; renderInvoiceList(); }
+      function prevInvPage() {
+        if (invPage > 0) {
+          invPage--;
+          renderInvoiceList();
+        }
+      }
 
-      /* ══════════════════════════════════════════════════════════
-         ANOMALY DETECTION
-      ════════════════════════════════════════════════════════════ */
+      function nextInvPage() {
+        invPage++;
+        renderInvoiceList();
+      }
+
       async function loadAnomaly() {
-        document.getElementById('riskSummary').innerHTML = spinnerHtml('Analysing...');
-        document.getElementById('anomalyList').innerHTML = spinnerHtml('Comparing records...');
+        document.getElementById("riskSummary").innerHTML =
+          spinnerHtml("Analysing...");
+        document.getElementById("anomalyList").innerHTML = spinnerHtml(
+          "Comparing records...",
+        );
 
         try {
           const [taxRes, blocksRes, validateRes] = await Promise.all([
@@ -1527,98 +1567,93 @@
             safeJson(`${API}:8087/api/blockchain/validate/details`),
           ]);
 
-          const t      = taxRes.data;
+          const t = taxRes.data;
           const blocks = blocksRes.data || [];
-          const v      = validateRes.data;
+          const v = validateRes.data;
 
-          const chainOk     = v.valid;
-          const blockVatSum = blocks.reduce((s, b) => s + Number(b.totalVat || 0), 0);
-          const vatGap      = Math.abs(Number(t.totalVat || 0) - blockVatSum);
+          const chainOk = v.valid;
+          const blockVatSum = blocks.reduce(
+            (s, b) => s + Number(b.totalVat || 0),
+            0,
+          );
+          const vatGap = Math.abs(Number(t.totalVat || 0) - blockVatSum);
           const vatMismatch = vatGap > 0.01;
-          const hasAnomaly  = !chainOk || vatMismatch;
+          const hasAnomaly = !chainOk || vatMismatch;
 
-          /* Alert banner */
-          const banner = document.getElementById('anomalyBanner');
-          banner.className = 'status-banner ' + (hasAnomaly ? 'invalid' : 'valid');
-          document.getElementById('anomalyBannerTitle').textContent = hasAnomaly
-            ? '⚠ Anomalies detected — manual review required.'
-            : '✓ No anomalies detected — all records are consistent.';
-          document.getElementById('anomalyBannerSub').textContent = hasAnomaly
-            ? `Chain integrity: ${chainOk ? 'OK' : 'FAILED'} · VAT discrepancy: ${euro(vatGap)}`
-            : 'VAT service records and blockchain data are fully aligned.';
+          const banner = document.getElementById("anomalyBanner");
+          banner.className =
+            "status-banner " + (hasAnomaly ? "invalid" : "valid");
+          document.getElementById("anomalyBannerTitle").textContent = hasAnomaly
+            ? "⚠ Anomalies detected — manual review required."
+            : "✓ No anomalies detected — all records are consistent.";
+          document.getElementById("anomalyBannerSub").textContent = hasAnomaly
+            ? `Chain integrity: ${chainOk ? "OK" : "FAILED"} · VAT discrepancy: ${euro(vatGap)}`
+            : "VAT service records and blockchain data are fully aligned.";
 
-          /* Risk summary */
-          document.getElementById('riskSummary').innerHTML = `
-            <div class="kv-row"><span class="kv-label">Chain Integrity</span>
-              <span class="${chainOk ? 'badge-valid' : 'badge-invalid'}">${chainOk ? 'Valid' : 'FAILED'}</span>
-            </div>
-            <div class="kv-row"><span class="kv-label">VAT vs. Blockchain Gap</span>
-              <span class="kv-val" style="color:${vatMismatch ? 'var(--red)' : 'var(--green)'};">${euro(vatGap)}</span>
-            </div>
+          document.getElementById("riskSummary").innerHTML = `
+            <div class="kv-row"><span class="kv-label">Chain Integrity</span><span class="${chainOk ? "badge-valid" : "badge-invalid"}">${chainOk ? "Valid" : "FAILED"}</span></div>
+            <div class="kv-row"><span class="kv-label">VAT vs. Blockchain Gap</span><span class="kv-val" style="color:${vatMismatch ? "var(--red)" : "var(--green)"};">${euro(vatGap)}</span></div>
             <div class="kv-row"><span class="kv-label">Blockchain VAT Sum</span><span class="kv-val">${euro(blockVatSum)}</span></div>
             <div class="kv-row"><span class="kv-label">VAT Service Total</span><span class="kv-val">${euro(t.totalVat)}</span></div>
-            <div class="kv-row"><span class="kv-label">Risk Level</span>
-              <span class="${hasAnomaly ? 'badge-invalid' : 'badge-valid'}">${hasAnomaly ? 'High Risk' : 'Low Risk'}</span>
-            </div>
+            <div class="kv-row"><span class="kv-label">Risk Level</span><span class="${hasAnomaly ? "badge-invalid" : "badge-valid"}">${hasAnomaly ? "High Risk" : "Low Risk"}</span></div>
           `;
 
-          /* Block-level comparison cards */
           const recent = blocks.slice().reverse().slice(0, 20);
           if (!recent.length) {
-            document.getElementById('anomalyList').innerHTML =
+            document.getElementById("anomalyList").innerHTML =
               '<div class="empty-state">No block data available.</div>';
             return;
           }
 
-          document.getElementById('anomalyList').innerHTML = `
+          document.getElementById("anomalyList").innerHTML = `
             <div style="display:grid;gap:14px;">
-              ${recent.map(blk => {
-                const recorded = Number(blk.totalVat  || 0);
-                const gross    = Number(blk.grossTotal || 0);
-                const exp19    = +(gross / 1.19 * 0.19).toFixed(2);
-                const exp7     = +(gross / 1.07 * 0.07).toFixed(2);
-                const gap      = Math.min(
-                  Math.abs(recorded - exp19),
-                  Math.abs(recorded - exp7)
-                );
-                const ok = gap <= 0.02;
-                return `
-                  <div class="invoice-row ${ok ? '' : 'anomaly-row'}">
-                    <div class="invoice-row-head">
-                      <div>
-                        <div class="invoice-row-title">Block #${escapeHtml(blk.blockIndex)}</div>
-                        <div class="subtle">Order: ${escapeHtml(blk.orderId)}</div>
+              ${recent
+                .map((blk) => {
+                  const recorded = Number(blk.totalVat || 0);
+                  const gross = Number(blk.grossTotal || 0);
+                  const exp19 = +((gross / 1.19) * 0.19).toFixed(2);
+                  const exp7 = +((gross / 1.07) * 0.07).toFixed(2);
+                  const gap = Math.min(
+                    Math.abs(recorded - exp19),
+                    Math.abs(recorded - exp7),
+                  );
+                  const ok = gap <= 0.02;
+
+                  return `
+                    <div class="invoice-row ${ok ? "" : "anomaly-row"}">
+                      <div class="invoice-row-head">
+                        <div>
+                          <div class="invoice-row-title">Block #${escapeHtml(blk.blockIndex)}</div>
+                          <div class="subtle">Order: ${escapeHtml(blk.orderId)}</div>
+                        </div>
+                        ${ok ? '<span class="badge-valid">OK</span>' : '<span class="badge-warn">Review</span>'}
                       </div>
-                      ${ok
-                        ? '<span class="badge-valid">OK</span>'
-                        : '<span class="badge-warn">Review</span>'}
+                      <div class="invoice-row-grid">
+                        <div><span class="subtle">Gross</span><br><strong>${euro(blk.grossTotal)}</strong></div>
+                        <div><span class="subtle">Recorded VAT</span><br><strong style="color:var(--blue);">${euro(recorded)}</strong></div>
+                        <div><span class="subtle">Min. Gap</span><br><strong style="color:${ok ? "var(--green)" : "var(--red)"};">${euro(gap)}</strong></div>
+                        <div><span class="subtle">Expected (19%)</span><br><strong>${euro(exp19)}</strong></div>
+                        <div><span class="subtle">Expected (7%)</span><br><strong>${euro(exp7)}</strong></div>
+                      </div>
                     </div>
-                    <div class="invoice-row-grid">
-                      <div><span class="subtle">Gross</span><br><strong>${euro(blk.grossTotal)}</strong></div>
-                      <div><span class="subtle">Recorded VAT</span><br><strong style="color:var(--blue);">${euro(recorded)}</strong></div>
-                      <div><span class="subtle">Min. Gap</span><br><strong style="color:${ok ? 'var(--green)' : 'var(--red)'};">${euro(gap)}</strong></div>
-                      <div><span class="subtle">Expected (19%)</span><br><strong>${euro(exp19)}</strong></div>
-                      <div><span class="subtle">Expected (7%)</span><br><strong>${euro(exp7)}</strong></div>
-                    </div>
-                  </div>
-                `;
-              }).join('')}
+                  `;
+                })
+                .join("")}
             </div>
           `;
-
         } catch (e) {
           console.error(e);
-          document.getElementById('riskSummary').innerHTML = errorHtml(e.message);
+          document.getElementById("riskSummary").innerHTML = errorHtml(
+            e.message,
+          );
         }
       }
 
-      /* ══════════════════════════════════════════════════════════
-         VAT DECLARATION
-      ════════════════════════════════════════════════════════════ */
       async function loadDeclaration() {
-        const docEl = document.getElementById('declarationDoc');
-        docEl.innerHTML = spinnerHtml('Generating declaration...');
-        document.getElementById('auditLog').innerHTML = spinnerHtml('Loading...');
+        const docEl = document.getElementById("declarationDoc");
+        docEl.innerHTML = spinnerHtml("Generating declaration...");
+        document.getElementById("auditLog").innerHTML =
+          spinnerHtml("Loading...");
 
         try {
           const [taxRes, summaryRes, validateRes] = await Promise.all([
@@ -1627,27 +1662,24 @@
             safeJson(`${API}:8087/api/blockchain/validate/details`),
           ]);
 
-          const t   = taxRes.data;
-          const s   = summaryRes.data;
-          const v   = validateRes.data;
+          const t = taxRes.data;
+          const s = summaryRes.data;
+          const v = validateRes.data;
           const now = new Date();
 
-          /* Declaration document */
           docEl.innerHTML = `
             <div class="declaration-header">
               <div>
-                <div style="font-size:28px;font-weight:700;letter-spacing:-0.03em;margin-bottom:6px;">VAT Pre-Declaration</div>
+                <div style="font-size:28px;font-weight:750;letter-spacing:-0.03em;margin-bottom:6px;">VAT Pre-Declaration</div>
                 <div style="color:var(--muted);font-size:14px;margin-bottom:14px;">Umsatzsteuervoranmeldung</div>
                 <div style="font-size:14px;color:var(--muted);line-height:1.75;">
                   <div><strong style="color:var(--text);">Taxpayer:</strong> Blockchain Café GmbH</div>
                   <div><strong style="color:var(--text);">Period:</strong> ${now.getFullYear()}</div>
-                  <div><strong style="color:var(--text);">Report Date:</strong> ${now.toLocaleDateString('en-GB')}</div>
+                  <div><strong style="color:var(--text);">Report Date:</strong> ${now.toLocaleDateString("en-GB")}</div>
                   <div><strong style="color:var(--text);">Auditor:</strong> Tax Authority System</div>
                 </div>
               </div>
-              <div class="declaration-stamp">
-                BLOCKCHAIN<br>VERIFIED<br>${v.valid ? '✓' : '✗'}
-              </div>
+              <div class="declaration-stamp">BLOCKCHAIN<br>VERIFIED<br>${v.valid ? "✓" : "✗"}</div>
             </div>
 
             <div class="section-title">Gross Revenue</div>
@@ -1664,84 +1696,92 @@
             <div class="declaration-row"><span>Business Invoices — VAT</span><span>${euro(t.businessVatTotal)}</span></div>
             <div class="declaration-row"><span>Private Invoices — VAT</span><span>${euro(t.privateVatTotal)}</span></div>
 
-            <div class="declaration-row total">
-              <span>Total VAT Payable</span>
-              <span>${euro(t.totalVat)}</span>
-            </div>
+            <div class="declaration-row total"><span>Total VAT Payable</span><span>${euro(t.totalVat)}</span></div>
 
             <div class="section-title">Blockchain Verification</div>
-            <div class="declaration-row">
-              <span>Chain Integrity</span>
-              <span>${v.valid
-                ? '<span class="badge-valid">Verified ✓</span>'
-                : '<span class="badge-invalid">FAILED ✗</span>'}</span>
-            </div>
+            <div class="declaration-row"><span>Chain Integrity</span><span>${v.valid ? '<span class="badge-valid">Verified ✓</span>' : '<span class="badge-invalid">FAILED ✗</span>'}</span></div>
             <div class="declaration-row"><span>Total Transaction Records</span><span>${t.totalRecords}</span></div>
             <div class="declaration-row"><span>Total Invoices Issued</span><span>${s.count}</span></div>
           `;
 
-          /* Audit log */
           const steps = [
-            { title: 'Declaration Generated',  desc: 'VAT pre-declaration compiled from live API data.' },
-            { title: 'Blockchain Verified',     desc: v.valid ? 'Chain is intact — all hashes match.' : 'Chain integrity FAILED — manual review required!' },
-            { title: 'VAT Records Processed',  desc: `${t.totalRecords} records processed from the VAT service.` },
-            { title: 'Audit Session Started',  desc: 'Tax authority audit portal initialised successfully.' },
+            {
+              title: "Declaration Generated",
+              desc: "VAT pre-declaration compiled from live API data.",
+            },
+            {
+              title: "Blockchain Verified",
+              desc: v.valid
+                ? "Chain is intact — all hashes match."
+                : "Chain integrity FAILED — manual review required!",
+            },
+            {
+              title: "VAT Records Processed",
+              desc: `${t.totalRecords} records processed from the VAT service.`,
+            },
+            {
+              title: "Audit Session Started",
+              desc: "Tax authority audit portal initialised successfully.",
+            },
           ];
 
-          document.getElementById('auditLog').innerHTML = steps.map((step, i) => `
-            <div class="audit-step">
-              <div class="audit-dot">
-                <div class="audit-dot-circle"></div>
-                ${i < steps.length - 1 ? '<div class="audit-dot-line"></div>' : ''}
-              </div>
-              <div>
-                <div style="font-size:14px;font-weight:650;margin-bottom:2px;">${step.title}</div>
-                <div class="subtle">${step.desc}</div>
-              </div>
-            </div>
-          `).join('');
-
+          document.getElementById("auditLog").innerHTML = steps
+            .map(
+              (step, i) => `
+                <div class="audit-step">
+                  <div class="audit-dot">
+                    <div class="audit-dot-circle"></div>
+                    ${i < steps.length - 1 ? '<div class="audit-dot-line"></div>' : ""}
+                  </div>
+                  <div>
+                    <div style="font-size:14px;font-weight:650;margin-bottom:2px;">${step.title}</div>
+                    <div class="subtle">${step.desc}</div>
+                  </div>
+                </div>
+              `,
+            )
+            .join("");
         } catch (e) {
           console.error(e);
           docEl.innerHTML = errorHtml(e.message);
         }
       }
 
-      /* ─── CSV export ─── */
       async function exportCSV() {
         try {
           const [taxRes, summaryRes] = await Promise.all([
             safeJson(`${API}:8086/api/vat/analytics/tax`),
             safeJson(`${API}:8083/api/invoices/summary`),
           ]);
+
           const t = taxRes.data;
           const s = summaryRes.data;
           const rows = [
-            ['Metric', 'Value'],
-            ['Gross Total',        t.grossTotal],
-            ['Net Total',          t.netTotal],
-            ['VAT Total',          t.totalVat],
-            ['19% VAT',            t.vat19Total],
-            ['7% VAT',             t.vat7Total],
-            ['Business VAT',       t.businessVatTotal],
-            ['Private VAT',        t.privateVatTotal],
-            ['Total Invoices',     s.count],
-            ['Business Invoices',  s.businessCount],
-            ['Private Invoices',   s.privateCount],
-            ['Average Invoice',    s.averageAmount],
+            ["Metric", "Value"],
+            ["Gross Total", t.grossTotal],
+            ["Net Total", t.netTotal],
+            ["VAT Total", t.totalVat],
+            ["19% VAT", t.vat19Total],
+            ["7% VAT", t.vat7Total],
+            ["Business VAT", t.businessVatTotal],
+            ["Private VAT", t.privateVatTotal],
+            ["Total Invoices", s.count],
+            ["Business Invoices", s.businessCount],
+            ["Private Invoices", s.privateCount],
+            ["Average Invoice", s.averageAmount],
           ];
-          const csv  = rows.map(r => r.join(';')).join('\n');
-          const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-          const a    = document.createElement('a');
-          a.href     = URL.createObjectURL(blob);
+
+          const csv = rows.map((r) => r.join(";")).join("\n");
+          const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+          const a = document.createElement("a");
+          a.href = URL.createObjectURL(blob);
           a.download = `blockchain-cafe-vat-${new Date().toISOString().slice(0, 10)}.csv`;
           a.click();
         } catch (e) {
-          alert('CSV export failed: ' + e.message);
+          alert("CSV export failed: " + e.message);
         }
       }
 
-      /* ─── Initialise on page load ─── */
       loadOverview();
     </script>
   </body>
