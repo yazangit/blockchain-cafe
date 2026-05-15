@@ -2,7 +2,7 @@
 
 > Enterprise-inspired blockchain payment ecosystem prototype for VAT transparency, invoice traceability, blockchain auditability, and fintech-oriented transaction verification.
 
-![Main Checkout](./screenshots/home.png)
+![Main Checkout](./Screenshots/home.png)
 
 ---
 
@@ -109,49 +109,49 @@ The main objectives of this project are:
 
 ## Main Checkout Interface
 
-![Main Checkout](./screenshots/home.png)
+![Main Checkout](./Screenshots/home.png)
 
 ---
 
 ## Cart & Payment Workflow
 
-![Cart & Payment](./screenshots/cart.png)
+![Cart & Payment](./Screenshots/cart.png)
 
 ---
 
 ## Customer Invoice
 
-![Invoice](./screenshots/invoice.png)
+![Invoice](./Screenshots/invoice.png)
 
 ---
 
 ## Tax Authority Overview Dashboard
 
-![Overview Dashboard](./screenshots/Overview_Dashboard.png)
+![Overview Dashboard](./Screenshots/Overview_Dashboard.png)
 
 ---
 
 ## Blockchain Audit Records
 
-![Blockchain Records](./screenshots/Blockchain_Records.png)
+![Blockchain Records](./Screenshots/Blockchain_Records.png)
 
 ---
 
 ## Invoice Management
 
-![Invoice List](./screenshots/invoice_list.png)
+![Invoice List](./Screenshots/invoice_list.png)
 
 ---
 
 ## Anomaly Detection
 
-![Anomaly Detection](./screenshots/Anomaly_Detection.png)
+![Anomaly Detection](./Screenshots/Anomaly_Detection.png)
 
 ---
 
 ## VAT Declaration System
 
-![VAT Declaration](./screenshots/VAT_Declaration.png)
+![VAT Declaration](./Screenshots/VAT_Declaration.png)
 
 ---
 
