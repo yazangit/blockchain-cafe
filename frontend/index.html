@@ -613,7 +613,7 @@
     </div>
 
     <script>
-      const API = "http://localhost";
+      const API = "";
 
       let products = [];
       let cart = [];
@@ -654,7 +654,7 @@
         const menuDiv = document.getElementById("menu");
 
         try {
-          const json = await safeJson(`${API}:8082/api/products`);
+          const json = await safeJson(`${API}/api/products`);
           products = (json.data || []).filter((p) => p.active !== false);
           renderMenu();
         } catch (e) {
@@ -853,12 +853,8 @@
         };
 
         try {
-          await safeJson(`${API}:8083/api/nfc/status/demo-card-001`, {
-            method: "DELETE",
-          });
-
           const response = await safeJson(
-            `${API}:8088/api/nfc/checkout-intent`,
+            `${API}/api/nfc/checkout-intent`,
             {
               method: "POST",
               headers: { "Content-Type": "application/json" },
@@ -877,6 +873,9 @@
           resultsDiv.innerHTML = `
           <div class="result-box">
             <p class="status-positive">NFC payment prepared successfully.</p>
+
+
+
             <p><strong>Order ID:</strong> ${escapeHtml(response.orderId)}</p>
             <p><strong>Card Token:</strong> ${escapeHtml(response.cardToken)}</p>
             <p><strong>Amount:</strong> ${euro(response.amount)}</p>
@@ -933,12 +932,9 @@
         };
 
         try {
-          await safeJson(`${API}:8083/api/nfc/status/demo-card-001`, {
-            method: "DELETE",
-          });
 
           const response = await safeJson(
-            `${API}:8088/api/nfc/checkout-intent`,
+            `${API}/api/nfc/checkout-intent`,
             {
               method: "POST",
               headers: { "Content-Type": "application/json" },
@@ -960,6 +956,9 @@
           resultsDiv.innerHTML = `
           <div class="result-box">
             <p class="status-positive">Business NFC payment prepared successfully.</p>
+
+
+
             <p><strong>Order ID:</strong> ${escapeHtml(response.orderId)}</p>
             <p><strong>Card Token:</strong> ${escapeHtml(response.cardToken)}</p>
             <p><strong>Amount:</strong> ${euro(response.amount)}</p>
@@ -984,11 +983,13 @@
 
         nfcPollingInterval = setInterval(async () => {
           try {
-            const data = await safeJson(
-              `${API}:8083/api/nfc/status/${cardToken}`,
-            );
+            const data = await safeJson(`${API}/api/nfc/last-resolution`);
 
-            if (data.paid === true) {
+            if (
+              data?.resolved === true &&
+              pendingNfcOrder &&
+              data.orderId === pendingNfcOrder.orderId
+            ) {
               clearInterval(nfcPollingInterval);
               nfcPollingInterval = null;
 
@@ -996,12 +997,12 @@
               <div class="loading-state">
                 <div class="loading">
                   <div class="spinner"></div>
-                  <span>NFC confirmed. Creating invoice...</span>
+                  <span>NFC approved. Creating invoice...</span>
                 </div>
               </div>
             `;
 
-              if (pendingNfcOrder?.payerType === "BUSINESS") {
+              if (pendingNfcOrder.payerType === "BUSINESS") {
                 await checkout("BUSINESS", pendingNfcOrder.businessDetails);
               } else {
                 await checkout("PRIVATE", null);
@@ -1012,7 +1013,7 @@
           } catch (error) {
             console.error("NFC polling error:", error);
           }
-        }, 2000);
+        }, 1000);
       }
 
       async function checkout(payerType, businessDetails) {
@@ -1044,7 +1045,7 @@
         }
 
         try {
-          const result = await safeJson(`${API}:8083/api/orders/checkout`, {
+          const result = await safeJson(`${API}/api/orders/checkout`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload),
@@ -1085,10 +1086,10 @@
         try {
           const [vat, payment] = await Promise.all([
             safeJson(
-              `${API}:8086/api/vat/records/${encodeURIComponent(orderId)}`,
+              `${API}/api/vat/records/${encodeURIComponent(orderId)}`,
             ),
             safeJson(
-              `${API}:8084/api/payments/by-order/${encodeURIComponent(orderId)}`,
+              `${API}/api/payments/by-order/${encodeURIComponent(orderId)}`,
             ),
           ]);
 
@@ -1185,7 +1186,7 @@
           </div>
 
           <a class="download-btn"
-             href="${API}:8083/api/invoices/${encodeURIComponent(orderId)}"
+             href="${API}/api/invoices/${encodeURIComponent(orderId)}"
              target="_blank"
              style="margin-top:14px;">
             Download Invoice PDF
@@ -1222,3 +1223,46 @@
     </script>
   </body>
 </html>
+
+<script>
+
+async function startNfcResolutionPolling() {
+
+    const interval = setInterval(async () => {
+
+        try {
+
+            const res = await fetch(
+                `${API}/api/nfc/last-resolution`
+            );
+
+            const data = await res.json();
+
+            if (data?.resolved) {
+
+                clearInterval(interval);
+
+                renderReceipt(`
+                    <div class="success">
+                        Payment Approved ✅
+                    </div>
+
+                    <br>
+
+                    <strong>Order ID:</strong> ${data.orderId}<br>
+                    <strong>Card Token:</strong> ${data.cardToken}<br>
+                    <strong>Amount:</strong> €${data.amount}<br>
+                    <strong>Payer Type:</strong> ${data.payerType}<br>
+                    <strong>Status:</strong> ${data.resolutionStatus}<br>
+                `);
+            }
+
+        } catch (e) {
+            console.error(e);
+        }
+
+    }, 1000);
+}
+
+</script>
+

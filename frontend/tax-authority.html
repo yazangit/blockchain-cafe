@@ -1169,7 +1169,7 @@
     </div>
 
     <script>
-      const API = "http://localhost";
+      const API = "";
 
       let invPage = 0;
       const invSize = 5;
@@ -1246,10 +1246,10 @@
         try {
           const [summaryRes, taxRes, chainOverviewRes, validateRes] =
             await Promise.all([
-              safeJson(`${API}:8083/api/invoices/summary`),
-              safeJson(`${API}:8086/api/vat/analytics/tax`),
-              safeJson(`${API}:8087/api/blockchain/overview`),
-              safeJson(`${API}:8087/api/blockchain/validate/details`),
+              safeJson(`${API}/api/invoices/summary`),
+              safeJson(`${API}/api/vat/analytics/tax`),
+              safeJson(`${API}/api/blockchain/overview`),
+              safeJson(`${API}/api/blockchain/validate/details`),
             ]);
 
           const s = summaryRes.data;
@@ -1361,9 +1361,9 @@
 
         try {
           const [overviewRes, validateRes, blocksRes] = await Promise.all([
-            safeJson(`${API}:8087/api/blockchain/overview`),
-            safeJson(`${API}:8087/api/blockchain/validate/details`),
-            safeJson(`${API}:8087/api/blockchain/blocks`),
+            safeJson(`${API}/api/blockchain/overview`),
+            safeJson(`${API}/api/blockchain/validate/details`),
+            safeJson(`${API}/api/blockchain/blocks`),
           ]);
 
           const o = overviewRes.data;
@@ -1436,7 +1436,7 @@
 
       async function loadInvoices() {
         try {
-          const res = await safeJson(`${API}:8083/api/invoices/summary`);
+          const res = await safeJson(`${API}/api/invoices/summary`);
           const s = res.data;
           document.getElementById("invoiceSummary").innerHTML = `
             <div class="summary-card"><div class="label">Invoice Count</div><div class="value">${s.count}</div></div>
@@ -1469,7 +1469,7 @@
 
         try {
           const res = await safeJson(
-            `${API}:8083/api/invoices/history?${params}`,
+            `${API}/api/invoices/history?${params}`,
           );
           const pageData = res.data;
           const invoices = pageData.content || [];
@@ -1501,7 +1501,7 @@
                         <div><span class="subtle">Company</span><br><strong>${escapeHtml(inv.companyName || "—")}</strong></div>
                         <div><span class="subtle">VAT ID</span><br><strong>${escapeHtml(inv.vatId || "—")}</strong></div>
                       </div>
-                      <a class="download-btn" href="${API}:8083/api/invoices/${encodeURIComponent(inv.orderId)}" target="_blank" style="margin-top:12px;">Open Invoice PDF</a>
+                      <a class="download-btn" href="${API}/api/invoices/${encodeURIComponent(inv.orderId)}" target="_blank" style="margin-top:12px;">Open Invoice PDF</a>
                     </div>
                   `,
                 )
@@ -1562,9 +1562,9 @@
 
         try {
           const [taxRes, blocksRes, validateRes] = await Promise.all([
-            safeJson(`${API}:8086/api/vat/analytics/tax`),
-            safeJson(`${API}:8087/api/blockchain/blocks`),
-            safeJson(`${API}:8087/api/blockchain/validate/details`),
+            safeJson(`${API}/api/vat/analytics/tax`),
+            safeJson(`${API}/api/blockchain/blocks`),
+            safeJson(`${API}/api/blockchain/validate/details`),
           ]);
 
           const t = taxRes.data;
@@ -1657,9 +1657,9 @@
 
         try {
           const [taxRes, summaryRes, validateRes] = await Promise.all([
-            safeJson(`${API}:8086/api/vat/analytics/tax`),
-            safeJson(`${API}:8083/api/invoices/summary`),
-            safeJson(`${API}:8087/api/blockchain/validate/details`),
+            safeJson(`${API}/api/vat/analytics/tax`),
+            safeJson(`${API}/api/invoices/summary`),
+            safeJson(`${API}/api/blockchain/validate/details`),
           ]);
 
           const t = taxRes.data;
@@ -1750,8 +1750,8 @@
       async function exportCSV() {
         try {
           const [taxRes, summaryRes] = await Promise.all([
-            safeJson(`${API}:8086/api/vat/analytics/tax`),
-            safeJson(`${API}:8083/api/invoices/summary`),
+            safeJson(`${API}/api/vat/analytics/tax`),
+            safeJson(`${API}/api/invoices/summary`),
           ]);
 
           const t = taxRes.data;
